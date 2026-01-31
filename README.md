@@ -53,16 +53,16 @@ SUVIDHA is a Government of India initiative providing citizens easy access to go
 ## Screenshots
 
 ### Home Page
-![Home Page](./public/screenshots/home.png)
+![Home Page](./client//public/screenshots/home.png)
 
 ### Services Page
-![Services Page](./public/screenshots/services.png)
+![Services Page](./client//public/screenshots/services.png)
 
 ### Sign In page
-![Sign In Page](./public/screenshots/signIn.png)
+![Sign In Page](./client//public/screenshots/signIn.png)
 
 ### Sign Up Page
-![Sign Up Page](./public/screenshots/signUp.png)
+![Sign Up Page](./client//public/screenshots/signUp.png)
 
 ---
 
