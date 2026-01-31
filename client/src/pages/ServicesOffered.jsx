@@ -93,18 +93,18 @@ const ServicesOffered = () => {
       <TickerBanner />
 
       {/* SUVIDHA Services Header */}
-      <section className="w-full py-8 px-6">
+      <section className="w-full py-4 sm:py-8 px-3 sm:px-6">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">SUVIDHA Services</h2>
-          <p className="text-gray-600 text-lg">Access all government services in one place. Pay bills, apply for permits, check status, and more.</p>
+          <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">SUVIDHA Services</h2>
+          <p className="text-gray-600 text-xs sm:text-lg">Access all government services in one place. Pay bills, apply for permits, check status, and more.</p>
         </div>
       </section>
 
       {/* Services List Section - SUVIDHA Style */}
-      <section className="pt-8 pb-48 px-4 sm:px-6 lg:px-8">
+      <section className="pt-4 sm:pt-8 pb-32 sm:pb-48 px-2 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
           {(
-            <div className="flex flex-wrap w-full max-w-7xl justify-center" style={{gap: '24px'}}>
+            <div className="flex flex-wrap w-full max-w-7xl justify-center" style={{gap: '12px'}}>
               {services.map((service, index) => {
                 // Define colors for each service
                 const colorMap = {
@@ -133,31 +133,30 @@ const ServicesOffered = () => {
                 return (
                   <div
                     key={service.id}
-                    style={{width: cardWidth}}
-                    className="group relative bg-white border-2 border-gray-300 rounded-3xl p-8 py-10 hover:shadow-xl transition-all duration-300 shadow-md overflow-hidden"
+                    className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-8px)] group relative bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-8 sm:py-10 hover:shadow-xl transition-all duration-300 shadow-md overflow-hidden"
                   >
                     {/* Ribbon at the top */}
-                    <div className={`absolute top-0 left-0 right-0 h-6 bg-gradient-to-r ${colors.bg} rounded-t-xl`}></div>
+                    <div className={`absolute top-0 left-0 right-0 h-4 sm:h-6 bg-gradient-to-r ${colors.bg} rounded-t-xl`}></div>
                     
                     {/* Subtle background effect */}
                     <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     
-                    <div className="relative z-10 flex flex-col items-center text-center pt-2">
+                    <div className="relative z-10 flex flex-col items-center text-center pt-1 sm:pt-2">
                       {/* Icon Circle */}
-                      <div className={`w-20 h-20 rounded-sm bg-gradient-to-br ${colors.bg} flex items-center justify-center mb-5 group-hover:scale-105 transition-transform shadow-md`}>
-                        <IconComponent size={36} className="text-white" />
+                      <div className={`w-14 sm:w-20 h-14 sm:h-20 rounded-sm bg-gradient-to-br ${colors.bg} flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-105 transition-transform shadow-md`}>
+                        <IconComponent size={24} className="text-white sm:w-full" />
                       </div>
                       
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase tracking-wide">{service.name}</h3>
-                      <p className="text-gray-700 text-sm mb-6 leading-relaxed max-w-xs font-semibold">{service.description}</p>
+                      <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase tracking-tight sm:tracking-wide">{service.name}</h3>
+                      <p className="text-gray-700 text-xs sm:text-sm mb-3 sm:mb-6 leading-relaxed max-w-xs font-semibold">{service.description}</p>
                       
-                      <div className="flex flex-col gap-3 items-center mb-4">
-                        <button className="w-60 px-8 py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-orange-200 transition-all font-bold text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1">
+                      <div className="flex flex-col gap-2 sm:gap-3 items-center mb-3 sm:mb-4 w-full">
+                        <button className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-orange-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1">
                           Pay Now
                         </button>
                         <button 
                           onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                          className="w-60 px-8 py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-green-200 transition-all font-bold text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
+                          className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-green-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
                         >
                           {expandedService === service.id ? 'Hide Details' : 'Details'}
                         </button>
@@ -172,8 +171,8 @@ const ServicesOffered = () => {
                           transition: 'max-height 0.3s ease-in-out, opacity 0.3s ease-in-out'
                         }}
                       >
-                        <div className="w-full bg-blue-50 p-4 rounded-lg border border-blue-200 mt-4">
-                          <ul className="text-left text-gray-700 text-sm space-y-2">
+                        <div className="w-full bg-blue-50 p-2 sm:p-4 rounded-lg border border-blue-200 mt-2 sm:mt-4">
+                          <ul className="text-left text-gray-700 text-xs sm:text-sm space-y-1 sm:space-y-2">
                             {service.details.split('.').filter(item => item.trim()).map((detail, idx) => (
                               <li key={idx} className="font-semibold flex gap-2">
                                 <span className="text-blue-600 font-bold">•</span>
@@ -193,22 +192,22 @@ const ServicesOffered = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-green-700 to-green-800 text-white overflow-hidden relative">
+      <section className="py-8 sm:py-16 md:py-20 px-3 sm:px-6 lg:px-8 bg-linear-to-r from-green-700 to-green-800 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-tight">
+          <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-6 md:mb-8 leading-tight">
             {t('readyToStart')}
           </h2>
-          <p className="text-green-100 text-base sm:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-green-100 text-xs sm:text-base md:text-lg mb-6 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
             {t('joinMillions')}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-white text-green-700 rounded-2xl hover:bg-gray-50 transition font-bold text-base shadow-lg hover:shadow-xl w-full sm:w-auto transform hover:-translate-y-0.5">
+          <div className="flex flex-col gap-3 sm:gap-4 justify-center">
+            <button className="px-4 sm:px-8 py-2 sm:py-4 bg-white text-green-700 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition font-bold text-xs sm:text-base shadow-lg hover:shadow-xl w-full transform hover:-translate-y-0.5">
               {t('createaccount')}
             </button>
-            <button className="px-8 py-4 border-2 border-white/30 text-white rounded-2xl hover:bg-white/10 transition font-bold text-base w-full sm:w-auto backdrop-blur-sm">
+            <button className="px-4 sm:px-8 py-2 sm:py-4 border-2 border-white/30 text-white rounded-xl sm:rounded-2xl hover:bg-white/10 transition font-bold text-xs sm:text-base backdrop-blur-sm">
               {t('learnmore')}
             </button>
           </div>

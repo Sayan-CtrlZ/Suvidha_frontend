@@ -53,18 +53,18 @@ const SignIn = () => {
       <TickerBanner />
 
       {/* Sign In Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 grow">
+      <section className="py-8 sm:py-16 px-2 sm:px-4 md:px-6 lg:px-8 grow">
         <div className="max-w-md mx-auto">
           {/* Sign In Card */}
-          <div className="bg-white border-2 border-gray-300 rounded-3xl p-6 shadow-md hover:shadow-lg transition-all">
+          <div className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-all">
             {/* Header */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
-              <p className="text-gray-600">Access your SUVIDHA account</p>
+            <div className="text-center mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Sign In</h1>
+              <p className="text-gray-600 text-xs sm:text-sm">Access your SUVIDHA account</p>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
               {/* Email Input */}
               <div>
                 <label className="block text-sm font-semibold text-gray-900 mb-2">

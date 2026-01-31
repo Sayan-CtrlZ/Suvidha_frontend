@@ -39,55 +39,55 @@ const Home = () => {
       <TickerBanner />
 
       {/* Welcome Section */}
-      <section className="w-full py-8 px-6">
+      <section className="w-full py-4 sm:py-8 px-3 sm:px-6">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">One Platform for All Citizen Services</h1>
-          <p className="text-gray-600 text-xl leading-relaxed max-w-3xl mx-auto">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">One Platform for All Citizen Services</h1>
+          <p className="text-gray-600 text-sm sm:text-xl leading-relaxed max-w-3xl mx-auto">
             Access essential civic services quickly, securely, and transparently.
           </p>
         </div>
       </section>
 
       {/* Quick Links Section */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
+      <section className="py-4 sm:py-8 px-2 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">What Can You Do Today?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link to="/services" className="bg-white border-2 border-gray-300 rounded-3xl p-6 hover:shadow-xl transition-all text-center group">
-              <div className="text-4xl mb-4">⚡</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase">Services Offered</h3>
-              <p className="text-gray-700 text-sm mb-3 leading-relaxed">Explore a comprehensive range of government services. Pay utility bills, apply for permits, check application status, and more - all in one secure platform.</p>
-              <ul className="text-left text-gray-600 text-xs mb-3 space-y-1">
+          <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">What Can You Do Today?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
+            <Link to="/services" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
+              <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">⚡</div>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Services Offered</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Explore a comprehensive range of government services. Pay utility bills, apply for permits, check application status, and more - all in one secure platform.</p>
+              <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
                 <li>✓ Electricity & Gas Bills</li>
                 <li>✓ Water Connection</li>
                 <li>✓ Sanitation Services</li>
                 <li>✓ Municipal Grievances</li>
               </ul>
-              <div className="mt-4 text-green-600 group-hover:text-green-700 font-bold text-sm">View All Services →</div>
+              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">View All Services →</div>
             </Link>
-            <Link to="/signin" className="bg-white border-2 border-gray-300 rounded-3xl p-6 hover:shadow-xl transition-all text-center group">
-              <div className="text-4xl mb-4">🔐</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase">Sign In</h3>
-              <p className="text-gray-700 text-sm mb-3 leading-relaxed">Access your personalized dashboard to manage all your service requests. Track application status, download certificates, and receive real-time notifications.</p>
-              <ul className="text-left text-gray-600 text-xs mb-3 space-y-1">
+            <Link to="/signin" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
+              <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">🔐</div>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Sign In</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Access your personalized dashboard to manage all your service requests. Track application status, download certificates, and receive real-time notifications.</p>
+              <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
                 <li>✓ Account Dashboard</li>
                 <li>✓ Application Tracking</li>
                 <li>✓ Document Downloads</li>
                 <li>✓ Payment History</li>
               </ul>
-              <div className="mt-4 text-green-600 group-hover:text-green-700 font-bold text-sm">Sign In Now →</div>
+              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">Sign In Now →</div>
             </Link>
-            <Link to="/help" className="bg-white border-2 border-gray-300 rounded-3xl p-6 hover:shadow-xl transition-all text-center group">
-              <div className="text-4xl mb-4">💬</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 uppercase">Help & Support</h3>
-              <p className="text-gray-700 text-sm mb-3 leading-relaxed">Get instant assistance from our support team. Find answers to frequently asked questions, submit support tickets, and track service requests effortlessly.</p>
-              <ul className="text-left text-gray-600 text-xs mb-3 space-y-1">
+            <Link to="/help" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
+              <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">💬</div>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Help & Support</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Get instant assistance from our support team. Find answers to frequently asked questions, submit support tickets, and track service requests effortlessly.</p>
+              <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
                 <li>✓ 24/7 Support Available</li>
                 <li>✓ Live Chat Assistance</li>
                 <li>✓ FAQ & Guides</li>
                 <li>✓ Contact Support Team</li>
               </ul>
-              <div className="mt-6 text-green-600 group-hover:text-green-700 font-bold text-base">Get Help →</div>
+              <div className="mt-3 sm:mt-6 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-base">Get Help →</div>
             </Link>
           </div>
         </div>

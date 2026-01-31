@@ -7,11 +7,12 @@ A modern, responsive web application for delivering government services to citiz
 1. [Overview](#overview)
 2. [Technology Stack](#technology-stack)
 3. [Features](#features)
-4. [Installation](#installation)
-5. [Development](#development)
-6. [Building for Production](#building-for-production)
-7. [Project Structure](#project-structure)
-8. [Key Components](#key-components)
+4. [Screenshots](#screenshots)
+5. [Installation](#installation)
+6. [Development](#development)
+7. [Building for Production](#building-for-production)
+8. [Project Structure](#project-structure)
+9. [Key Components](#key-components)
 
 ---
 
@@ -46,6 +47,22 @@ SUVIDHA is a Government of India initiative providing citizens easy access to go
 - Government branding with emblem and logo
 - Smooth animations and transitions
 - Trust indicators and verification marks
+
+---
+
+## Screenshots
+
+### Home Page
+![Home Page](./public/screenshots/home.png)
+
+### Services Page
+![Services Page](./public/screenshots/services.png)
+
+### Sign In page
+![Sign In Page](./public/screenshots/signIn.png)
+
+### Sign Up Page
+![Sign Up Page](./public/screenshots/signUp.png)
 
 ---
 
