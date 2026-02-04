@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import TopBar from '../components/TopBar';
-import NavBar from '../components/NavBar';
-import TickerBanner from '../components/TickerBanner';
-import HeroSection from '../components/HeroSection';
-import Footer from '../components/Footer';
+import { Link, useNavigate } from 'react-router-dom';
+import TopBar from '../components/common/TopBar';
+import NavBar from '../components/common/NavBar';
+import TickerBanner from '../components/home/TickerBanner';
+import HeroSection from '../components/home/HeroSection';
+import Footer from '../components/common/Footer';
 import { useLanguage } from '../context/LanguageContext.jsx';
 
 const Home = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   return (
     <div 
@@ -39,55 +40,56 @@ const Home = () => {
       <TickerBanner />
 
       {/* Welcome Section */}
-      <section className="w-full py-4 sm:py-8 px-3 sm:px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">One Platform for All Citizen Services</h1>
-          <p className="text-gray-600 text-sm sm:text-xl leading-relaxed max-w-3xl mx-auto">
-            Access essential civic services quickly, securely, and transparently.
-          </p>
-        </div>
-      </section>
+      <main id="main-content" tabIndex="-1" className="outline-none">
+        <section className="w-full py-4 sm:py-8 px-3 sm:px-6">
+          <div className="max-w-5xl mx-auto text-center">
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 sm:mb-4">{t('hero.onePlatformTitle')}</h1>
+            <p className="text-gray-600 text-sm sm:text-xl leading-relaxed max-w-3xl mx-auto">
+              {t('hero.accessServices')}
+            </p>
+          </div>
+        </section>
 
       {/* Quick Links Section */}
       <section className="py-4 sm:py-8 px-2 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">What Can You Do Today?</h2>
+          <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">{t('home.whatCanYouDo')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6">
             <Link to="/services" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
               <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">⚡</div>
-              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Services Offered</h3>
-              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Explore a comprehensive range of government services. Pay utility bills, apply for permits, check application status, and more - all in one secure platform.</p>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">{t('home.servicesOfferedTitle')}</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">{t('home.servicesOfferedDesc')}</p>
               <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
-                <li>✓ Electricity & Gas Bills</li>
-                <li>✓ Water Connection</li>
-                <li>✓ Sanitation Services</li>
-                <li>✓ Municipal Grievances</li>
+                <li>✓ {t('services.electricityBill')}</li>
+                <li>✓ {t('services.waterConnection')}</li>
+                <li>✓ {t('services.sanitation')}</li>
+                <li>✓ {t('services.municipalGrievances')}</li>
               </ul>
-              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">View All Services →</div>
+              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">{t('services.viewAll')} →</div>
             </Link>
             <Link to="/signin" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
               <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">🔐</div>
-              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Sign In</h3>
-              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Access your personalized dashboard to manage all your service requests. Track application status, download certificates, and receive real-time notifications.</p>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">{t('home.signInTitle')}</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">{t('home.signInDesc')}</p>
               <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
-                <li>✓ Account Dashboard</li>
-                <li>✓ Application Tracking</li>
-                <li>✓ Document Downloads</li>
-                <li>✓ Payment History</li>
+                <li>✓ {t('home.accountDashboard')}</li>
+                <li>✓ {t('home.applicationTracking')}</li>
+                <li>✓ {t('home.documentDownloads')}</li>
+                <li>✓ {t('home.paymentHistory')}</li>
               </ul>
-              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">Sign In Now →</div>
+              <div className="mt-2 sm:mt-4 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-sm">{t('home.signInNow')} →</div>
             </Link>
             <Link to="/help" className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-all text-center group">
               <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">💬</div>
-              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">Help & Support</h3>
-              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">Get instant assistance from our support team. Find answers to frequently asked questions, submit support tickets, and track service requests effortlessly.</p>
+              <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase">{t('home.helpTitle')}</h3>
+              <p className="text-gray-700 text-xs sm:text-sm mb-2 sm:mb-3 leading-relaxed">{t('home.helpDesc')}</p>
               <ul className="text-left text-gray-600 text-[10px] sm:text-xs mb-2 sm:mb-3 space-y-0.5 sm:space-y-1">
-                <li>✓ 24/7 Support Available</li>
-                <li>✓ Live Chat Assistance</li>
-                <li>✓ FAQ & Guides</li>
-                <li>✓ Contact Support Team</li>
+                <li>✓ {t('home.support247')}</li>
+                <li>✓ {t('home.liveChat')}</li>
+                <li>✓ {t('home.faqGuides')}</li>
+                <li>✓ {t('home.contactSupport')}</li>
               </ul>
-              <div className="mt-3 sm:mt-6 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-base">Get Help →</div>
+              <div className="mt-3 sm:mt-6 text-green-600 group-hover:text-green-700 font-bold text-xs sm:text-base">{t('home.getHelp')} →</div>
             </Link>
           </div>
         </div>
@@ -97,10 +99,10 @@ const Home = () => {
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-700 text-lg leading-relaxed">
-            An official government digital service platform.
+            {t('home.officialPlatform')}
           </p>
           <p className="text-gray-600 text-base mt-3">
-            Committed to transparency and efficiency.
+            {t('home.commitment')}
           </p>
         </div>
       </section>
@@ -112,21 +114,25 @@ const Home = () => {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 leading-tight">
-            {t('readyToStart')}
+            {t('cta.readyToStart')}
           </h2>
           <p className="text-green-100 text-base sm:text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            {t('joinMillions')}
+            {t('cta.joinMillions')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-white text-green-700 rounded-2xl hover:bg-gray-50 transition font-bold text-base shadow-lg hover:shadow-xl w-full sm:w-auto transform hover:-translate-y-0.5">
-              {t('createaccount')}
+            <button 
+              onClick={() => navigate('/signup')}
+              className="px-8 py-4 bg-white text-green-700 rounded-2xl hover:bg-gray-50 transition font-bold text-base shadow-lg hover:shadow-xl w-full sm:w-auto transform hover:-translate-y-0.5 text-center"
+            >
+              {t('auth.createaccount')}
             </button>
             <button className="px-8 py-4 border-2 border-white/30 text-white rounded-2xl hover:bg-white/10 transition font-bold text-base w-full sm:w-auto backdrop-blur-sm">
-              {t('learnmore')}
+              {t('hero.learnmore')}
             </button>
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <Footer />

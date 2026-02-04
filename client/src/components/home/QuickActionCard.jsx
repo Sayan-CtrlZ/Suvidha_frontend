@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const QuickActionCard = ({ icon: Icon, title, description, ctaText, variant = 'default' }) => {
   const { t } = useLanguage();

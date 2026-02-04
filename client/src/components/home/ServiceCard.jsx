@@ -1,7 +1,9 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ServiceCard = ({ icon: Icon, title, description, category }) => {
+  const { t } = useLanguage();
   return (
     <div className="group h-full">
       <div className="bg-white/40 backdrop-blur-lg rounded-2xl border border-white/60 p-6 sm:p-8 h-full hover:bg-white/50 hover:shadow-lg transition duration-300 flex flex-col">
@@ -27,7 +29,7 @@ const ServiceCard = ({ icon: Icon, title, description, category }) => {
 
         {/* Link */}
         <button className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition">
-          Learn More
+          {t('hero.learnmore')}
           <ArrowRight size={18} />
         </button>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Globe, Check } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const LanguageSwitcher = ({ compact = false }) => {
   const { language, setLanguage, t } = useLanguage();

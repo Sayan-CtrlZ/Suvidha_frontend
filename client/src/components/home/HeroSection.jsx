@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import emblem from '../assets/emblem.png';
-import logo from '../assets/logo.png';
-import banner from '../assets/banner.png';
+import { useLanguage } from '../../context/LanguageContext';
+import emblem from '../../assets/emblem.png';
+import logo from '../../assets/logo.png';
+import banner from '../../assets/banner.png';
 
 const HeroSection = () => {
   const { t } = useLanguage();
@@ -33,7 +33,7 @@ const HeroSection = () => {
 
             {/* Center Branding */}
             <div className="text-center flex-1 px-1 sm:px-4">
-              <div className="text-[10px] sm:text-sm text-gray-900 mb-0.5 font-bold tracking-tight sm:tracking-wide">GOVERNMENT OF INDIA</div>
+              <div className="text-[10px] sm:text-sm text-gray-900 mb-0.5 font-bold tracking-tight sm:tracking-wide">{t('hero.govOfIndia')}</div>
               <h1 className="text-sm sm:text-3xl md:text-7xl font-black leading-tight sm:leading-normal">
                 <span 
                   style={{
@@ -48,7 +48,7 @@ const HeroSection = () => {
                   SUVIDHA
                 </span>
               </h1>
-              <div className="text-[10px] sm:text-sm text-gray-900 mt-0.5 sm:mt-1 font-bold tracking-tight sm:tracking-wide">A GOVERNMENT OF INDIA INITIATIVE</div>
+              <div className="text-[10px] sm:text-sm text-gray-900 mt-0.5 sm:mt-1 font-bold tracking-tight sm:tracking-wide">{t('hero.govInitiative')}</div>
             </div>
 
             {/* SUVIDHA Emblem */}

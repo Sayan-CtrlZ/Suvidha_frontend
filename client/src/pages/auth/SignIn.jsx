@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import TopBar from '../components/TopBar';
-import NavBar from '../components/NavBar';
-import TickerBanner from '../components/TickerBanner';
-import HeroSection from '../components/HeroSection';
-import Footer from '../components/Footer';
-import { useLanguage } from '../context/LanguageContext.jsx';
+import TopBar from '../../components/common/TopBar';
+import NavBar from '../../components/common/NavBar';
+import TickerBanner from '../../components/home/TickerBanner';
+import HeroSection from '../../components/home/HeroSection';
+import Footer from '../../components/common/Footer';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 const SignIn = () => {
   const { t } = useLanguage();
@@ -53,61 +53,61 @@ const SignIn = () => {
       <TickerBanner />
 
       {/* Sign In Section */}
-      <section className="py-8 sm:py-16 px-2 sm:px-4 md:px-6 lg:px-8 grow">
+      <section className="py-8 px-4 sm:px-6 lg:px-8 grow">
         <div className="max-w-md mx-auto">
           {/* Sign In Card */}
-          <div className="bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-all">
+          <div className="bg-white border-2 border-gray-300 rounded-2xl p-4 pb-8 shadow-md hover:shadow-lg transition-all">
             {/* Header */}
-            <div className="text-center mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Sign In</h1>
-              <p className="text-gray-600 text-xs sm:text-sm">Access your SUVIDHA account</p>
+            <div className="text-center mb-4">
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('auth.signin')}</h1>
+              <p className="text-gray-600 text-sm">{t('auth.signinDesc')}</p>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
+            <form onSubmit={handleSubmit} className="space-y-2 px-6">
               {/* Email Input */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Email Address or User ID
+                <label className="block text-xs font-semibold text-gray-900 mb-1">
+                  {t('auth.emailOrUserId')}
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email or user ID"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                  placeholder={t('auth.enterEmail')}
+                  className="w-full px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                   required
                 />
               </div>
 
               {/* Password Input */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">
-                  Password
+                <label className="block text-xs font-semibold text-gray-900 mb-1">
+                  {t('auth.password')}
                 </label>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                    placeholder={t('auth.enterPassword')}
+                    className="w-full px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-600 hover:text-gray-900 font-semibold text-sm"
+                    className="absolute right-2.5 top-1.5 text-gray-600 hover:text-gray-900 font-semibold text-xs"
                   >
-                    {showPassword ? 'Hide' : 'Show'}
+                    {showPassword ? t('auth.hide') : t('auth.show')}
                   </button>
                 </div>
               </div>
 
               {/* Forgot Password Link */}
               <div className="text-right">
-                <a href="/forgot-password" className="text-sm text-green-600 hover:text-green-700 font-semibold">
-                  Forgot your password?
+                <a href="/forgot-password" className="text-xs text-green-600 hover:text-green-700 font-semibold">
+                  {t('auth.forgotPassword')}
                 </a>
               </div>
 
@@ -115,42 +115,42 @@ const SignIn = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full px-4 py-3 bg-green-600 text-white rounded-lg font-bold uppercase tracking-wider hover:bg-green-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-2.5 py-1.5 text-sm bg-green-600 text-white rounded-md font-bold uppercase tracking-wider hover:bg-green-700 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed mt-3"
               >
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isLoading ? t('auth.signingIn') : t('auth.signin')}
               </button>
             </form>
 
             {/* Divider */}
-            <div className="my-6 flex items-center">
+            <div className="my-4 flex items-center px-6">
               <div className="flex-grow border-t border-gray-300"></div>
-              <span className="px-3 text-gray-600 text-sm">OR</span>
+              <span className="px-3 text-gray-600 text-xs">{t('auth.or')}</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
             {/* Sign Up Link */}
-            <div className="text-center">
-              <p className="text-gray-700 mb-3">
-                Don't have an account?
+            <div className="text-center px-6">
+              <p className="text-gray-700 text-sm mb-2">
+                {t('auth.noAccount')}
               </p>
               <Link 
                 to="/signup" 
-                className="w-full px-4 py-3 border-2 border-green-600 text-green-600 rounded-lg font-bold uppercase tracking-wider hover:bg-green-50 transition-all text-center block"
+                className="w-full px-3 py-1.5 text-sm border-2 border-green-600 text-green-600 rounded-md font-bold uppercase tracking-wider hover:bg-green-50 transition-all text-center block"
               >
-                Create Account
+                {t('auth.createaccount')}
               </Link>
             </div>
 
           </div>
 
           {/* Help Section */}
-          <div className="mt-8 text-center">
-            <p className="text-gray-700 mb-3">Need help signing in?</p>
+          <div className="mt-4 text-center">
+            <p className="text-gray-700 text-sm mb-2">{t('auth.needHelp')}</p>
             <Link 
               to="/help" 
-              className="text-green-600 hover:text-green-700 font-semibold hover:underline"
+              className="text-green-600 hover:text-green-700 font-semibold hover:underline text-sm"
             >
-              Contact Support
+              {t('auth.visitHelpCenter')}
             </Link>
           </div>
         </div>

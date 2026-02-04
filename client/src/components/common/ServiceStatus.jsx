@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 
 const ServiceStatus = () => {
     const { t } = useLanguage();
     const [statuses, setStatuses] = useState([
-        { id: 1, name: 'Electricity', status: 'operational', label: 'Operational' },
-        { id: 2, name: 'Water Supply', status: 'operational', label: 'Operational' },
-        { id: 3, name: 'Gas Services', status: 'maintenance', label: 'Maintenance' },
-        { id: 4, name: 'Municipal', status: 'operational', label: 'Operational' },
+        { id: 1, name: t('services.electricity'), status: 'operational' },
+        { id: 2, name: t('services.water'), status: 'operational' },
+        { id: 3, name: t('services.gas'), status: 'maintenance' },
+        { id: 4, name: t('services.municipal'), status: 'operational' },
     ]);
 
     const getStatusColor = (status) => {
@@ -34,7 +34,7 @@ const ServiceStatus = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-sm">
                     <span className="font-semibold text-gray-500 whitespace-nowrap">
-                        {t('systemStatus') || 'System Status'}:
+                        {t('status.systemStatus')}:
                     </span>
                     <div className="flex flex-wrap gap-3 w-full">
                         {statuses.map(service => (

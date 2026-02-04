@@ -1,21 +1,24 @@
 import React from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const TickerBanner = () => {
+  const { t } = useLanguage();
+  
   const updates = [
-    "📢 New Online Services Available: Apply for Electricity Bill Online",
-    "✅ Water Connection Status: You can now track in real-time",
-    "🔔 Important: GST portal integration completed successfully",
-    "📰 Latest News: Municipal Grievance Portal enhanced with video support",
-    "🎉 Milestone: 1 Million Citizens Registered on SUVIDHA",
-    "⚡ Update: Faster processing for all service requests implemented",
+    `📢 ${t('ticker.newServices')}`,
+    `✅ ${t('ticker.waterStatus')}`,
+    `🔔 ${t('ticker.gstPortal')}`,
+    `📰 ${t('ticker.grievancePortal')}`,
+    `🎉 ${t('ticker.milestone')}`,
+    `⚡ ${t('ticker.fasterProcessing')}`,
   ];
 
   return (
-    <div className="w-full bg-transparent text-green-600 overflow-hidden border-y border-green-300">
+    <div className="w-full bg-blue-600 text-white overflow-hidden border-y border-blue-700">
       <div className="flex items-center h-12">
         {/* Label */}
-        <div className="flex-shrink-0 px-4 font-bold text-sm sm:text-base whitespace-nowrap text-green-600">
-          LATEST UPDATE
+        <div className="flex-shrink-0 px-4 font-bold text-sm sm:text-base whitespace-nowrap text-white bg-blue-700">
+          {t('ticker.latestUpdate')}
         </div>
         
         {/* Ticker */}

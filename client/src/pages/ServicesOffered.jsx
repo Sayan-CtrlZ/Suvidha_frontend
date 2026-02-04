@@ -1,55 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Zap, Flame, Droplet, Trash2, FileText } from 'lucide-react';
-import TopBar from '../components/TopBar';
-import NavBar from '../components/NavBar';
-import TickerBanner from '../components/TickerBanner';
-import HeroSection from '../components/HeroSection';
-import Footer from '../components/Footer';
+import TopBar from '../components/common/TopBar';
+import NavBar from '../components/common/NavBar';
+import TickerBanner from '../components/home/TickerBanner';
+import HeroSection from '../components/home/HeroSection';
+import Footer from '../components/common/Footer';
 import { fetchServices, fetchQuickActionStats } from '../context/mockApi';
 import { useLanguage } from '../context/LanguageContext.jsx';
 
 const ServicesOffered = () => {
-  const [services, setServices] = useState([
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+  
+  const services = [
     { 
       id: 1, 
-      name: 'Electricity Bill', 
-      description: 'Pay your electricity bills online securely and conveniently.',
-      details: 'View your electricity consumption, download bills, check pending payments, and set up automatic payments. Get instant payment receipts and billing history.',
+      nameKey: 'services.electricityUtilities', 
+      descriptionKey: 'services.electricityDesc',
+      detailsKey: 'services.electricityDetails',
       icon: 'Zap' 
     },
     { 
       id: 2, 
-      name: 'Gas Connection', 
-      description: 'Manage your gas services and track consumption easily.',
-      details: 'Apply for new gas connections, pay bills, request meter readings, report leaks, and manage your account settings. Real-time notifications for all updates.',
+      nameKey: 'services.gasServices', 
+      descriptionKey: 'services.gasDesc',
+      detailsKey: 'services.gasDetails',
       icon: 'Flame' 
     },
     { 
       id: 3, 
-      name: 'Water Bill', 
-      description: 'Pay water charges easily and manage your water account.',
-      details: 'View water consumption, pay bills online, apply for new connections, request meter inspection, and track service requests instantly.',
+      nameKey: 'services.waterServices', 
+      descriptionKey: 'services.waterDesc',
+      detailsKey: 'services.waterDetails',
       icon: 'Droplet' 
     },
     { 
       id: 4, 
-      name: 'Sanitation', 
-      description: 'Report waste management issues and track resolutions.',
-      details: 'File complaints about waste collection, track complaint status, schedule pickup requests, and receive timely updates on issue resolution.',
+      nameKey: 'services.wasteManagement', 
+      descriptionKey: 'services.wasteManagementDesc',
+      detailsKey: 'services.wasteManagementDetails',
       icon: 'Trash2' 
     },
     { 
       id: 5, 
-      name: 'Municipal Grievances', 
-      description: 'File complaints and track status of all civic issues.',
-      details: 'Submit grievances about potholes, water issues, construction complaints, and more. Track status in real-time and receive updates via email and SMS.',
+      nameKey: 'services.municipalGrievance', 
+      descriptionKey: 'services.municipalGrievanceDesc',
+      detailsKey: 'services.municipalGrievanceDetails',
       icon: 'FileText' 
     },
-  ]);
+  ];
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(false);
   const [expandedService, setExpandedService] = useState(null);
-  const { t } = useLanguage();
 
   useEffect(() => {
     const loadData = async () => {
@@ -92,11 +95,11 @@ const ServicesOffered = () => {
       {/* Ticker Banner */}
       <TickerBanner />
 
-      {/* SUVIDHA Services Header */}
-      <section className="w-full py-4 sm:py-8 px-3 sm:px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">SUVIDHA Services</h2>
-          <p className="text-gray-600 text-xs sm:text-lg">Access all government services in one place. Pay bills, apply for permits, check status, and more.</p>
+      {/* SUVIDHA Services Header - Government Style */}
+      <section className="w-full py-6 sm:py-8 px-3 sm:px-6 bg-gradient-to-r from-green-700 to-green-600 shadow-lg">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-wide mb-2">{t('services.title')}</h2>
+          <p className="text-white/90 text-sm sm:text-base font-medium">{t('services.desc')}</p>
         </div>
       </section>
 
@@ -147,18 +150,33 @@ const ServicesOffered = () => {
                         <IconComponent size={24} className="text-white sm:w-full" />
                       </div>
                       
-                      <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase tracking-tight sm:tracking-wide">{service.name}</h3>
-                      <p className="text-gray-700 text-xs sm:text-sm mb-3 sm:mb-6 leading-relaxed max-w-xs font-semibold">{service.description}</p>
+                      <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase tracking-tight sm:tracking-wide">{t(service.nameKey)}</h3>
+                      <p className="text-gray-700 text-xs sm:text-sm mb-3 sm:mb-6 leading-relaxed max-w-xs font-semibold">{t(service.descriptionKey)}</p>
                       
                       <div className="flex flex-col gap-2 sm:gap-3 items-center mb-3 sm:mb-4 w-full">
-                        <button className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-orange-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1">
-                          Pay Now
+                        <button 
+                          onClick={() => {
+                            if (service.id === 1) {
+                              navigate('/services/electricity');
+                            } else if (service.id === 2) {
+                              navigate('/services/gas');
+                            } else if (service.id === 3) {
+                              navigate('/services/water');
+                            } else if (service.id === 4) {
+                              navigate('/services/waste');
+                            } else if (service.id === 5) {
+                              navigate('/services/grievance');
+                            }
+                          }}
+                          className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-orange-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
+                        >
+                          {t('services.viewServices')}
                         </button>
                         <button 
                           onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
                           className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-green-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
                         >
-                          {expandedService === service.id ? 'Hide Details' : 'Details'}
+                          {expandedService === service.id ? t('services.hideDetails') : t('services.details')}
                         </button>
                       </div>
 
@@ -172,14 +190,9 @@ const ServicesOffered = () => {
                         }}
                       >
                         <div className="w-full bg-blue-50 p-2 sm:p-4 rounded-lg border border-blue-200 mt-2 sm:mt-4">
-                          <ul className="text-left text-gray-700 text-xs sm:text-sm space-y-1 sm:space-y-2">
-                            {service.details.split('.').filter(item => item.trim()).map((detail, idx) => (
-                              <li key={idx} className="font-semibold flex gap-2">
-                                <span className="text-blue-600 font-bold">•</span>
-                                <span>{detail.trim()}</span>
-                              </li>
-                            ))}
-                          </ul>
+                          <p className="text-left text-gray-700 text-xs sm:text-sm font-semibold">
+                            {t(service.detailsKey)}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -198,17 +211,17 @@ const ServicesOffered = () => {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-6 md:mb-8 leading-tight">
-            {t('readyToStart')}
+            {t('cta.readyToStart')}
           </h2>
           <p className="text-green-100 text-xs sm:text-base md:text-lg mb-6 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
-            {t('joinMillions')}
+            {t('cta.joinMillions')}
           </p>
           <div className="flex flex-col gap-3 sm:gap-4 justify-center">
             <button className="px-4 sm:px-8 py-2 sm:py-4 bg-white text-green-700 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition font-bold text-xs sm:text-base shadow-lg hover:shadow-xl w-full transform hover:-translate-y-0.5">
-              {t('createaccount')}
+              {t('auth.createaccount')}
             </button>
             <button className="px-4 sm:px-8 py-2 sm:py-4 border-2 border-white/30 text-white rounded-xl sm:rounded-2xl hover:bg-white/10 transition font-bold text-xs sm:text-base backdrop-blur-sm">
-              {t('learnmore')}
+              {t('hero.learnmore')}
             </button>
           </div>
         </div>

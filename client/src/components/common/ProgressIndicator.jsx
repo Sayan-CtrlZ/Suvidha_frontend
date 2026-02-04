@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle, Circle } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const ProgressIndicator = ({ 
   currentStep = 1, 
@@ -67,7 +67,7 @@ const ProgressIndicator = ({
       <div className="w-full mb-6 md:mb-8">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs md:text-sm font-semibold text-gray-700">
-            {t('step')} {currentStep} {t('of')} {totalSteps}
+            {t('progress.step')} {currentStep} {t('progress.of')} {totalSteps}
           </span>
           <span className="text-xs text-gray-500">{Math.round((currentStep / totalSteps) * 100)}%</span>
         </div>

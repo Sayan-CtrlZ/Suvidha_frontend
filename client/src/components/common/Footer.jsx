@@ -1,7 +1,9 @@
 import React from 'react';
 import { Facebook, Twitter, Linkedin, Mail } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -18,7 +20,7 @@ const Footer = () => {
               <span className="font-bold text-lg">SUVIDHA</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              One Platform for All Citizen Services. Making government services accessible to every citizen.
+              {t('footer.aboutDesc')}
             </p>
             <div className="flex gap-3 mt-4">
               <button className="text-gray-400 hover:text-blue-400 transition">
@@ -35,26 +37,26 @@ const Footer = () => {
 
           {/* Services Links */}
           <div>
-            <h3 className="font-bold text-base mb-4">Services</h3>
+            <h3 className="font-bold text-base mb-4">{t('footer.services')}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Electricity Payment
+                  {t('services.electricity')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Water Bill
+                  {t('services.waterBill')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Gas Connection
+                  {t('services.gas')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Municipal Services
+                  {t('services.municipal')}
                 </a>
               </li>
             </ul>
@@ -62,26 +64,26 @@ const Footer = () => {
 
           {/* Help & Support */}
           <div>
-            <h3 className="font-bold text-base mb-4">Help & Support</h3>
+            <h3 className="font-bold text-base mb-4">{t('footer.helpSupport')}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Help Center
+                  {t('footer.helpCenter')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  FAQs
+                  {t('footer.faqs')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Contact Us
+                  {t('footer.contact')}
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition text-sm">
-                  Report Issue
+                  {t('footer.reportIssue')}
                 </a>
               </li>
             </ul>
@@ -89,7 +91,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-bold text-base mb-4">Contact</h3>
+            <h3 className="font-bold text-base mb-4">{t('nav.contact')}</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <Mail size={16} className="shrink-0 mt-1 text-gray-400" />
@@ -98,10 +100,10 @@ const Footer = () => {
                 </a>
               </li>
               <li className="text-gray-400">
-                Toll Free: 1800-000-SUVIDHA
+                {t('footer.tollFree')}: 1800-000-SUVIDHA
               </li>
               <li className="text-gray-400">
-                Mon-Fri: 9 AM - 6 PM IST
+                {t('footer.workingHours')}
               </li>
             </ul>
           </div>
@@ -113,20 +115,20 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm">
-            © {currentYear} SUVIDHA. All rights reserved.
+            © {currentYear} SUVIDHA. {t('footer.copyright').replace('© 2026 SUVIDHA. ', '')}
           </p>
           <div className="flex flex-wrap gap-4 sm:gap-6 text-sm">
             <a href="#" className="text-gray-400 hover:text-white transition">
-              Privacy Policy
+              {t('footer.privacy')}
             </a>
             <a href="#" className="text-gray-400 hover:text-white transition">
-              Terms & Conditions
+              {t('footer.terms')}
             </a>
             <a href="#" className="text-gray-400 hover:text-white transition">
-              Accessibility
+              {t('footer.accessibility')}
             </a>
             <a href="#" className="text-gray-400 hover:text-white transition">
-              Sitemap
+              {t('footer.sitemap')}
             </a>
           </div>
         </div>
