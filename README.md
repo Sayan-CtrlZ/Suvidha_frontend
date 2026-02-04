@@ -1,3 +1,4 @@
+git clone <repository-url>
 # SUVIDHA - Government Citizen Services Portal
 
 A modern, responsive web application for delivering government services to citizens with an intuitive interface and seamless user experience.
