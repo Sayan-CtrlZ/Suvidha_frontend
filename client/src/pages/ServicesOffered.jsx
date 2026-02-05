@@ -1,233 +1,166 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap, Flame, Droplet, Trash2, FileText } from 'lucide-react';
+import { Zap, Droplet, Flame, Trash2, FileText, ArrowRight } from 'lucide-react';
 import TopBar from '../components/common/TopBar';
 import NavBar from '../components/common/NavBar';
-import TickerBanner from '../components/home/TickerBanner';
-import HeroSection from '../components/home/HeroSection';
+import AnimatedBackground from '../components/common/AnimatedBackground';
 import Footer from '../components/common/Footer';
-import { fetchServices, fetchQuickActionStats } from '../context/mockApi';
+import BackButton from '../components/common/BackButton';
+import PageHeader from '../components/common/PageHeader';
 import { useLanguage } from '../context/LanguageContext.jsx';
+import { useAuth } from '../context/AuthContext';
 
 const ServicesOffered = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const navigate = useNavigate();
-  
+  const servicesRef = useRef(null);
+
   const services = [
-    { 
-      id: 1, 
-      nameKey: 'services.electricityUtilities', 
+    {
+      id: 1,
+      nameKey: 'services.electricityUtilities',
       descriptionKey: 'services.electricityDesc',
-      detailsKey: 'services.electricityDetails',
-      icon: 'Zap' 
+      icon: Zap,
+      gradient: 'from-violet-600 to-indigo-600',
+      shadowColor: 'hover:shadow-violet-500/70',
+      link: '/services/electricity'
     },
-    { 
-      id: 2, 
-      nameKey: 'services.gasServices', 
+    {
+      id: 2,
+      nameKey: 'services.gasServices',
       descriptionKey: 'services.gasDesc',
-      detailsKey: 'services.gasDetails',
-      icon: 'Flame' 
+      icon: Flame,
+      gradient: 'from-orange-500 to-red-600',
+      shadowColor: 'hover:shadow-orange-500/70',
+      link: '/services/gas'
     },
-    { 
-      id: 3, 
-      nameKey: 'services.waterServices', 
+    {
+      id: 3,
+      nameKey: 'services.waterServices',
       descriptionKey: 'services.waterDesc',
-      detailsKey: 'services.waterDetails',
-      icon: 'Droplet' 
+      icon: Droplet,
+      gradient: 'from-cyan-500 to-blue-600',
+      shadowColor: 'hover:shadow-cyan-500/70',
+      link: '/services/water'
     },
-    { 
-      id: 4, 
-      nameKey: 'services.wasteManagement', 
+    {
+      id: 4,
+      nameKey: 'services.wasteManagement',
       descriptionKey: 'services.wasteManagementDesc',
-      detailsKey: 'services.wasteManagementDetails',
-      icon: 'Trash2' 
+      icon: Trash2,
+      gradient: 'from-emerald-500 to-green-600',
+      shadowColor: 'hover:shadow-emerald-500/70',
+      link: '/services/waste'
     },
-    { 
-      id: 5, 
-      nameKey: 'services.municipalGrievance', 
+    {
+      id: 5,
+      nameKey: 'services.municipalGrievance',
       descriptionKey: 'services.municipalGrievanceDesc',
-      detailsKey: 'services.municipalGrievanceDetails',
-      icon: 'FileText' 
+      icon: FileText,
+      gradient: 'from-teal-500 to-emerald-600',
+      shadowColor: 'hover:shadow-teal-500/70',
+      link: '/services/grievance'
     },
   ];
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [expandedService, setExpandedService] = useState(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const statsData = await fetchQuickActionStats();
-        setStats(statsData);
-      } catch (error) {
-        console.error('Error loading stats:', error);
-      }
-    };
-
-    loadData();
-  }, []);
 
   return (
-    <div 
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle, #d1d5db 0.8px, transparent 0.8px)
-        `,
-        backgroundSize: '10px 10px',
-        backgroundColor: '#f9fafb'
-      }}
-    >
-      
-      {/* Green Top Bar */}
+    <div className="min-h-screen flex flex-col">
       <TopBar />
 
-      {/* Hero Section - Banner with SUVIDHA branding */}
-      <div id="welcome-tour-step">
-        <HeroSection />
-      </div>
+      {/* Animated Background Bubbles & Waves */}
+      <AnimatedBackground />
 
-      {/* White Navigation Bar */}
+      <div id="welcome-tour-step"></div>
       <div id="search-tour-step">
         <NavBar />
       </div>
 
-      {/* Ticker Banner */}
-      <TickerBanner />
+      {/* SUVIDHA Services Header - Enhanced Aesthetic */}
+      <PageHeader
+        title={t('services.title')}
+        description={t('services.desc')}
+        to={user ? "/dashboard" : "/"}
+        backText={user ? t('nav.backToDashboard') : t('common.back')}
+        watermarkIcon={Zap}
+      />
 
-      {/* SUVIDHA Services Header - Government Style */}
-      <section className="w-full py-6 sm:py-8 px-3 sm:px-6 bg-gradient-to-r from-green-700 to-green-600 shadow-lg">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white uppercase tracking-wide mb-2">{t('services.title')}</h2>
-          <p className="text-white/90 text-sm sm:text-base font-medium">{t('services.desc')}</p>
-        </div>
-      </section>
+      {/* Main Services Grid */}
+      <section className="py-12 px-4 sm:px-6 mb-12 -mt-8 relative z-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-8">
+            {services.map((service) => {
+              const Icon = service.icon;
+              return (
+                <button
+                  key={service.id}
+                  onClick={() => navigate(service.link)}
+                  className={`group relative h-96 w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1.5rem)] rounded-[2rem] overflow-hidden bg-white/70 backdrop-blur-xl border border-white/50 shadow-xl transition-[transform,box-shadow] ${service.shadowColor.replace('shadow-', 'shadow-[0_0_40px_rgba(').replace('70', '0.3)]')}`}
+                >
+                  {/* Decorative Wave & Bubbles */}
+                  <div className={`absolute -right-16 -top-16 w-56 h-56 rounded-full bg-gradient-to-br ${service.gradient} opacity-10 group-hover:opacity-20 transition-opacity ease-out`} />
+                  <div className={`absolute -left-10 -bottom-10 w-32 h-32 rounded-full bg-gradient-to-tr ${service.gradient} opacity-10 group-hover:opacity-20 transition-opacity ease-out`} />
+                  <svg className={`absolute bottom-0 left-0 w-full h-24 text-gray-900/5 group-hover:text-gray-900/10 transition-colors pointer-events-none`} viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="currentColor" d="M0,256L48,245.3C96,235,192,213,288,192C384,171,480,149,576,160C672,171,768,213,864,229.3C960,245,1056,235,1152,224C1248,213,1344,203,1392,197.3L1440,192V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0Z"></path>
+                  </svg>
 
-      {/* Services List Section - SUVIDHA Style */}
-      <section className="pt-4 sm:pt-8 pb-32 sm:pb-48 px-2 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-col items-center w-full">
-          {(
-            <div className="flex flex-wrap w-full max-w-7xl justify-center" style={{gap: '12px'}}>
-              {services.map((service, index) => {
-                // Define colors for each service
-                const colorMap = {
-                  1: { bg: 'from-yellow-500 to-orange-500', icon: 'text-yellow-600', light: 'bg-yellow-100' },
-                  2: { bg: 'from-red-500 to-rose-500', icon: 'text-red-600', light: 'bg-red-100' },
-                  3: { bg: 'from-blue-500 to-cyan-500', icon: 'text-blue-600', light: 'bg-blue-100' },
-                  4: { bg: 'from-purple-500 to-indigo-500', icon: 'text-purple-600', light: 'bg-purple-100' },
-                  5: { bg: 'from-green-500 to-emerald-500', icon: 'text-green-600', light: 'bg-green-100' },
-                };
-                
-                const colors = colorMap[service.id] || { bg: 'from-gray-500 to-gray-600', icon: 'text-gray-600', light: 'bg-gray-100' };
-                
-                const iconMap = {
-                  'Zap': Zap,
-                  'Flame': Flame,
-                  'Droplet': Droplet,
-                  'Trash2': Trash2,
-                  'FileText': FileText,
-                };
-                
-                const IconComponent = iconMap[service.icon] || FileText;
-                
-                // All cards have equal width
-                const cardWidth = 'calc(33.333% - 16px)';
-                
-                return (
-                  <div
-                    key={service.id}
-                    className="w-full sm:w-[calc(50%-6px)] lg:w-[calc(33.333%-8px)] group relative bg-white border-2 border-gray-300 rounded-2xl sm:rounded-3xl p-3 sm:p-8 sm:py-10 hover:shadow-xl transition-all duration-300 shadow-md overflow-hidden"
-                  >
-                    {/* Ribbon at the top */}
-                    <div className={`absolute top-0 left-0 right-0 h-4 sm:h-6 bg-gradient-to-r ${colors.bg} rounded-t-xl`}></div>
-                    
-                    {/* Subtle background effect */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div className="relative z-10 flex flex-col items-center text-center pt-1 sm:pt-2">
-                      {/* Icon Circle */}
-                      <div className={`w-14 sm:w-20 h-14 sm:h-20 rounded-sm bg-gradient-to-br ${colors.bg} flex items-center justify-center mb-3 sm:mb-5 group-hover:scale-105 transition-transform shadow-md`}>
-                        <IconComponent size={24} className="text-white sm:w-full" />
-                      </div>
-                      
-                      <h3 className="text-sm sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 uppercase tracking-tight sm:tracking-wide">{t(service.nameKey)}</h3>
-                      <p className="text-gray-700 text-xs sm:text-sm mb-3 sm:mb-6 leading-relaxed max-w-xs font-semibold">{t(service.descriptionKey)}</p>
-                      
-                      <div className="flex flex-col gap-2 sm:gap-3 items-center mb-3 sm:mb-4 w-full">
-                        <button 
-                          onClick={() => {
-                            if (service.id === 1) {
-                              navigate('/services/electricity');
-                            } else if (service.id === 2) {
-                              navigate('/services/gas');
-                            } else if (service.id === 3) {
-                              navigate('/services/water');
-                            } else if (service.id === 4) {
-                              navigate('/services/waste');
-                            } else if (service.id === 5) {
-                              navigate('/services/grievance');
-                            }
-                          }}
-                          className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-orange-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
-                        >
-                          {t('services.viewServices')}
-                        </button>
-                        <button 
-                          onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-                          className="w-full px-4 sm:px-8 py-2 sm:py-3 bg-white text-gray-800 border border-gray-300 rounded-full hover:bg-green-200 transition-all font-bold text-xs sm:text-sm shadow-md hover:shadow-lg uppercase tracking-wider hover:-translate-y-1"
-                        >
-                          {expandedService === service.id ? t('services.hideDetails') : t('services.details')}
-                        </button>
+                  <div className="relative h-full p-8 pb-12 flex flex-col justify-between z-10 text-left">
+                    <div>
+                      {/* Icon Box */}
+                      <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg mb-6 group-hover:shadow-[0_0_20px_rgba(0,0,0,0.2)] transition-shadow`}>
+                        <Icon size={36} className="text-white drop-shadow-md" />
                       </div>
 
-                      {/* Details Container Below Buttons with smooth expansion */}
-                      <div
-                        style={{
-                          maxHeight: expandedService === service.id ? '500px' : '0',
-                          opacity: expandedService === service.id ? 1 : 0,
-                          overflow: 'hidden',
-                          transition: 'max-height 0.3s ease-in-out, opacity 0.3s ease-in-out'
-                        }}
-                      >
-                        <div className="w-full bg-blue-50 p-2 sm:p-4 rounded-lg border border-blue-200 mt-2 sm:mt-4">
-                          <p className="text-left text-gray-700 text-xs sm:text-sm font-semibold">
-                            {t(service.detailsKey)}
-                          </p>
-                        </div>
-                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-gray-600 transition-colors">
+                        {t(service.nameKey)}
+                      </h3>
+                      <p className="text-gray-500 font-medium text-lg leading-relaxed line-clamp-3">
+                        {t(service.descriptionKey)}
+                      </p>
+                    </div>
+
+                    {/* Action Footer */}
+                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-gray-900 transition-colors pt-6 border-t border-gray-100 mt-2">
+                      <span>{t('services.viewServices')}</span>
+                      <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform" />
                     </div>
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-8 sm:py-16 md:py-20 px-3 sm:px-6 lg:px-8 bg-linear-to-r from-green-700 to-green-800 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-6 md:mb-8 leading-tight">
-            {t('cta.readyToStart')}
-          </h2>
-          <p className="text-green-100 text-xs sm:text-base md:text-lg mb-6 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
-            {t('cta.joinMillions')}
-          </p>
-          <div className="flex flex-col gap-3 sm:gap-4 justify-center">
-            <button className="px-4 sm:px-8 py-2 sm:py-4 bg-white text-green-700 rounded-xl sm:rounded-2xl hover:bg-gray-50 transition font-bold text-xs sm:text-base shadow-lg hover:shadow-xl w-full transform hover:-translate-y-0.5">
-              {t('auth.createaccount')}
-            </button>
-            <button className="px-4 sm:px-8 py-2 sm:py-4 border-2 border-white/30 text-white rounded-xl sm:rounded-2xl hover:bg-white/10 transition font-bold text-xs sm:text-base backdrop-blur-sm">
-              {t('hero.learnmore')}
-            </button>
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* CTA Section */}
+      {!user && (
+        <section className="py-16 px-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white relative overflow-hidden">
+          {/* Abstract Shapes */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl -mr-24 -mt-24"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl -ml-24 -mb-24"></div>
+
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+              {t('cta.readyToStart')}
+            </h2>
+            <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
+              {t('cta.joinMillions')}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={() => navigate('/signup')}
+                className="px-8 py-4 bg-green-500 hover:bg-green-400 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-green-500/30 transition-transform"
+              >
+                {t('auth.createaccount')}
+              </button>
+              <button className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold text-lg backdrop-blur-sm transition-colors">
+                {t('hero.learnmore')}
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
       <Footer />
     </div>
   );

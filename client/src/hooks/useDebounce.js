@@ -1,0 +1,39 @@
+import { useState, useEffect } from 'react';
+
+/**
+ * Custom hook for debouncing a value
+ * Delays updating the debounced value until after the specified delay
+ * Useful for search inputs, API calls, and expensive operations
+ * 
+ * @param {*} value - Value to debounce
+ * @param {number} delay - Delay in milliseconds (default: 500ms)
+ * @returns {*} Debounced value
+ * 
+ * @example
+ * const [searchTerm, setSearchTerm] = useState('');
+ * const debouncedSearch = useDebounce(searchTerm, 500);
+ * 
+ * useEffect(() => {
+ *   // API call only happens after user stops typing for 500ms
+ *   if (debouncedSearch) {
+ *     fetchResults(debouncedSearch);
+ *   }
+ * }, [debouncedSearch]);
+ */
+const useDebounce = (value, delay = 500) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+};
+
+export default useDebounce;

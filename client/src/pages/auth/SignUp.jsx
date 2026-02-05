@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
-import TickerBanner from '../../components/home/TickerBanner';
-import HeroSection from '../../components/home/HeroSection';
+
+
 import Footer from '../../components/common/Footer';
+import AnimatedBackground from '../../components/common/AnimatedBackground';
 import { useLanguage } from '../../context/LanguageContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import BackButton from '../../components/common/BackButton';
 
 const SignUp = () => {
   const { t } = useLanguage();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect if already authenticated
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
   const [formData, setFormData] = useState({
     fullName: '',
     emailOrPhone: '',
@@ -29,7 +41,7 @@ const SignUp = () => {
   const handleOtpChange = (index, value) => {
     // Get only the last character if multiple were entered
     const digit = value.slice(-1);
-    
+
     // Only allow digits
     if (digit && !/^[0-9]$/.test(digit)) return;
 
@@ -71,7 +83,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === 'checkbox' ? checked : value;
-    
+
     setFormData(prev => ({
       ...prev,
       [name]: newValue
@@ -90,24 +102,24 @@ const SignUp = () => {
       alert(t('alerts.enterEmailPhone'));
       return;
     }
-    
+
     setOtpLoading(true);
     // Clear any previously entered OTP
     setOtp(['', '', '', '', '', '']);
-    
+
     // Simulate API call
     setTimeout(() => {
       setOtpLoading(false);
       setOtpSent(true);
       setResendTimer(30);
       alert(`${t('alerts.otpSent')}: ${formData.emailOrPhone}`);
-      
+
       // Auto-focus first OTP input
       setTimeout(() => {
         const firstInput = document.getElementById('otp-0');
         if (firstInput) firstInput.focus();
       }, 100);
-      
+
       // Start countdown timer
       const interval = setInterval(() => {
         setResendTimer(prev => {
@@ -127,7 +139,7 @@ const SignUp = () => {
       alert(t('alerts.enterCompleteOtp'));
       return;
     }
-    
+
     setOtpLoading(true);
     // Simulate API call
     setTimeout(() => {
@@ -145,7 +157,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       alert(t('alerts.passwordMismatch'));
       return;
@@ -165,23 +177,15 @@ const SignUp = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundImage: `
-          radial-gradient(circle, #d1d5db 0.8px, transparent 0.8px)
-        `,
-        backgroundSize: '10px 10px',
-        backgroundColor: '#f9fafb'
-      }}
-    >
-      
+    <div className="min-h-screen flex flex-col">
+
       {/* Green Top Bar */}
       <TopBar />
+      <AnimatedBackground />
 
       {/* Hero Section - Banner with SUVIDHA branding */}
       <div id="welcome-tour-step">
-        <HeroSection />
+
       </div>
 
       {/* White Navigation Bar */}
@@ -190,217 +194,227 @@ const SignUp = () => {
       </div>
 
       {/* Ticker Banner */}
-      <TickerBanner />
+
 
       {/* Sign Up Section */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8 grow">
+      <section className="py-4 px-4 sm:px-6 lg:px-8 grow relative z-10">
         <div className="max-w-md mx-auto">
           {/* Sign Up Card */}
-          <div className="bg-white border-2 border-gray-300 rounded-2xl p-4 pb-8 shadow-md hover:shadow-lg transition-all">
-            {/* Header */}
-            <div className="text-center mb-4">
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('auth.createaccount')}</h1>
-              <p className="text-gray-600 text-sm">{t('auth.createaccountDesc')}</p>
-            </div>
+          <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-3xl p-5 pb-8 shadow-2xl hover:shadow-3xl transition-all relative overflow-hidden">
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-2 px-6">
-              {/* Full Name Input */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-900 mb-1">
-                  {t('auth.fullName')}
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  placeholder={t('auth.enterFullName')}
-                  className="w-full px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                  required
-                />
+            {/* Decorative Wave & Bubbles on Card */}
+            <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 opacity-10 pointer-events-none" />
+            <div className="absolute -left-10 -bottom-10 w-32 h-32 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 opacity-10 pointer-events-none" />
+            <svg className="absolute bottom-0 left-0 w-full h-24 text-indigo-500/5 pointer-events-none" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path fill="currentColor" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0Z"></path>
+            </svg>
+
+            <div className="relative z-10">
+              {/* Header */}
+              <div className="text-center mb-4">
+                <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('auth.createaccount')}</h1>
+                <p className="text-gray-600 text-base">{t('auth.createaccountDesc')}</p>
               </div>
 
-              {/* Email or Phone Input with OTP Button */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-900 mb-1">
-                  {t('auth.emailOrPhone')}
-                </label>
-                <div className="flex gap-2">
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-3 px-6">
+                {/* Full Name Input */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                    {t('auth.fullName')}
+                  </label>
                   <input
                     type="text"
-                    name="emailOrPhone"
-                    value={formData.emailOrPhone}
+                    name="fullName"
+                    value={formData.fullName}
                     onChange={handleChange}
-                    placeholder={t('auth.enterEmailOrPhone')}
-                    className="flex-1 px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                    disabled={otpVerified}
+                    placeholder={t('auth.enterFullName')}
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
                     required
                   />
-                  <button
-                    type="button"
-                    onClick={handleSendOtp}
-                    disabled={otpVerified || otpLoading}
-                    className="px-3 py-1.5 text-xs bg-green-600 text-white rounded-md font-bold uppercase tracking-wider hover:bg-green-700 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                  >
-                    {otpLoading ? t('auth.sendingOtp') : otpSent ? t('auth.resendOtp') : t('auth.sendOtp')}
-                  </button>
                 </div>
-                {otpVerified && (
-                  <p className="text-green-600 text-xs mt-1 font-semibold">✓ {t('auth.verified')}</p>
-                )}
-              </div>
 
-              {/* OTP Input - Shows after Send OTP is clicked */}
-              {otpSent && !otpVerified && (
+                {/* Email or Phone Input with OTP Button */}
                 <div>
-                  <label className="block text-xs font-semibold text-gray-900 mb-1">
-                    {t('auth.enterOtp')}
+                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                    {t('auth.emailOrPhone')}
                   </label>
-                  <div className="flex justify-between gap-1">
-                    {otp.map((digit, index) => (
-                      <input
-                        key={index}
-                        id={`otp-${index}`}
-                        type="text"
-                        inputMode="numeric"
-                        autoComplete="one-time-code"
-                        value={digit}
-                        onChange={(e) => handleOtpChange(index, e.target.value)}
-                        onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                        onPaste={index === 0 ? handleOtpPaste : undefined}
-                        maxLength="1"
-                        className="w-9 h-9 text-center text-sm font-bold border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all"
-                      />
-                    ))}
-                  </div>
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      name="emailOrPhone"
+                      value={formData.emailOrPhone}
+                      onChange={handleChange}
+                      placeholder={t('auth.enterEmailOrPhone')}
+                      className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
+                      disabled={otpVerified}
+                      required
+                    />
                     <button
                       type="button"
-                      onClick={handleVerifyOtp}
-                      disabled={otp.join('').length !== 6 || otpLoading}
-                      className="flex-1 px-2 py-1.5 text-xs bg-green-600 text-white rounded-md font-bold uppercase tracking-wider hover:bg-green-700 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={handleSendOtp}
+                      disabled={otpVerified || otpLoading}
+                      className="px-4 py-3 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                     >
-                      {otpLoading ? t('auth.verifying') : t('auth.verifyOtp')}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleResendOtp}
-                      disabled={resendTimer > 0 || otpLoading}
-                      className="flex-1 px-2 py-1.5 text-xs border-2 border-green-600 text-green-600 rounded-md font-bold uppercase tracking-wider hover:bg-green-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {resendTimer > 0 ? `${t('auth.resendIn')} (${resendTimer}${t('auth.seconds')})` : t('auth.resendOtp')}
+                      {otpLoading ? t('auth.sendingOtp') : otpSent ? t('auth.resendOtp') : t('auth.sendOtp')}
                     </button>
                   </div>
+                  {otpVerified && (
+                    <p className="text-green-600 text-sm mt-1 font-semibold">✓ {t('auth.verified')}</p>
+                  )}
                 </div>
-              )}
 
-              {/* Password Input */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-900 mb-1">
-                  {t('auth.password')}
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder={t('auth.createPassword')}
-                    className="w-full px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2.5 top-1.5 text-gray-600 hover:text-gray-900 font-semibold text-xs"
-                  >
-                    {showPassword ? t('auth.hide') : t('auth.show')}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm Password Input */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-900 mb-1">
-                  {t('auth.confirmPassword')}
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    placeholder={t('auth.reenterPassword')}
-                    className={`w-full px-2.5 py-1.5 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent ${
-                      !passwordMatch && formData.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-2.5 top-1.5 text-gray-600 hover:text-gray-900 font-semibold text-xs"
-                  >
-                    {showConfirmPassword ? t('auth.hide') : t('auth.show')}
-                  </button>
-                </div>
-                {!passwordMatch && formData.confirmPassword && (
-                  <p className="text-red-600 text-xs mt-1">{t('alerts.passwordMismatch')}</p>
+                {/* OTP Input - Shows after Send OTP is clicked */}
+                {otpSent && !otpVerified && (
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-1">
+                      {t('auth.enterOtp')}
+                    </label>
+                    <div className="flex justify-between gap-1">
+                      {otp.map((digit, index) => (
+                        <input
+                          key={index}
+                          id={`otp-${index}`}
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="one-time-code"
+                          value={digit}
+                          onChange={(e) => handleOtpChange(index, e.target.value)}
+                          onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                          onPaste={index === 0 ? handleOtpPaste : undefined}
+                          maxLength="1"
+                          className="w-12 h-12 text-center text-lg font-bold border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all"
+                        />
+                      ))}
+                    </div>
+                    <div className="flex gap-2 mt-2">
+                      <button
+                        type="button"
+                        onClick={handleVerifyOtp}
+                        disabled={otp.join('').length !== 6 || otpLoading}
+                        className="flex-1 px-3 py-3 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {otpLoading ? t('auth.verifying') : t('auth.verifyOtp')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleResendOtp}
+                        disabled={resendTimer > 0 || otpLoading}
+                        className="flex-1 px-3 py-3 text-sm border-2 border-green-600 text-green-600 rounded-lg font-bold uppercase tracking-wider hover:bg-green-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {resendTimer > 0 ? `${t('auth.resendIn')} (${resendTimer}${t('auth.seconds')})` : t('auth.resendOtp')}
+                      </button>
+                    </div>
+                  </div>
                 )}
+
+                {/* Password Input */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                    {t('auth.password')}
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder={t('auth.createPassword')}
+                      className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent pr-20"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 font-semibold text-sm px-3 py-2"
+                    >
+                      {showPassword ? t('auth.hide') : t('auth.show')}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Confirm Password Input */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                    {t('auth.confirmPassword')}
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder={t('auth.reenterPassword')}
+                      className={`w-full px-4 py-3 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent pr-20 ${!passwordMatch && formData.confirmPassword ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 font-semibold text-sm px-3 py-2"
+                    >
+                      {showConfirmPassword ? t('auth.hide') : t('auth.show')}
+                    </button>
+                  </div>
+                  {!passwordMatch && formData.confirmPassword && (
+                    <p className="text-red-600 text-sm mt-1">{t('alerts.passwordMismatch')}</p>
+                  )}
+                </div>
+
+                {/* Terms & Conditions */}
+                <div className="flex items-start gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    name="agreeTerms"
+                    checked={formData.agreeTerms}
+                    onChange={handleChange}
+                    className="mt-0.5 w-5 h-5 cursor-pointer accent-green-600"
+                    required
+                  />
+                  <label className="text-sm text-gray-700">
+                    I agree to the
+                    <a href="#" className="text-green-700 hover:text-green-900 font-semibold underline"> Terms & Conditions</a> and
+                    <a href="#" className="text-green-700 hover:text-green-900 font-semibold underline"> Privacy Policy</a>
+                  </label>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading || !passwordMatch}
+                  className="w-full px-4 py-3 text-base bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                >
+                  {isLoading ? t('auth.creatingAccount') : t('auth.createaccount')}
+                </button>
+              </form>
+
+              {/* Divider */}
+              <div className="my-4 flex items-center px-6">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="px-3 text-gray-600 text-xs">{t('auth.hasAccount')}</span>
+                <div className="flex-grow border-t border-gray-300"></div>
               </div>
 
-              {/* Terms & Conditions */}
-              <div className="flex items-start gap-2 pt-1">
-                <input
-                  type="checkbox"
-                  name="agreeTerms"
-                  checked={formData.agreeTerms}
-                  onChange={handleChange}
-                  className="mt-0.5 w-3.5 h-3.5 cursor-pointer accent-green-600"
-                  required
-                />
-                <label className="text-xs text-gray-700">
-                  I agree to the 
-                  <a href="#" className="text-green-600 hover:text-green-700 font-semibold"> Terms & Conditions</a> and 
-                  <a href="#" className="text-green-600 hover:text-green-700 font-semibold"> Privacy Policy</a>
-                </label>
+              {/* Sign In Link */}
+              <div className="px-6">
+                <Link
+                  to="/signin"
+                  className="w-full px-3 py-1.5 text-sm border-2 bg-gradient-to-r from-green-700 via-green-600 to-green-700 bg-clip-border text-white rounded-md font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all text-center block shadow-md hover:shadow-lg"
+                >
+                  {t('auth.signin')}
+                </Link>
               </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isLoading || !passwordMatch}
-                className="w-full px-2.5 py-1.5 text-sm bg-green-600 text-white rounded-md font-bold uppercase tracking-wider hover:bg-green-700 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed mt-3"
-              >
-                {isLoading ? t('auth.creatingAccount') : t('auth.createaccount')}
-              </button>
-            </form>
-
-            {/* Divider */}
-            <div className="my-4 flex items-center px-6">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="px-3 text-gray-600 text-xs">{t('auth.hasAccount')}</span>
-              <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            {/* Sign In Link */}
-            <div className="px-6">
-              <Link 
-                to="/signin" 
-                className="w-full px-3 py-1.5 text-sm border-2 border-green-600 text-green-600 rounded-md font-bold uppercase tracking-wider hover:bg-green-50 transition-all text-center block"
-              >
-                {t('auth.signin')}
-              </Link>
-            </div>
           </div>
 
           {/* Help Section */}
           <div className="mt-4 text-center">
             <p className="text-gray-700 text-sm mb-2">{t('auth.needHelp')}</p>
-            <Link 
-              to="/help" 
-              className="text-green-600 hover:text-green-700 font-semibold hover:underline text-sm"
+            <Link
+              to="/help"
+              className="text-green-700 hover:text-green-900 font-semibold hover:underline text-sm"
             >
               {t('auth.visitHelpCenter')}
             </Link>

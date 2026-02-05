@@ -1,7 +1,14 @@
-// Mock API functions for SUVIDHA frontend
-// These simulate API calls and return mock data
+/**
+ * Mock API functions for SUVIDHA frontend
+ * These simulate backend API calls and return mock data for development and testing
+ * 
+ * @module mockApi
+ */
 
-// Get announcements/notices
+/**
+ * Fetch system announcements and notices
+ * @returns {Promise<Array<{id: number, title: string, description: string, type: string, date: string}>>} List of announcements
+ */
 export const fetchAnnouncements = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -32,7 +39,10 @@ export const fetchAnnouncements = async () => {
   });
 };
 
-// Get services list
+/**
+ * Fetch available services list
+ * @returns {Promise<Array<{id: number, name: string, description: string, category: string, icon: string}>>} List of services
+ */
 export const fetchServices = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -77,7 +87,10 @@ export const fetchServices = async () => {
   });
 };
 
-// Get quick action stats
+/**
+ * Fetch platform statistics
+ * @returns {Promise<{totalUsers: string, servicesAvailable: string, transactionsPerDay: string, satisfactionRate: string}>} Platform statistics
+ */
 export const fetchQuickActionStats = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -91,7 +104,13 @@ export const fetchQuickActionStats = async () => {
   });
 };
 
-// Mock user sign in (placeholder)
+/**
+ * Mock user sign in
+ * @param {string} email - User's email address
+ * @param {string} password - User's password
+ * @returns {Promise<{success: boolean, user?: {id: string, name: string, email: string, token: string}, message?: string}>} Sign in result
+ * @throws {Object} Error object with success false and message
+ */
 export const mockSignIn = async (email, password) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -115,7 +134,13 @@ export const mockSignIn = async (email, password) => {
   });
 };
 
-// Mock user sign up (placeholder)
+/**
+ * Mock user sign up
+ * @param {Object} userData - User registration data
+ * @param {string} userData.name - User's full name
+ * @param {string} userData.email - User's email address
+ * @returns {Promise<{success: boolean, message: string, user: {id: string, name: string, email: string}}>} Sign up result
+ */
 export const mockSignUp = async (userData) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -132,7 +157,12 @@ export const mockSignUp = async (userData) => {
   });
 };
 
-// Mock guest payment (Quick Pay without login)
+/**
+ * Mock guest payment (Quick Pay without login)
+ * @param {Object} billData - Bill payment data
+ * @param {number} billData.amount - Payment amount
+ * @returns {Promise<{success: boolean, transactionId: string, amount: number, status: string}>} Payment result
+ */
 export const mockQuickPay = async (billData) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -146,11 +176,15 @@ export const mockQuickPay = async (billData) => {
   });
 };
 
-// Check Application Status
+/**
+ * Check application status by tracking ID
+ * @param {string} trackingId - Application tracking ID (minimum 5 characters)
+ * @returns {Promise<{id: string, service: string, status: string, type: string, message: string}>} Application status
+ * @throws {Object} Error object with message if tracking ID is invalid
+ */
 export const checkApplicationStatus = async (trackingId) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // Mock simple logic: ID ending in various numbers gives different results
       if (!trackingId || trackingId.length < 5) {
         reject({ message: 'Invalid Tracking ID' });
         return;

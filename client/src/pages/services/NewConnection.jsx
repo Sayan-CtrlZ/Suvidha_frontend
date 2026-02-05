@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { 
-  User, MapPin, Zap, FileCheck, CheckCircle2, ChevronRight, ChevronLeft, 
-  Upload, Camera, Shield, Phone, Mail, FileText, Building2, Home, Factory, 
+import {
+  User, MapPin, Zap, FileCheck, CheckCircle2, ChevronRight, ChevronLeft,
+  Upload, Camera, Shield, Phone, Mail, FileText, Building2, Home, Factory,
   Tractor, AlertCircle, Printer, Download, CreditCard, Check, Loader2,
   IndianRupee, MessageSquare, ArrowRight, ArrowLeft
 } from 'lucide-react';
@@ -10,52 +10,63 @@ import { useLanguage } from '../../context/LanguageContext';
 import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
 import Footer from '../../components/common/Footer';
+import BackButton from '../../components/common/BackButton';
+import AnimatedBackground from '../../components/common/AnimatedBackground';
+import { useMultiStepForm, useFormValidation } from '../../hooks';
 
 const NewConnectionPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [documentVerified, setDocumentVerified] = useState(false);
-  const fileInputRef = useRef(null);
-  const fileInputBackRef = useRef(null);
+  const {
+    currentStep,
+    next: nextStep,
+    back: backStep,
+    goTo: goToStep,
+    isFirstStep,
+    isLastStep
+  } = useMultiStepForm(5);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    // Applicant Details
-    fullName: '',
-    mobile: '',
-    email: '',
-    idProofType: '',
-    documentNumber: '',
-    documentFront: null,
-    documentBack: null,
-    documentFrontPreview: null,
-    documentBackPreview: null,
-    
-    // Address Details
-    houseNo: '',
-    street: '',
-    landmark: '',
-    state: '',
-    district: '',
-    subdivision: '',
-    city: '',
-    pincode: '',
-    ownershipType: 'owned',
-    
-    // Connection Details
-    connectionType: 'domestic',
-    loadRequired: '',
-    phase: 'single',
-    purpose: '',
-    
-    // Terms
+  const validationRules = {
+    fullName: { required: true, message: t('newConnection.validation.nameRequired') },
+    mobile: { required: true, pattern: /^\d{10}$/, message: t('newConnection.validation.mobileInvalid') },
+    email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t('newConnection.validation.emailInvalid') },
+    idProofType: { required: true, message: t('newConnection.validation.idProofRequired') },
+    documentNumber: { required: true, message: t('newConnection.validation.documentNoRequired') },
+    documentFront: { required: true, message: t('newConnection.validation.documentRequired') },
+    houseNo: { required: true, message: t('newConnection.validation.addressRequired') },
+    street: { required: true, message: t('newConnection.validation.addressRequired') },
+    state: { required: true, message: t('newConnection.validation.stateRequired') },
+    district: { required: true, message: t('newConnection.validation.districtRequired') },
+    city: { required: true, message: t('newConnection.validation.addressRequired') },
+    pincode: { required: true, pattern: /^\d{6}$/, message: t('newConnection.validation.pincodeInvalid') },
+    connectionType: { required: true, message: t('newConnection.validation.connectionTypeRequired') },
+    loadRequired: { required: true, message: t('newConnection.validation.loadRequired') },
+    termsAccepted: { required: true, message: t('newConnection.validation.termsRequired') }
+  };
+
+  const {
+    values: formData,
+    errors,
+    setFieldValue,
+    setValues,
+    validateForm,
+    isSubmitting,
+    handleSubmit: handleFormSubmit
+  } = useFormValidation({
+    fullName: '', mobile: '', email: '', idProofType: '', documentNumber: '',
+    documentFront: null, documentBack: null, documentFrontPreview: null, documentBackPreview: null,
+    houseNo: '', street: '', landmark: '', state: '', district: '', subdivision: '', city: '', pincode: '',
+    ownershipType: 'owned', connectionType: 'domestic', loadRequired: '', phase: 'single', purpose: '',
     termsAccepted: false
+  }, validationRules, async (values) => {
+    // This is called by final submit
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    goToStep(5);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  const [errors, setErrors] = useState({});
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [documentVerified, setDocumentVerified] = useState(false);
 
   // Dropdown data
   const states = [
@@ -77,10 +88,10 @@ const NewConnectionPage = () => {
       industrial: { deposit: 15000, processing: 2500 },
       agricultural: { deposit: 2000, processing: 300 }
     };
-    
+
     const loadMultiplier = parseFloat(formData.loadRequired) || 1;
     const costs = baseCosts[formData.connectionType] || baseCosts.domestic;
-    
+
     return {
       securityDeposit: costs.deposit * Math.max(1, loadMultiplier / 5),
       processingFee: costs.processing,
@@ -97,10 +108,7 @@ const NewConnectionPage = () => {
   ];
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: null }));
-    }
+    setFieldValue(field, value);
   };
 
   const handleFileUpload = (e, type) => {
@@ -113,17 +121,17 @@ const NewConnectionPage = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (type === 'front') {
-          setFormData(prev => ({
-            ...prev,
+          setValues({
+            ...formData,
             documentFront: file,
             documentFrontPreview: event.target.result
-          }));
+          });
         } else {
-          setFormData(prev => ({
-            ...prev,
+          setValues({
+            ...formData,
             documentBack: file,
             documentBackPreview: event.target.result
-          }));
+          });
         }
       };
       reader.readAsDataURL(file);
@@ -138,65 +146,44 @@ const NewConnectionPage = () => {
     setDocumentVerified(true);
   };
 
-  const validateStep = (step) => {
-    const newErrors = {};
-    
-    if (step === 1) {
-      if (!formData.fullName.trim()) newErrors.fullName = t('newConnection.validation.nameRequired');
-      if (!formData.mobile.trim()) newErrors.mobile = t('newConnection.validation.mobileRequired');
-      else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = t('newConnection.validation.mobileInvalid');
-      if (!formData.email.trim()) newErrors.email = t('newConnection.validation.emailRequired');
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t('newConnection.validation.emailInvalid');
-      if (!formData.idProofType) newErrors.idProofType = t('newConnection.validation.idProofRequired');
-      if (!formData.documentNumber.trim()) newErrors.documentNumber = t('newConnection.validation.documentNoRequired');
-      if (!formData.documentFront) newErrors.documentFront = t('newConnection.validation.documentRequired');
-      if (!documentVerified) newErrors.verification = t('newConnection.validation.verificationRequired');
+  const validateStep = async (step) => {
+    const currentValues = formData;
+    const stepFields = {
+      1: ['fullName', 'mobile', 'email', 'idProofType', 'documentNumber', 'documentFront'],
+      2: ['houseNo', 'street', 'state', 'district', 'city', 'pincode'],
+      3: ['connectionType', 'loadRequired'],
+      4: ['termsAccepted']
+    };
+
+    const fieldsToValidate = stepFields[step] || [];
+    const stepErrors = await validateForm();
+
+    // Add custom verification check for step 1
+    if (step === 1 && !documentVerified) {
+      setFieldValue('verification', t('newConnection.validation.verificationRequired'));
+      return false;
     }
-    
-    if (step === 2) {
-      if (!formData.houseNo.trim()) newErrors.houseNo = t('newConnection.validation.addressRequired');
-      if (!formData.street.trim()) newErrors.street = t('newConnection.validation.addressRequired');
-      if (!formData.state) newErrors.state = t('newConnection.validation.stateRequired');
-      if (!formData.district.trim()) newErrors.district = t('newConnection.validation.districtRequired');
-      if (!formData.city.trim()) newErrors.city = t('newConnection.validation.addressRequired');
-      if (!formData.pincode.trim()) newErrors.pincode = t('newConnection.validation.pincodeRequired');
-      else if (!/^\d{6}$/.test(formData.pincode)) newErrors.pincode = t('newConnection.validation.pincodeInvalid');
-    }
-    
-    if (step === 3) {
-      if (!formData.connectionType) newErrors.connectionType = t('newConnection.validation.connectionTypeRequired');
-      if (!formData.loadRequired) newErrors.loadRequired = t('newConnection.validation.loadRequired');
-    }
-    
-    if (step === 4) {
-      if (!formData.termsAccepted) newErrors.termsAccepted = t('newConnection.validation.termsRequired');
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    const hasStepErrors = fieldsToValidate.some(field => !!stepErrors[field]);
+    return !hasStepErrors;
   };
 
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, 5));
+  const handleNext = async () => {
+    const isValid = await validateStep(currentStep);
+    if (isValid) {
+      nextStep();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 1));
+    backStep();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubmit = async () => {
-    if (!validateStep(4)) return;
-    
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2500));
-    setIsSubmitting(false);
-    setCurrentStep(5);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault();
+    handleFormSubmit();
   };
 
   const generateApplicationNo = () => {
@@ -214,26 +201,41 @@ const NewConnectionPage = () => {
   const costs = getCostBreakdown();
 
   return (
-    <div 
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundImage: `radial-gradient(circle, #d1d5db 0.8px, transparent 0.8px)`,
-        backgroundSize: '10px 10px',
-        backgroundColor: '#f9fafb'
-      }}
-    >
+    <div className="min-h-screen flex flex-col">
+      <AnimatedBackground />
       <TopBar />
       <NavBar />
 
-      {/* Page Header */}
-      <section className="w-full py-6 sm:py-8 px-3 sm:px-6 bg-gradient-to-r from-violet-700 to-violet-600 shadow-lg">
-        <div className="max-w-5xl mx-auto">
-          <button 
+      {/* Page Header - Enhanced Aesthetic */}
+      <section className="w-full pt-2 md:pt-3 pb-4 md:pb-5 px-3 sm:px-6 bg-gradient-to-br from-violet-900 via-purple-800 to-violet-900 shadow-2xl relative overflow-hidden">
+        {/* Sophisticated Mesh Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.25]">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-newconn" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
+                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
+                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-newconn)" />
+          </svg>
+        </div>
+
+        {/* Elegant Gradient Orbs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-violet-400/30 to-purple-500/30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-indigo-400/25 to-violet-500/25 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
+
+        {/* Decorative Line Accent */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
+
+        <div className="max-w-5xl mx-auto relative z-10">
+          <button
             onClick={() => navigate('/services/electricity')}
-            className="mb-4 text-white/80 hover:text-white font-semibold text-sm flex items-center gap-2 tracking-wide"
+            className="mb-4 text-white/80 hover:text-white font-semibold text-sm flex items-center gap-2 tracking-wide transition-colors"
           >
             <ArrowLeft size={18} />
-            {t('nav.backToServices')}
+            Back
           </button>
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
@@ -241,44 +243,46 @@ const NewConnectionPage = () => {
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">{t('newConnection.title')}</h1>
-              <p className="text-white/90 text-sm sm:text-base mt-1 font-medium">{t('newConnection.subtitle')}</p>
+              <p className="text-violet-50 text-sm sm:text-base mt-1 font-medium">{t('newConnection.subtitle')}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <main className="flex-1 py-6 sm:py-10 px-3 sm:px-6">
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="max-w-5xl mx-auto">
-          {/* Progress Steps */}
+          {/* Top Back Button */}
+          <div className="mb-6">
+            <BackButton to="/services/electricity" text={t('common.back')} />
+          </div>
+
+          {/* Progress Section */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 mb-6">
             <div className="flex items-center justify-between max-w-4xl mx-auto">
               {steps.map((step, index) => (
                 <React.Fragment key={step.id}>
                   <div className="flex flex-col items-center">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
-                      currentStep > step.id 
-                        ? 'bg-violet-600 text-white' 
-                        : currentStep === step.id 
-                          ? 'bg-violet-600 text-white ring-4 ring-violet-200' 
-                          : 'bg-gray-200 text-gray-500'
-                    }`}>
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-colors ${currentStep > step.id
+                      ? 'bg-violet-600 text-white'
+                      : currentStep === step.id
+                        ? 'bg-violet-600 text-white ring-4 ring-violet-200'
+                        : 'bg-gray-200 text-gray-500'
+                      }`}>
                       {currentStep > step.id ? (
                         <Check size={20} />
                       ) : (
                         <step.icon size={20} />
                       )}
                     </div>
-                    <span className={`text-xs sm:text-sm mt-2 font-medium text-center max-w-[70px] sm:max-w-none ${
-                      currentStep >= step.id ? 'text-violet-700' : 'text-gray-500'
-                    }`}>
+                    <span className={`text-xs sm:text-sm mt-2 font-medium text-center max-w-[70px] sm:max-w-none ${currentStep >= step.id ? 'text-violet-700' : 'text-gray-500'
+                      }`}>
                       {step.name}
                     </span>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={`flex-1 h-1 mx-2 sm:mx-4 rounded-full ${
-                      currentStep > step.id ? 'bg-violet-500' : 'bg-gray-200'
-                    }`} />
+                    <div className={`flex-1 h-1 mx-2 sm:mx-4 rounded-full ${currentStep > step.id ? 'bg-violet-500' : 'bg-gray-200'
+                      }`} />
                   )}
                 </React.Fragment>
               ))}
@@ -315,9 +319,8 @@ const NewConnectionPage = () => {
                           value={formData.fullName}
                           onChange={(e) => handleChange('fullName', e.target.value)}
                           placeholder={t('newConnection.applicantDetails.enterFullName')}
-                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                            errors.fullName ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.fullName ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                            }`}
                         />
                       </div>
                       {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>}
@@ -335,9 +338,8 @@ const NewConnectionPage = () => {
                           value={formData.mobile}
                           onChange={(e) => handleChange('mobile', e.target.value.replace(/\D/g, '').slice(0, 10))}
                           placeholder={t('newConnection.applicantDetails.enterMobile')}
-                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                            errors.mobile ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.mobile ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                            }`}
                         />
                       </div>
                       {errors.mobile && <p className="text-xs text-red-500 mt-1">{errors.mobile}</p>}
@@ -355,9 +357,8 @@ const NewConnectionPage = () => {
                           value={formData.email}
                           onChange={(e) => handleChange('email', e.target.value)}
                           placeholder={t('newConnection.applicantDetails.enterEmail')}
-                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                            errors.email ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.email ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                            }`}
                         />
                       </div>
                       {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
@@ -373,9 +374,8 @@ const NewConnectionPage = () => {
                         <select
                           value={formData.idProofType}
                           onChange={(e) => handleChange('idProofType', e.target.value)}
-                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${
-                            errors.idProofType ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                          }`}
+                          className={`w-full pl-10 pr-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${errors.idProofType ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                            }`}
                         >
                           <option value="">{t('newConnection.applicantDetails.selectIdProof')}</option>
                           <option value="aadhaar">{t('newConnection.applicantDetails.idTypes.aadhaar')}</option>
@@ -398,9 +398,8 @@ const NewConnectionPage = () => {
                         value={formData.documentNumber}
                         onChange={(e) => handleChange('documentNumber', e.target.value.toUpperCase())}
                         placeholder={t('newConnection.applicantDetails.enterDocNumber')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.documentNumber ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.documentNumber ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.documentNumber && <p className="text-xs text-red-500 mt-1">{errors.documentNumber}</p>}
                     </div>
@@ -412,7 +411,7 @@ const NewConnectionPage = () => {
                       <Upload size={18} className="text-violet-600" />
                       {t('newConnection.applicantDetails.uploadDocument')}
                     </h4>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       {/* Front Side Upload */}
                       <div>
@@ -428,9 +427,9 @@ const NewConnectionPage = () => {
                         />
                         {formData.documentFrontPreview ? (
                           <div className="relative rounded-xl overflow-hidden border-2 border-violet-300 bg-violet-50">
-                            <img 
-                              src={formData.documentFrontPreview} 
-                              alt="Document Front" 
+                            <img
+                              src={formData.documentFrontPreview}
+                              alt="Document Front"
                               className="w-full h-40 object-cover"
                             />
                             <button
@@ -446,9 +445,8 @@ const NewConnectionPage = () => {
                         ) : (
                           <button
                             onClick={() => fileInputRef.current?.click()}
-                            className={`w-full h-40 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-2 hover:border-violet-400 hover:bg-violet-50 transition-colors ${
-                              errors.documentFront ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                            }`}
+                            className={`w-full h-40 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-2 hover:border-violet-400 hover:bg-violet-50 transition-colors ${errors.documentFront ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                              }`}
                           >
                             <Upload size={28} className="text-gray-400" />
                             <span className="text-sm text-gray-500 text-center px-4">{t('newConnection.applicantDetails.dragDrop')}</span>
@@ -471,9 +469,9 @@ const NewConnectionPage = () => {
                         />
                         {formData.documentBackPreview ? (
                           <div className="relative rounded-xl overflow-hidden border-2 border-violet-300 bg-violet-50">
-                            <img 
-                              src={formData.documentBackPreview} 
-                              alt="Document Back" 
+                            <img
+                              src={formData.documentBackPreview}
+                              alt="Document Back"
                               className="w-full h-40 object-cover"
                             />
                             <button
@@ -512,7 +510,7 @@ const NewConnectionPage = () => {
                           <button
                             onClick={verifyDocument}
                             disabled={isVerifying}
-                            className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-xl font-semibold hover:from-violet-700 hover:to-violet-800 transition-all disabled:opacity-50"
+                            className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-xl font-semibold hover:from-violet-700 hover:to-violet-800 transition-colors disabled:opacity-50"
                           >
                             {isVerifying ? (
                               <>
@@ -558,9 +556,8 @@ const NewConnectionPage = () => {
                         value={formData.houseNo}
                         onChange={(e) => handleChange('houseNo', e.target.value)}
                         placeholder={t('newConnection.addressDetails.enterHouseNo')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.houseNo ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.houseNo ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.houseNo && <p className="text-xs text-red-500 mt-1">{errors.houseNo}</p>}
                     </div>
@@ -575,9 +572,8 @@ const NewConnectionPage = () => {
                         value={formData.street}
                         onChange={(e) => handleChange('street', e.target.value)}
                         placeholder={t('newConnection.addressDetails.enterStreet')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.street ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.street ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
                     </div>
@@ -604,9 +600,8 @@ const NewConnectionPage = () => {
                       <select
                         value={formData.state}
                         onChange={(e) => handleChange('state', e.target.value)}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${
-                          errors.state ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${errors.state ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       >
                         <option value="">{t('newConnection.addressDetails.selectState')}</option>
                         {states.map(state => (
@@ -626,9 +621,8 @@ const NewConnectionPage = () => {
                         value={formData.district}
                         onChange={(e) => handleChange('district', e.target.value)}
                         placeholder={t('newConnection.addressDetails.selectDistrict')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.district ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.district ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.district && <p className="text-xs text-red-500 mt-1">{errors.district}</p>}
                     </div>
@@ -657,9 +651,8 @@ const NewConnectionPage = () => {
                         value={formData.city}
                         onChange={(e) => handleChange('city', e.target.value)}
                         placeholder={t('newConnection.addressDetails.enterCity')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.city ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.city ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
                     </div>
@@ -674,9 +667,8 @@ const NewConnectionPage = () => {
                         value={formData.pincode}
                         onChange={(e) => handleChange('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}
                         placeholder={t('newConnection.addressDetails.enterPincode')}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${
-                          errors.pincode ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors ${errors.pincode ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       />
                       {errors.pincode && <p className="text-xs text-red-500 mt-1">{errors.pincode}</p>}
                     </div>
@@ -691,11 +683,10 @@ const NewConnectionPage = () => {
                           <button
                             key={type}
                             onClick={() => handleChange('ownershipType', type)}
-                            className={`px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-all ${
-                              formData.ownershipType === type
-                                ? 'bg-violet-600 text-white border-violet-600'
-                                : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                            }`}
+                            className={`px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-colors ${formData.ownershipType === type
+                              ? 'bg-violet-600 text-white border-violet-600'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
+                              }`}
                           >
                             {t(`newConnection.addressDetails.${type}`)}
                           </button>
@@ -734,15 +725,13 @@ const NewConnectionPage = () => {
                         <button
                           key={id}
                           onClick={() => handleChange('connectionType', id)}
-                          className={`p-5 rounded-2xl border-2 transition-all text-center ${
-                            formData.connectionType === id
-                              ? 'bg-violet-50 border-violet-500 ring-2 ring-violet-200'
-                              : 'bg-white border-gray-200 hover:border-violet-300'
-                          }`}
+                          className={`p-5 rounded-2xl border-2 transition-colors text-center ${formData.connectionType === id
+                            ? 'bg-violet-50 border-violet-500 ring-2 ring-violet-200'
+                            : 'bg-white border-gray-200 hover:border-violet-300'
+                            }`}
                         >
-                          <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ${
-                            formData.connectionType === id ? 'bg-violet-100' : 'bg-gray-100'
-                          }`}>
+                          <div className={`w-12 h-12 mx-auto rounded-xl flex items-center justify-center mb-3 ${formData.connectionType === id ? 'bg-violet-100' : 'bg-gray-100'
+                            }`}>
                             <Icon size={24} className={formData.connectionType === id ? 'text-violet-600' : 'text-gray-500'} />
                           </div>
                           <p className={`text-sm font-semibold ${formData.connectionType === id ? 'text-violet-700' : 'text-gray-700'}`}>
@@ -766,9 +755,8 @@ const NewConnectionPage = () => {
                       <select
                         value={formData.loadRequired}
                         onChange={(e) => handleChange('loadRequired', e.target.value)}
-                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${
-                          errors.loadRequired ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                        }`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-colors appearance-none bg-white ${errors.loadRequired ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
+                          }`}
                       >
                         <option value="">{t('newConnection.connectionDetails.selectLoad')}</option>
                         {loadOptions.map(load => (
@@ -786,21 +774,19 @@ const NewConnectionPage = () => {
                       <div className="flex gap-3">
                         <button
                           onClick={() => handleChange('phase', 'single')}
-                          className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${
-                            formData.phase === 'single'
-                              ? 'bg-violet-600 text-white border-violet-600'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                          }`}
+                          className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-colors ${formData.phase === 'single'
+                            ? 'bg-violet-600 text-white border-violet-600'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
+                            }`}
                         >
                           {t('newConnection.connectionDetails.singlePhase')}
                         </button>
                         <button
                           onClick={() => handleChange('phase', 'three')}
-                          className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-all ${
-                            formData.phase === 'three'
-                              ? 'bg-violet-600 text-white border-violet-600'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                          }`}
+                          className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium border-2 transition-colors ${formData.phase === 'three'
+                            ? 'bg-violet-600 text-white border-violet-600'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
+                            }`}
                         >
                           {t('newConnection.connectionDetails.threePhase')}
                         </button>
@@ -976,7 +962,7 @@ const NewConnectionPage = () => {
                   <div className="w-24 h-24 mx-auto rounded-full bg-violet-100 flex items-center justify-center">
                     <CheckCircle2 size={56} className="text-violet-600" />
                   </div>
-                  
+
                   <div>
                     <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('newConnection.confirmation.title')}</h3>
                     <p className="text-gray-600 mt-2 text-lg">{t('newConnection.confirmation.subtitle')}</p>
@@ -1078,7 +1064,7 @@ const NewConnectionPage = () => {
                       {t('newConnection.confirmation.printAcknowledgement')}
                     </button>
                     <button
-                      onClick={() => {}}
+                      onClick={() => { }}
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-white border-2 border-violet-500 text-violet-700 rounded-xl font-semibold hover:bg-violet-50 transition-colors"
                     >
                       <Download size={20} />
@@ -1101,9 +1087,9 @@ const NewConnectionPage = () => {
               <div className="px-4 sm:px-8 py-5 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
                 <button
                   onClick={currentStep === 1 ? () => navigate('/services/electricity') : handleBack}
-                  className="flex items-center gap-2 px-5 sm:px-8 py-3 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+                  className="group flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 transition-all shadow-sm active:scale-95"
                 >
-                  <ChevronLeft size={22} />
+                  <ChevronLeft size={22} strokeWidth={2.5} className="group-hover:-translate-x-1 transition-transform" />
                   <span>{currentStep === 1 ? t('common.cancel') : t('progress.back')}</span>
                 </button>
 

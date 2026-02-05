@@ -34,9 +34,9 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
   const handlePayment = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 2000));
-    
+
     setIsProcessing(false);
     setPaymentSuccess(true);
   };
@@ -56,15 +56,8 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
-      <div 
-        className="w-full max-w-4xl my-2 rounded-2xl overflow-hidden shadow-2xl border-2 border-gray-200"
-        style={{
-          backgroundImage: `radial-gradient(circle, #d1d5db 0.8px, transparent 0.8px)`,
-          backgroundSize: '10px 10px',
-          backgroundColor: '#f9fafb'
-        }}
-      >
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div className="w-full max-w-5xl my-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-200 bg-white transform transition-all scale-100">
         {/* Success Screen */}
         {paymentSuccess ? (
           <div className="bg-white m-4 rounded-xl p-8 text-center shadow-lg border border-gray-100">
@@ -73,7 +66,7 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Payment Successful</h2>
             <p className="text-gray-600 mb-6">Your electricity bill has been paid successfully.</p>
-            
+
             <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 mb-6 text-left">
               <div className="flex justify-between py-3 border-b border-gray-200">
                 <span className="text-gray-600 text-sm font-medium">Amount Paid</span>
@@ -94,7 +87,7 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
                 <FileText size={18} />
                 Download Receipt
               </button>
-              <button 
+              <button
                 onClick={handleClose}
                 className="flex-1 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
@@ -106,51 +99,51 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
         ) : (
           <>
             {/* Official Header */}
-            <div className="bg-gradient-to-r from-violet-700 to-violet-600 p-4 sm:p-5">
+            <div className="bg-gradient-to-r from-violet-700 to-violet-600 p-6 sm:p-8">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md">
-                    <Zap size={28} className="text-violet-600" />
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                    <Zap size={32} className="text-violet-600" />
                   </div>
                   <div>
-                    <h2 className="text-lg sm:text-xl font-bold text-white tracking-wide">ELECTRICITY BILL PAYMENT</h2>
-                    <p className="text-violet-100 text-sm mt-0.5">Consumer No: {userData?.consumerNumber}</p>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide">ELECTRICITY BILL PAYMENT</h2>
+                    <p className="text-violet-100 text-lg mt-1 font-medium">Consumer No: {userData?.consumerNumber}</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={handleClose}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                  className="p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all active:scale-95"
                 >
-                  <X size={22} className="text-white" />
+                  <X size={32} className="text-white" />
                 </button>
               </div>
             </div>
 
             {/* Bill Summary Card */}
-            <div className="mx-4 mt-4">
-              <div className="bg-white rounded-xl border-2 border-gray-200 shadow-md overflow-hidden">
-                <div className="bg-gray-50 px-5 py-3 border-b border-gray-200">
-                  <h3 className="font-bold text-gray-800 text-sm uppercase tracking-wide flex items-center gap-2">
-                    <FileText size={16} className="text-violet-600" />
+            <div className="mx-6 mt-6">
+              <div className="bg-white rounded-2xl border-2 border-gray-200 shadow-md overflow-hidden">
+                <div className="bg-gray-50 px-8 py-5 border-b border-gray-200">
+                  <h3 className="font-bold text-gray-800 text-lg uppercase tracking-wider flex items-center gap-3">
+                    <FileText size={24} className="text-violet-600" />
                     Bill Summary
                   </h3>
                 </div>
-                <div className="p-5 flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-violet-50 rounded-xl flex items-center justify-center border-2 border-violet-100">
-                      <IndianRupee size={28} className="text-violet-600" />
+                <div className="p-8 flex items-center justify-between">
+                  <div className="flex items-center gap-6">
+                    <div className="w-20 h-20 bg-violet-50 rounded-2xl flex items-center justify-center border-2 border-violet-100">
+                      <IndianRupee size={40} className="text-violet-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Total Amount Due</p>
-                      <p className="text-3xl font-bold text-gray-900">₹{billData?.amount?.toLocaleString()}</p>
+                      <p className="text-sm text-gray-500 font-bold uppercase tracking-wide">Total Amount Due</p>
+                      <p className="text-4xl font-extrabold text-gray-900 mt-1">₹{billData?.amount?.toLocaleString()}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="flex items-center gap-2 text-gray-500 mb-1">
-                      <Clock size={14} />
-                      <span className="text-xs font-medium uppercase tracking-wide">Billing Period</span>
+                    <div className="flex items-center justify-end gap-2 text-gray-500 mb-2">
+                      <Clock size={20} />
+                      <span className="text-sm font-bold uppercase tracking-wide">Billing Period</span>
                     </div>
-                    <p className="font-semibold text-gray-900">{billData?.billingPeriod}</p>
+                    <p className="text-2xl font-bold text-gray-900">{billData?.billingPeriod}</p>
                   </div>
                 </div>
               </div>
@@ -160,33 +153,32 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
             <div className="mx-4 my-4">
               <div className="bg-white rounded-xl border-2 border-gray-200 shadow-md overflow-hidden">
                 {/* Payment Methods Header */}
-                <div className="bg-gray-50 px-5 py-3 border-b border-gray-200">
-                  <h3 className="font-bold text-gray-800 text-sm uppercase tracking-wide flex items-center gap-2">
-                    <CreditCard size={16} className="text-violet-600" />
+                <div className="bg-gray-50 px-8 py-5 border-b border-gray-200">
+                  <h3 className="font-bold text-gray-800 text-lg uppercase tracking-wider flex items-center gap-3">
+                    <CreditCard size={24} className="text-violet-600" />
                     Select Payment Method
                   </h3>
                 </div>
 
                 {/* Payment Method Tabs */}
-                <div className="p-4 border-b border-gray-100">
-                  <div className="grid grid-cols-4 gap-2">
+                <div className="p-6 border-b border-gray-100">
+                  <div className="grid grid-cols-4 gap-4">
                     {paymentMethods.map((method) => {
                       const IconComponent = method.icon;
                       return (
                         <button
                           key={method.id}
                           onClick={() => setPaymentMethod(method.id)}
-                          className={`p-3 rounded-lg border-2 text-center transition-all ${
-                            paymentMethod === method.id
-                              ? 'border-violet-500 bg-violet-50 shadow-sm'
-                              : 'border-gray-200 hover:border-violet-300 hover:bg-gray-50'
-                          }`}
+                          className={`p-6 rounded-2xl border-2 text-center transition-all shadow-sm ${paymentMethod === method.id
+                            ? 'border-violet-600 bg-violet-50 ring-2 ring-violet-200'
+                            : 'border-gray-200 hover:border-violet-300 hover:bg-gray-50'
+                            }`}
                         >
-                          <IconComponent 
-                            size={22} 
-                            className={`mx-auto mb-1.5 ${paymentMethod === method.id ? 'text-violet-600' : 'text-gray-500'}`} 
+                          <IconComponent
+                            size={32}
+                            className={`mx-auto mb-3 ${paymentMethod === method.id ? 'text-violet-700' : 'text-gray-500'}`}
                           />
-                          <span className={`font-semibold text-xs ${paymentMethod === method.id ? 'text-violet-700' : 'text-gray-700'}`}>
+                          <span className={`font-bold text-lg block ${paymentMethod === method.id ? 'text-violet-800' : 'text-gray-700'}`}>
                             {method.name}
                           </span>
                         </button>
@@ -204,13 +196,13 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
                           <p className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Scan QR Code to Pay</p>
                           <div className="relative w-56 h-56 mx-auto">
                             <div className={`w-full h-full bg-white rounded-xl p-3 border-2 border-gray-300 shadow-inner transition-all duration-300 ${!showQR ? 'blur-md' : ''}`}>
-                              <img 
-                                src={QrImage} 
-                                alt="Payment QR Code" 
+                              <img
+                                src={QrImage}
+                                alt="Payment QR Code"
                                 className="w-full h-full object-contain"
                               />
                             </div>
-                            
+
                             {!showQR && (
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <button
@@ -232,49 +224,49 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
                     )}
 
                     {paymentMethod === 'card' && (
-                      <div className="space-y-4 max-w-md mx-auto">
+                      <div className="space-y-6 max-w-2xl mx-auto py-4">
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Card Number</label>
+                          <label className="block text-lg font-bold text-gray-700 mb-3 ml-1">Card Number</label>
                           <input
                             type="text"
                             value={cardNumber}
                             onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, '').slice(0, 16))}
                             placeholder="1234 5678 9012 3456"
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-100 focus:outline-none transition-all bg-gray-50"
+                            className="w-full px-6 py-5 border-2 border-gray-300 rounded-xl text-xl tracking-wider focus:border-violet-600 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all bg-white"
                             required
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">Cardholder Name</label>
+                          <label className="block text-lg font-bold text-gray-700 mb-3 ml-1">Cardholder Name</label>
                           <input
                             type="text"
                             value={cardName}
                             onChange={(e) => setCardName(e.target.value)}
                             placeholder="Name as on card"
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-100 focus:outline-none transition-all bg-gray-50"
+                            className="w-full px-6 py-5 border-2 border-gray-300 rounded-xl text-xl focus:border-violet-600 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all bg-white"
                             required
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                           <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Expiry</label>
+                            <label className="block text-lg font-bold text-gray-700 mb-3 ml-1">Expiry</label>
                             <input
                               type="text"
                               value={cardExpiry}
                               onChange={(e) => setCardExpiry(e.target.value)}
                               placeholder="MM/YY"
-                              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-100 focus:outline-none transition-all bg-gray-50"
+                              className="w-full px-6 py-5 border-2 border-gray-300 rounded-xl text-xl text-center focus:border-violet-600 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all bg-white"
                               required
                             />
                           </div>
                           <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">CVV</label>
+                            <label className="block text-lg font-bold text-gray-700 mb-3 ml-1">CVV</label>
                             <input
                               type="password"
                               value={cardCvv}
                               onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
                               placeholder="•••"
-                              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-100 focus:outline-none transition-all bg-gray-50"
+                              className="w-full px-6 py-5 border-2 border-gray-300 rounded-xl text-xl text-center focus:border-violet-600 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all bg-white"
                               required
                             />
                           </div>
@@ -321,24 +313,23 @@ const PaymentForm = ({ isOpen, onClose, billData, userData }) => {
 
                     {/* Submit Button - Only for non-UPI methods */}
                     {paymentMethod !== 'upi' && (
-                      <div className="max-w-md mx-auto mt-6">
+                      <div className="max-w-xl mx-auto mt-8 mb-4">
                         <button
                           type="submit"
                           disabled={isProcessing}
-                          className={`w-full px-6 py-4 rounded-lg font-bold text-white flex items-center justify-center gap-2 transition-all ${
-                            isProcessing
-                              ? 'bg-gray-400 cursor-not-allowed'
-                              : 'bg-violet-600 hover:bg-violet-700 shadow-md hover:shadow-lg'
-                          }`}
+                          className={`w-full px-8 py-5 rounded-2xl font-bold text-xl text-white flex items-center justify-center gap-4 transition-all transform active:scale-95 ${isProcessing
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 shadow-xl hover:shadow-2xl ring-4 ring-violet-200'
+                            }`}
                         >
                           {isProcessing ? (
                             <>
-                              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                              <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                               Processing Payment...
                             </>
                           ) : (
                             <>
-                              <Shield size={18} />
+                              <Shield size={24} />
                               Pay ₹{billData?.amount?.toLocaleString()} Securely
                             </>
                           )}

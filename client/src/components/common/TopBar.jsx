@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Phone, Mail, MinusCircle, Circle, PlusCircle, ChevronDown, Globe, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 
 const TopBar = () => {
   const { language, setLanguage, t, languages, currentLanguage } = useLanguage();
+  const { isAuthenticated } = useAuth();
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [fontSize, setFontSize] = useState(() => {
     // Get saved font size from localStorage or default to 1 (normal)
@@ -57,103 +59,86 @@ const TopBar = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-green-600 via-white to-orange-500 text-gray-900 w-full relative">
-      {/* Skip to Content - Accessible link that appears on focus */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:bg-blue-700 focus:text-white focus:px-4 focus:py-2 focus:font-bold focus:rounded-br-lg focus:shadow-lg focus:outline-none"
-      >
-        {t('accessibility.skipToContent')}
-      </a>
-      
+    <div className="bg-gradient-to-r from-[#FF9933] via-white to-[#138808] border-b border-gray-200 text-gray-800 w-full relative">
       <div className="w-full px-4 py-1">
-        <div className="flex justify-between items-center text-xs font-semibold">
+        <div className="flex justify-between items-center text-sm font-bold">
           <div className="flex items-center gap-3">
-            <span className="text-gray-800">🇮🇳 {t('footer.govOfIndia')}</span>
-            <span className="text-gray-400">|</span>
-            <a 
+            <span className="text-gray-800 text-sm">🇮🇳 {t('footer.govOfIndia')}</span>
+            <span className="text-gray-300">|</span>
+            <a
               href="tel:08149203888"
-              className="flex items-center gap-1 hover:text-green-800 transition"
+              className="group relative flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/50 border border-gray-200 shadow-sm transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <Phone size={14} />
-              <span className="text-gray-900">08149203888</span>
+              <div className="absolute inset-0 bg-[#138808]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-lg" />
+              <Phone size={16} className="relative z-10 transition-colors group-hover:text-[#138808]" />
+              <span className="text-gray-900 text-sm relative z-10 transition-colors group-hover:text-[#138808]">08149203888</span>
             </a>
-            <span className="text-gray-400">|</span>
-            <a 
-              href="tel:8904085030"
-              className="flex items-center gap-1 hover:text-green-800 transition"
+            <span className="text-gray-300 hidden xl:inline">|</span>
+            <a
+              href="mailto:support@suvidha.gov.in"
+              className="group relative hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/50 border border-gray-200 shadow-sm transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <Phone size={14} />
-              <span className="text-gray-900">8904085030</span>
+              <div className="absolute inset-0 bg-[#138808]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-lg" />
+              <Mail size={16} className="relative z-10 transition-colors group-hover:text-[#138808]" />
+              <span className="text-gray-900 text-sm relative z-10 transition-colors group-hover:text-[#138808]">support@suvidha.gov.in</span>
             </a>
-            <span className="text-gray-400">|</span>
-            <a 
-              href="mailto:ONEHELPDESK@SUVIDHA.GOV.IN"
-              className="flex items-center gap-1 hover:text-green-800 transition"
-            >
-              <Mail size={14} />
-              <span className="text-gray-900">ONEHELPDESK@SUVIDHA.GOV.IN</span>
-            </a>
-            <span className="text-gray-400">|</span>
-            <span className="text-gray-800">📅 {new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
+            <span className="text-gray-300 hidden lg:inline">|</span>
+            <span className="text-gray-700 hidden lg:inline text-xs">📅 {new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
           <div className="flex items-center gap-2">
-            <a 
-              href="#main-content" 
-              className="hover:text-green-800 transition text-gray-900 focus:underline"
-              title="Skip navigation and go to main content"
+            {/* Skip to Content - Now on Right Side */}
+            <a
+              href="#main-content"
+              className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/50 border border-gray-200 shadow-sm transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              {t('accessibility.skipToContent')}
+              <div className="absolute inset-0 bg-[#138808]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-lg" />
+              <span className="text-gray-900 text-xs relative z-10 transition-colors group-hover:text-[#138808]">{t('accessibility.skipToContent')}</span>
             </a>
-            <span className="text-gray-400">|</span>
+            <span className="text-gray-300">|</span>
             <button
               onClick={() => {
-                // Toggle high contrast or announce screen reader mode
                 alert('Screen Reader Access: This website is optimized for screen readers. Use Tab to navigate, Enter to select.');
               }}
-              className="hover:text-green-800 transition text-gray-900 focus:underline"
+              className="group relative px-3 py-1.5 rounded-lg bg-white/50 border border-gray-200 shadow-sm text-gray-800 text-sm focus:underline transition-all duration-400 hover:scale-105 active:scale-95"
               title="Screen Reader Access Information"
             >
-              {t('accessibility.screenReader')}
+              <div className="absolute inset-0 bg-[#138808]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-lg" />
+              <span className="relative z-10 transition-colors group-hover:text-[#138808]">{t('accessibility.screenReader')}</span>
             </button>
-            <span className="text-gray-400">|</span>
-            <a href="/signin" className="hover:text-green-800 transition text-gray-900 uppercase">{t('nav.signIn')}</a>
-            <span className="text-gray-400">|</span>
-            <a href="/signup" className="hover:text-green-800 transition text-gray-900 uppercase">{t('nav.signUp')}</a>
-            <span className="text-gray-400">|</span>
-            <div className="flex items-center gap-0.5">
-              <button 
+            <div className="flex items-center gap-0.5 bg-white/50 rounded-lg border border-gray-200 p-0.5">
+              <button
                 onClick={handleDecreaseFontSize}
-                className="hover:text-green-800 text-gray-900 transition"
+                className="group relative p-1.5 rounded-md text-gray-800 transition-all duration-400 hover:bg-white"
                 title={t('accessibility.decrease')}
               >
-                <MinusCircle size={14} />
+                <MinusCircle size={16} className="relative z-10 transition-colors group-hover:text-[#138808]" />
               </button>
-              <button 
+              <button
                 onClick={handleResetFontSize}
-                className="hover:text-green-800 text-gray-900 transition"
+                className="group relative p-1.5 rounded-md text-gray-800 transition-all duration-400 hover:bg-white"
                 title={t('accessibility.reset')}
               >
-                <Circle size={14} />
+                <Circle size={14} className="relative z-10 transition-colors group-hover:text-[#138808]" />
               </button>
-              <button 
+              <button
                 onClick={handleIncreaseFontSize}
-                className="hover:text-green-800 text-gray-900 transition"
+                className="group relative p-1.5 rounded-md text-gray-800 transition-all duration-400 hover:bg-white"
                 title={t('accessibility.increase')}
               >
-                <PlusCircle size={14} />
+                <PlusCircle size={16} className="relative z-10 transition-colors group-hover:text-[#138808]" />
               </button>
             </div>
-            <span className="text-gray-400">|</span>
+            <span className="text-gray-300">|</span>
             {/* Language Selector Button */}
             <div className="relative">
               <button
                 onClick={() => setIsLanguageModalOpen(true)}
-                className="flex items-center gap-1 hover:text-green-800 transition text-xs font-semibold text-gray-900"
+                className="group relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/50 border border-gray-200 shadow-sm transition-all duration-400 hover:scale-105 active:scale-95"
               >
-                <Globe size={14} />
-                <span>{currentLanguage?.nativeName || 'English'}</span>
-                <ChevronDown size={12} />
+                <div className="absolute inset-0 bg-[#138808]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-lg" />
+                <Globe size={16} className="relative z-10 transition-colors group-hover:text-[#138808]" />
+                <span className="text-xs font-bold text-gray-900 relative z-10 transition-colors group-hover:text-[#138808]">{currentLanguage?.nativeName || 'English'}</span>
+                <ChevronDown size={14} className="relative z-10 transition-colors group-hover:text-[#138808]" />
               </button>
             </div>
           </div>
@@ -162,11 +147,11 @@ const TopBar = () => {
 
       {/* Language Selection Modal */}
       {isLanguageModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
           onClick={() => setIsLanguageModalOpen(false)}
         >
-          <div 
+          <div
             className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
@@ -191,20 +176,17 @@ const TopBar = () => {
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-lg hover:-translate-y-0.5 ${
-                      language === lang.code
-                        ? 'border-green-600 bg-green-50 shadow-md'
-                        : 'border-gray-200 bg-white hover:border-green-300'
-                    }`}
+                    className={`p-4 rounded-xl border-2 transition-colors text-left ${language === lang.code
+                      ? 'border-green-600 bg-green-50 shadow-md'
+                      : 'border-gray-200 bg-white hover:border-green-300'
+                      }`}
                   >
-                    <span className={`block text-lg font-bold ${
-                      language === lang.code ? 'text-green-700' : 'text-gray-900'
-                    }`}>
+                    <span className={`block text-lg font-bold ${language === lang.code ? 'text-green-700' : 'text-gray-900'
+                      }`}>
                       {lang.nativeName}
                     </span>
-                    <span className={`block text-sm ${
-                      language === lang.code ? 'text-green-600' : 'text-gray-500'
-                    }`}>
+                    <span className={`block text-sm ${language === lang.code ? 'text-green-600' : 'text-gray-500'
+                      }`}>
                       {lang.name}
                     </span>
                     {language === lang.code && (

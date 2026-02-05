@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  HelpCircle, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  ChevronDown, 
-  ChevronUp, 
-  MessageSquare, 
-  FileText, 
-  Shield, 
+import {
+  HelpCircle,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+  MessageSquare,
+  FileText,
+  Shield,
   Users,
   Zap,
   Droplet,
@@ -21,9 +21,11 @@ import {
 import { Link } from 'react-router-dom';
 import TopBar from '../components/common/TopBar';
 import NavBar from '../components/common/NavBar';
-import TickerBanner from '../components/home/TickerBanner';
-import HeroSection from '../components/home/HeroSection';
+
+
 import Footer from '../components/common/Footer';
+import AnimatedBackground from '../components/common/AnimatedBackground';
+import BackButton from '../components/common/BackButton';
 import { useLanguage } from '../context/LanguageContext';
 
 const HelpPage = () => {
@@ -118,227 +120,254 @@ const HelpPage = () => {
     { icon: AlertCircle, titleKey: 'services.municipalGrievance', path: '/services/grievance', color: 'bg-red-100 text-red-600' },
   ];
 
-  const filteredFaqs = faqs.filter(faq => 
+  const filteredFaqs = faqs.filter(faq =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
     faq.answer.toLowerCase().includes(searchQuery.toLowerCase()) ||
     faq.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div 
-      className="min-h-screen flex flex-col"
-      style={{
-        backgroundImage: `radial-gradient(circle, #d1d5db 0.8px, transparent 0.8px)`,
-        backgroundSize: '10px 10px',
-        backgroundColor: '#f9fafb'
-      }}
-    >
+    <div className="min-h-screen flex flex-col">
       {/* Full Banner Section */}
       <TopBar />
-      <HeroSection />
-      <NavBar />
-      <TickerBanner />
+      <AnimatedBackground />
 
-      {/* Government-style Header */}
-      <div className="bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white py-6">
-        <div className="max-w-7xl mx-auto px-4">
+      <NavBar />
+
+
+
+      {/* Government-style Header - Enhanced Aesthetic */}
+      <div className="bg-gradient-to-br from-emerald-800 via-green-700 to-emerald-800 text-white pt-2 md:pt-3 pb-4 md:pb-5 shadow-2xl relative overflow-hidden">
+        {/* Sophisticated Mesh Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.25]">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-help" width="40" height="40" patternUnits="userSpaceOnUse">
+                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
+                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
+                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-help)" />
+          </svg>
+        </div>
+
+        {/* Elegant Gradient Orbs */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/15 to-green-500/15 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-teal-400/10 to-emerald-500/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
+
+        {/* Decorative Line Accent */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-white/20 rounded-lg">
+            <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm border border-white/20">
               <HelpCircle className="w-8 h-8" />
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">{t('help.title')}</h1>
-              <p className="text-green-100 mt-1">{t('help.desc')}</p>
+              <p className="text-emerald-50 mt-1">{t('help.desc')}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          
-          {/* Search Section */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Search className="w-5 h-5 text-green-600" />
-              {t('help.searchTopics')}
-            </h2>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder={t('help.typeQuestion')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700"
-              />
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            </div>
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-8">
+            <BackButton />
           </div>
 
-          {/* Quick Links */}
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-green-600" />
-              {t('help.quickLinks')}
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {quickLinks.map((link, index) => (
-                <Link
-                  key={index}
-                  to={link.path}
-                  className="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:border-green-400 hover:shadow-md transition-all group"
-                >
-                  <div className={`p-3 rounded-full ${link.color} group-hover:scale-110 transition-transform`}>
-                    <link.icon className="w-6 h-6" />
-                  </div>
-                  <span className="mt-2 text-sm font-medium text-gray-700 text-center">{t(link.titleKey)}</span>
-                </Link>
-              ))}
+          <div className="text-center mb-12">
+            {/* Search Section */}
+            <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-6 mb-8 relative overflow-hidden">
+              <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 opacity-5 pointer-events-none" />
+              <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2 relative z-10">
+                <Search className="w-5 h-5 text-green-600" />
+                {t('help.searchTopics')}
+              </h2>
+              <div className="relative z-10">
+                <input
+                  type="text"
+                  placeholder={t('help.typeQuestion')}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-700 bg-white/70"
+                />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              </div>
             </div>
-          </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* FAQs Section */}
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-green-600" />
-                  {t('help.faqs')}
-                </h2>
-                
-                <div className="space-y-3">
-                  {filteredFaqs.length > 0 ? (
-                    filteredFaqs.map((faq) => (
-                      <div 
-                        key={faq.id}
-                        className="border border-gray-200 rounded-lg overflow-hidden"
-                      >
-                        <button
-                          onClick={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
-                          className="w-full px-4 py-3 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-colors"
+            {/* Quick Links */}
+            <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-6 mb-8 relative overflow-hidden">
+              <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 opacity-5 pointer-events-none" />
+              <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2 relative z-10">
+                <FileText className="w-5 h-5 text-green-600" />
+                {t('help.quickLinks')}
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 relative z-10">
+                {quickLinks.map((link, index) => (
+                  <Link
+                    key={index}
+                    to={link.path}
+                    className="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:border-green-400 hover:shadow-md transition-all group"
+                  >
+                    <div className={`p-3 rounded-full ${link.color} group-hover:shadow-lg transition-shadow`}>
+                      <link.icon className="w-6 h-6" />
+                    </div>
+                    <span className="mt-2 text-sm font-medium text-gray-700 text-center">{t(link.titleKey)}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* FAQs Section */}
+              <div className="lg:col-span-2">
+                <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-6 relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 opacity-5 pointer-events-none" />
+                  <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2 relative z-10">
+                    <MessageSquare className="w-5 h-5 text-green-600" />
+                    {t('help.faqs')}
+                  </h2>
+
+                  <div className="space-y-3 relative z-10">
+                    {filteredFaqs.length > 0 ? (
+                      filteredFaqs.map((faq) => (
+                        <div
+                          key={faq.id}
+                          className="border border-gray-200 rounded-lg overflow-hidden bg-white/40 backdrop-blur-sm"
                         >
-                          <div className="flex items-center gap-3 text-left">
-                            <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded">
-                              {faq.category}
-                            </span>
-                            <span className="font-medium text-gray-800">{faq.question}</span>
-                          </div>
-                          {expandedFaq === faq.id ? (
-                            <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                          ) : (
-                            <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                          <button
+                            onClick={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
+                            className="w-full px-4 py-3 flex items-center justify-between bg-gray-50/50 hover:bg-gray-100/50 transition-colors"
+                          >
+                            <div className="flex items-center gap-3 text-left">
+                              <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded">
+                                {faq.category}
+                              </span>
+                              <span className="font-medium text-gray-800">{faq.question}</span>
+                            </div>
+                            {expandedFaq === faq.id ? (
+                              <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                            ) : (
+                              <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                            )}
+                          </button>
+                          {expandedFaq === faq.id && (
+                            <div className="px-4 py-4 bg-white/60 border-t border-gray-200">
+                              <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                            </div>
                           )}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8 text-gray-500">
+                        <HelpCircle className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                        <p>{t('help.noFaqsFound')}</p>
+                        <button
+                          onClick={() => setSearchQuery('')}
+                          className="mt-2 text-green-600 hover:underline"
+                        >
+                          {t('help.clearSearch')}
                         </button>
-                        {expandedFaq === faq.id && (
-                          <div className="px-4 py-4 bg-white border-t border-gray-200">
-                            <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                          </div>
-                        )}
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-8 text-gray-500">
-                      <HelpCircle className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                      <p>{t('help.noFaqsFound')}</p>
-                      <button 
-                        onClick={() => setSearchQuery('')}
-                        className="mt-2 text-green-600 hover:underline"
-                      >
-                        {t('help.clearSearch')}
-                      </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact & Support Section */}
+              <div className="space-y-6">
+                {/* Contact Info */}
+                <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-6 relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 opacity-5 pointer-events-none" />
+                  <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2 relative z-10">
+                    <Phone className="w-5 h-5 text-green-600" />
+                    {t('help.contactInfo')}
+                  </h2>
+                  <div className="space-y-4 relative z-10">
+                    {contactInfo.map((info, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className={`p-2 rounded-lg ${info.color}`}>
+                          <info.icon className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-gray-800">{t(info.titleKey)}</h3>
+                          {info.detailKeys ? (
+                            info.detailKeys.map((key, idx) => (
+                              <p key={idx} className="text-sm text-gray-600">{t(key)}: {info.details?.[idx]}</p>
+                            ))
+                          ) : (
+                            info.details?.map((detail, idx) => (
+                              <p key={idx} className="text-sm text-gray-600">{detail}</p>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Important Guidelines */}
+                <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-6 relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 opacity-5 pointer-events-none" />
+                  <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2 relative z-10">
+                    <Shield className="w-5 h-5 text-green-600" />
+                    {t('help.guidelines')}
+                  </h2>
+                  <ul className="space-y-3 text-sm text-gray-600">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{t('help.guideline1')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{t('help.guideline2')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{t('help.guideline3')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{t('help.guideline4')}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{t('help.guideline5')}</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* Contact & Support Section */}
-            <div className="space-y-6">
-              {/* Contact Info */}
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-green-600" />
-                  {t('help.contactInfo')}
-                </h2>
-                <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <div className={`p-2 rounded-lg ${info.color}`}>
-                        <info.icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-gray-800">{t(info.titleKey)}</h3>
-                        {info.detailKeys ? (
-                          info.detailKeys.map((key, idx) => (
-                            <p key={idx} className="text-sm text-gray-600">{t(key)}: {info.details?.[idx]}</p>
-                          ))
-                        ) : (
-                          info.details?.map((detail, idx) => (
-                            <p key={idx} className="text-sm text-gray-600">{detail}</p>
-                          ))
-                        )}
-                      </div>
-                    </div>
-                  ))}
+            {/* Still Need Help Banner */}
+            <div className="mt-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl shadow-lg p-6 text-white">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-full">
+                    <MessageSquare className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">{t('help.stillNeedHelp')}</h3>
+                    <p className="text-blue-100">{t('help.supportTeamAvailable')}</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <button className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors">
+                    {t('help.liveChat')}
+                  </button>
+                  <button className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors border border-white/30">
+                    {t('help.submitTicket')}
+                  </button>
                 </div>
               </div>
-
-              {/* Important Guidelines */}
-              <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-green-600" />
-                  {t('help.guidelines')}
-                </h2>
-                <ul className="space-y-3 text-sm text-gray-600">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>{t('help.guideline1')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>{t('help.guideline2')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>{t('help.guideline3')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>{t('help.guideline4')}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></span>
-                    <span>{t('help.guideline5')}</span>
-                  </li>
-                </ul>
-              </div>
             </div>
+
           </div>
-
-          {/* Still Need Help Banner */}
-          <div className="mt-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl shadow-lg p-6 text-white">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-white/20 rounded-full">
-                  <MessageSquare className="w-8 h-8" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">{t('help.stillNeedHelp')}</h3>
-                  <p className="text-blue-100">{t('help.supportTeamAvailable')}</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <button className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors">
-                  {t('help.liveChat')}
-                </button>
-                <button className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors border border-white/30">
-                  {t('help.submitTicket')}
-                </button>
-              </div>
-            </div>
-          </div>
-
         </div>
       </main>
 

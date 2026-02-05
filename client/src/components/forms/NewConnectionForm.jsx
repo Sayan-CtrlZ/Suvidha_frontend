@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { 
-  X, User, MapPin, Zap, FileCheck, CheckCircle2, ChevronRight, ChevronLeft, 
-  Upload, Camera, Shield, Phone, Mail, FileText, Building2, Home, Factory, 
+import {
+  X, User, MapPin, Zap, FileCheck, CheckCircle2, ChevronRight, ChevronLeft, ChevronDown,
+  Upload, Camera, Shield, Phone, Mail, FileText, Building2, Home, Factory,
   Tractor, AlertCircle, Printer, Download, CreditCard, Check, Loader2,
   IndianRupee, MessageSquare, ArrowRight
 } from 'lucide-react';
@@ -28,7 +28,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
     documentBack: null,
     documentFrontPreview: null,
     documentBackPreview: null,
-    
+
     // Address Details
     houseNo: '',
     street: '',
@@ -39,13 +39,13 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
     city: '',
     pincode: '',
     ownershipType: 'owned',
-    
+
     // Connection Details
     connectionType: 'domestic',
     loadRequired: '',
     phase: 'single',
     purpose: '',
-    
+
     // Terms
     termsAccepted: false
   });
@@ -72,10 +72,10 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
       industrial: { deposit: 15000, processing: 2500 },
       agricultural: { deposit: 2000, processing: 300 }
     };
-    
+
     const loadMultiplier = parseFloat(formData.loadRequired) || 1;
     const costs = baseCosts[formData.connectionType] || baseCosts.domestic;
-    
+
     return {
       securityDeposit: costs.deposit * Math.max(1, loadMultiplier / 5),
       processingFee: costs.processing,
@@ -135,7 +135,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
 
   const validateStep = (step) => {
     const newErrors = {};
-    
+
     if (step === 1) {
       if (!formData.fullName.trim()) newErrors.fullName = t('newConnection.validation.nameRequired');
       if (!formData.mobile.trim()) newErrors.mobile = t('newConnection.validation.mobileRequired');
@@ -147,7 +147,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
       if (!formData.documentFront) newErrors.documentFront = t('newConnection.validation.documentRequired');
       if (!documentVerified) newErrors.verification = t('newConnection.validation.verificationRequired');
     }
-    
+
     if (step === 2) {
       if (!formData.houseNo.trim()) newErrors.houseNo = t('newConnection.validation.addressRequired');
       if (!formData.street.trim()) newErrors.street = t('newConnection.validation.addressRequired');
@@ -157,16 +157,16 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
       if (!formData.pincode.trim()) newErrors.pincode = t('newConnection.validation.pincodeRequired');
       else if (!/^\d{6}$/.test(formData.pincode)) newErrors.pincode = t('newConnection.validation.pincodeInvalid');
     }
-    
+
     if (step === 3) {
       if (!formData.connectionType) newErrors.connectionType = t('newConnection.validation.connectionTypeRequired');
       if (!formData.loadRequired) newErrors.loadRequired = t('newConnection.validation.loadRequired');
     }
-    
+
     if (step === 4) {
       if (!formData.termsAccepted) newErrors.termsAccepted = t('newConnection.validation.termsRequired');
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -183,7 +183,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async () => {
     if (!validateStep(4)) return;
-    
+
     setIsSubmitting(true);
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2500));
@@ -208,56 +208,53 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
   const costs = getCostBreakdown();
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden flex flex-col my-auto">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col my-auto border-4 border-gray-100">
         {/* Header */}
-        <div className="bg-gradient-to-r from-violet-700 to-violet-600 px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-              <Zap size={24} className="text-white" />
+        <div className="bg-gradient-to-r from-violet-700 to-violet-600 px-6 sm:px-8 py-6 flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-5">
+            <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
+              <Zap size={32} className="text-white" />
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-white">{t('newConnection.title')}</h2>
-              <p className="text-xs sm:text-sm text-white/80">{t('newConnection.subtitle')}</p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t('newConnection.title')}</h2>
+              <p className="text-base sm:text-lg text-white/90 font-medium">{t('newConnection.subtitle')}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors"
+            className="w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors active:scale-95"
           >
-            <X size={20} />
+            <X size={32} />
           </button>
         </div>
 
         {/* Progress Steps */}
-        <div className="px-4 sm:px-6 py-4 bg-gray-50 border-b border-gray-200 flex-shrink-0">
-          <div className="flex items-center justify-between max-w-3xl mx-auto">
+        <div className="px-6 sm:px-8 py-6 bg-gray-50 border-b border-gray-200 flex-shrink-0">
+          <div className="flex items-center justify-between max-w-5xl mx-auto">
             {steps.map((step, index) => (
               <React.Fragment key={step.id}>
                 <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all ${
-                    currentStep > step.id 
-                      ? 'bg-violet-600 text-white' 
-                      : currentStep === step.id 
-                        ? 'bg-violet-600 text-white ring-4 ring-violet-200' 
-                        : 'bg-gray-200 text-gray-500'
-                  }`}>
+                  <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all shadow-sm ${currentStep > step.id
+                    ? 'bg-violet-600 text-white'
+                    : currentStep === step.id
+                      ? 'bg-violet-600 text-white ring-4 ring-violet-200 scale-110'
+                      : 'bg-white border-2 border-gray-200 text-gray-400'
+                    }`}>
                     {currentStep > step.id ? (
-                      <Check size={16} />
+                      <Check size={28} strokeWidth={3} />
                     ) : (
-                      <step.icon size={16} />
+                      <step.icon size={28} />
                     )}
                   </div>
-                  <span className={`text-[10px] sm:text-xs mt-1.5 font-medium text-center max-w-[60px] sm:max-w-none ${
-                    currentStep >= step.id ? 'text-violet-700' : 'text-gray-500'
-                  }`}>
+                  <span className={`text-sm sm:text-base mt-3 font-bold text-center ${currentStep >= step.id ? 'text-violet-800' : 'text-gray-400'
+                    }`}>
                     {step.name}
                   </span>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-1 sm:mx-2 rounded-full ${
-                    currentStep > step.id ? 'bg-violet-500' : 'bg-gray-200'
-                  }`} />
+                  <div className={`flex-1 h-2 mx-2 sm:mx-4 rounded-full ${currentStep > step.id ? 'bg-violet-500' : 'bg-gray-200'
+                    }`} />
                 )}
               </React.Fragment>
             ))}
@@ -282,77 +279,73 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.applicantDetails.fullName')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <User size={28} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                       type="text"
                       value={formData.fullName}
                       onChange={(e) => handleChange('fullName', e.target.value)}
                       placeholder={t('newConnection.applicantDetails.enterFullName')}
-                      className={`w-full pl-10 pr-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                        errors.fullName ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                      }`}
+                      className={`w-full pl-16 pr-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.fullName ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
                     />
                   </div>
-                  {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>}
+                  {errors.fullName && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.fullName}</p>}
                 </div>
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.applicantDetails.mobile')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <Phone size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Phone size={28} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                       type="tel"
                       value={formData.mobile}
                       onChange={(e) => handleChange('mobile', e.target.value.replace(/\D/g, '').slice(0, 10))}
                       placeholder={t('newConnection.applicantDetails.enterMobile')}
-                      className={`w-full pl-10 pr-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                        errors.mobile ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                      }`}
+                      className={`w-full pl-16 pr-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.mobile ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
                     />
                   </div>
-                  {errors.mobile && <p className="text-xs text-red-500 mt-1">{errors.mobile}</p>}
+                  {errors.mobile && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.mobile}</p>}
                 </div>
 
                 {/* Email */}
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.applicantDetails.email')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Mail size={28} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => handleChange('email', e.target.value)}
                       placeholder={t('newConnection.applicantDetails.enterEmail')}
-                      className={`w-full pl-10 pr-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                        errors.email ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                      }`}
+                      className={`w-full pl-16 pr-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.email ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
                     />
                   </div>
-                  {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.email}</p>}
                 </div>
 
                 {/* ID Proof Type */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.applicantDetails.idProof')} <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FileText size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <FileText size={28} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
                     <select
                       value={formData.idProofType}
                       onChange={(e) => handleChange('idProofType', e.target.value)}
-                      className={`w-full pl-10 pr-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors appearance-none bg-white ${
-                        errors.idProofType ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                      }`}
+                      className={`w-full pl-16 pr-10 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all appearance-none bg-white shadow-sm ${errors.idProofType ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
                     >
                       <option value="">{t('newConnection.applicantDetails.selectIdProof')}</option>
                       <option value="aadhaar">{t('newConnection.applicantDetails.idTypes.aadhaar')}</option>
@@ -361,39 +354,44 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                       <option value="driving">{t('newConnection.applicantDetails.idTypes.driving')}</option>
                       <option value="passport">{t('newConnection.applicantDetails.idTypes.passport')}</option>
                     </select>
+                    <ChevronDown size={28} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                   </div>
-                  {errors.idProofType && <p className="text-xs text-red-500 mt-1">{errors.idProofType}</p>}
+                  {errors.idProofType && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.idProofType}</p>}
                 </div>
 
                 {/* Document Number */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.applicantDetails.documentNumber')} <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="text"
-                    value={formData.documentNumber}
-                    onChange={(e) => handleChange('documentNumber', e.target.value.toUpperCase())}
-                    placeholder={t('newConnection.applicantDetails.enterDocNumber')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.documentNumber ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
-                  />
-                  {errors.documentNumber && <p className="text-xs text-red-500 mt-1">{errors.documentNumber}</p>}
+                  <div className="relative">
+                    <CreditCard size={28} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      value={formData.documentNumber}
+                      onChange={(e) => handleChange('documentNumber', e.target.value.toUpperCase())}
+                      placeholder={t('newConnection.applicantDetails.enterDocNumber')}
+                      className={`w-full pl-16 pr-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.documentNumber ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
+                    />
+                  </div>
+                  {errors.documentNumber && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.documentNumber}</p>}
                 </div>
               </div>
 
               {/* Document Upload Section */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
-                <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                  <Upload size={18} className="text-violet-600" />
+              <div className="mt-8 p-6 bg-violet-50 rounded-3xl border-2 border-violet-100">
+                <h4 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                  <div className="p-2 bg-white rounded-lg shadow-sm">
+                    <Upload size={24} className="text-violet-600" />
+                  </div>
                   {t('newConnection.applicantDetails.uploadDocument')}
                 </h4>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Front Side Upload */}
                   <div>
-                    <p className="text-xs font-medium text-gray-600 mb-2">
+                    <p className="text-lg font-bold text-gray-700 mb-3">
                       {t('newConnection.applicantDetails.uploadFront')} <span className="text-red-500">*</span>
                     </p>
                     <input
@@ -404,39 +402,44 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                       className="hidden"
                     />
                     {formData.documentFrontPreview ? (
-                      <div className="relative rounded-lg overflow-hidden border-2 border-violet-300 bg-violet-50">
-                        <img 
-                          src={formData.documentFrontPreview} 
-                          alt="Document Front" 
-                          className="w-full h-32 object-cover"
+                      <div className="relative rounded-2xl overflow-hidden border-4 border-violet-300 bg-white shadow-md group">
+                        <img
+                          src={formData.documentFrontPreview}
+                          alt="Document Front"
+                          className="w-full h-56 object-cover"
                         />
                         <button
                           onClick={() => fileInputRef.current?.click()}
-                          className="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity"
+                          className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
                         >
-                          <Camera size={24} />
+                          <Camera size={48} className="mb-2" />
+                          <span className="font-bold text-lg">Change Photo</span>
                         </button>
-                        <div className="absolute top-2 right-2 w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center">
-                          <Check size={14} className="text-white" />
+                        <div className="absolute top-3 right-3 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                          <Check size={24} className="text-white" strokeWidth={3} />
                         </div>
                       </div>
                     ) : (
                       <button
                         onClick={() => fileInputRef.current?.click()}
-                        className={`w-full h-32 border-2 border-dashed rounded-lg flex flex-col items-center justify-center gap-2 hover:border-violet-400 hover:bg-violet-50 transition-colors ${
-                          errors.documentFront ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                        }`}
+                        className={`w-full h-56 border-4 border-dashed rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-violet-500 hover:bg-violet-100/50 transition-all active:scale-95 ${errors.documentFront ? 'border-red-300 bg-red-50' : 'border-gray-300 bg-white'
+                          }`}
                       >
-                        <Upload size={24} className="text-gray-400" />
-                        <span className="text-xs text-gray-500 text-center px-2">{t('newConnection.applicantDetails.dragDrop')}</span>
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                          <Upload size={32} className="text-gray-400" />
+                        </div>
+                        <div className="text-center">
+                          <span className="text-lg font-bold text-gray-600 block">{t('newConnection.applicantDetails.dragDrop')}</span>
+                          <span className="text-sm text-gray-400 mt-1 block">Tap to upload</span>
+                        </div>
                       </button>
                     )}
-                    {errors.documentFront && <p className="text-xs text-red-500 mt-1">{errors.documentFront}</p>}
+                    {errors.documentFront && <p className="text-base text-red-600 mt-2 font-medium flex items-center gap-1"><AlertCircle size={16} /> {errors.documentFront}</p>}
                   </div>
 
                   {/* Back Side Upload */}
                   <div>
-                    <p className="text-xs font-medium text-gray-600 mb-2">
+                    <p className="text-lg font-bold text-gray-700 mb-3">
                       {t('newConnection.applicantDetails.uploadBack')}
                     </p>
                     <input
@@ -447,35 +450,43 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                       className="hidden"
                     />
                     {formData.documentBackPreview ? (
-                      <div className="relative rounded-lg overflow-hidden border-2 border-violet-300 bg-violet-50">
-                        <img 
-                          src={formData.documentBackPreview} 
-                          alt="Document Back" 
-                          className="w-full h-32 object-cover"
+                      <div className="relative rounded-2xl overflow-hidden border-4 border-violet-300 bg-white shadow-md group">
+                        <img
+                          src={formData.documentBackPreview}
+                          alt="Document Back"
+                          className="w-full h-56 object-cover"
                         />
                         <button
                           onClick={() => fileInputBackRef.current?.click()}
-                          className="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity"
+                          className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm"
                         >
-                          <Camera size={24} />
+                          <Camera size={48} className="mb-2" />
+                          <span className="font-bold text-lg">Change Photo</span>
                         </button>
-                        <div className="absolute top-2 right-2 w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center">
-                          <Check size={14} className="text-white" />
+                        <div className="absolute top-3 right-3 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                          <Check size={24} className="text-white" strokeWidth={3} />
                         </div>
                       </div>
                     ) : (
                       <button
                         onClick={() => fileInputBackRef.current?.click()}
-                        className="w-full h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 hover:border-violet-400 hover:bg-violet-50 transition-colors"
+                        className="w-full h-56 border-4 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center gap-4 hover:border-violet-500 hover:bg-violet-100/50 transition-all active:scale-95 bg-white"
                       >
-                        <Upload size={24} className="text-gray-400" />
-                        <span className="text-xs text-gray-500 text-center px-2">{t('newConnection.applicantDetails.dragDrop')}</span>
+                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                          <Upload size={32} className="text-gray-400" />
+                        </div>
+                        <div className="text-center">
+                          <span className="text-lg font-bold text-gray-600 block">{t('newConnection.applicantDetails.dragDrop')}</span>
+                          <span className="text-sm text-gray-400 mt-1 block">Tap to upload</span>
+                        </div>
                       </button>
                     )}
                   </div>
                 </div>
 
-                <p className="text-xs text-gray-500 mt-3">{t('newConnection.applicantDetails.maxSize')}</p>
+                <p className="text-sm font-medium text-gray-500 mt-4 text-center bg-white/50 py-2 rounded-lg border border-gray-200">
+                  {t('newConnection.applicantDetails.maxSize')}
+                </p>
 
                 {/* Verification Button */}
                 {formData.documentFront && formData.documentNumber && (
@@ -527,7 +538,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* House/Flat Number */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.houseNo')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -535,16 +546,15 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.houseNo}
                     onChange={(e) => handleChange('houseNo', e.target.value)}
                     placeholder={t('newConnection.addressDetails.enterHouseNo')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.houseNo ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
+                    className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.houseNo ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                      }`}
                   />
-                  {errors.houseNo && <p className="text-xs text-red-500 mt-1">{errors.houseNo}</p>}
+                  {errors.houseNo && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.houseNo}</p>}
                 </div>
 
                 {/* Street/Locality */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.streetLocality')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -552,16 +562,15 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.street}
                     onChange={(e) => handleChange('street', e.target.value)}
                     placeholder={t('newConnection.addressDetails.enterStreet')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.street ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
+                    className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.street ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                      }`}
                   />
-                  {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
+                  {errors.street && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.street}</p>}
                 </div>
 
                 {/* Landmark */}
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.landmark')}
                   </label>
                   <input
@@ -569,33 +578,35 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.landmark}
                     onChange={(e) => handleChange('landmark', e.target.value)}
                     placeholder={t('newConnection.addressDetails.enterLandmark')}
-                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-violet-400 transition-colors"
+                    className="w-full px-6 py-5 border-2 border-gray-200 rounded-2xl text-xl font-medium focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all shadow-sm"
                   />
                 </div>
 
                 {/* State */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.state')} <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    value={formData.state}
-                    onChange={(e) => handleChange('state', e.target.value)}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors appearance-none bg-white ${
-                      errors.state ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
-                  >
-                    <option value="">{t('newConnection.addressDetails.selectState')}</option>
-                    {states.map(state => (
-                      <option key={state} value={state}>{state}</option>
-                    ))}
-                  </select>
-                  {errors.state && <p className="text-xs text-red-500 mt-1">{errors.state}</p>}
+                  <div className="relative">
+                    <select
+                      value={formData.state}
+                      onChange={(e) => handleChange('state', e.target.value)}
+                      className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all appearance-none bg-white shadow-sm pr-12 ${errors.state ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
+                    >
+                      <option value="">{t('newConnection.addressDetails.selectState')}</option>
+                      {states.map(state => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
+                    <ChevronDown size={28} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  </div>
+                  {errors.state && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.state}</p>}
                 </div>
 
                 {/* District */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.district')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -603,16 +614,15 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.district}
                     onChange={(e) => handleChange('district', e.target.value)}
                     placeholder={t('newConnection.addressDetails.selectDistrict')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.district ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
+                    className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.district ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                      }`}
                   />
-                  {errors.district && <p className="text-xs text-red-500 mt-1">{errors.district}</p>}
+                  {errors.district && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.district}</p>}
                 </div>
 
                 {/* Sub-Division */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.subdivision')}
                   </label>
                   <input
@@ -620,13 +630,13 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.subdivision}
                     onChange={(e) => handleChange('subdivision', e.target.value)}
                     placeholder={t('newConnection.addressDetails.selectSubdivision')}
-                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-violet-400 transition-colors"
+                    className="w-full px-6 py-5 border-2 border-gray-200 rounded-2xl text-xl font-medium focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all shadow-sm"
                   />
                 </div>
 
                 {/* City */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.city')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -634,16 +644,15 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.city}
                     onChange={(e) => handleChange('city', e.target.value)}
                     placeholder={t('newConnection.addressDetails.enterCity')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.city ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
+                    className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.city ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                      }`}
                   />
-                  {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
+                  {errors.city && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.city}</p>}
                 </div>
 
                 {/* PIN Code */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.pincode')} <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -651,28 +660,26 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     value={formData.pincode}
                     onChange={(e) => handleChange('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}
                     placeholder={t('newConnection.addressDetails.enterPincode')}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors ${
-                      errors.pincode ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
+                    className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all shadow-sm ${errors.pincode ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                      }`}
                   />
-                  {errors.pincode && <p className="text-xs text-red-500 mt-1">{errors.pincode}</p>}
+                  {errors.pincode && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.pincode}</p>}
                 </div>
 
                 {/* Ownership Type */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <div className="sm:col-span-2">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.addressDetails.ownershipType')}
                   </label>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {['owned', 'rented', 'leased', 'govtQuarter'].map((type) => (
                       <button
                         key={type}
                         onClick={() => handleChange('ownershipType', type)}
-                        className={`px-3 py-2 rounded-lg text-sm font-medium border-2 transition-all ${
-                          formData.ownershipType === type
-                            ? 'bg-violet-600 text-white border-violet-600'
-                            : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                        }`}
+                        className={`px-4 py-5 rounded-2xl text-lg font-bold border-2 transition-all shadow-sm ${formData.ownershipType === type
+                          ? 'bg-violet-600 text-white border-violet-600 scale-[1.02] shadow-md'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300 hover:bg-violet-50'
+                          }`}
                       >
                         {t(`newConnection.addressDetails.${type}`)}
                       </button>
@@ -698,10 +705,10 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
 
               {/* Connection Type Cards */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                <label className="block text-xl font-bold text-gray-800 mb-4 ml-1">
                   {t('newConnection.connectionDetails.connectionType')} <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     { id: 'domestic', icon: Home, color: 'blue' },
                     { id: 'commercial', icon: Building2, color: 'purple' },
@@ -711,73 +718,79 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                     <button
                       key={id}
                       onClick={() => handleChange('connectionType', id)}
-                      className={`p-4 rounded-xl border-2 transition-all text-center ${
-                        formData.connectionType === id
-                          ? 'bg-violet-50 border-violet-500 ring-2 ring-violet-200'
-                          : 'bg-white border-gray-200 hover:border-violet-300'
-                      }`}
+                      className={`relative p-6 rounded-3xl border-4 transition-all text-center h-48 flex flex-col items-center justify-center gap-3 active:scale-95 ${formData.connectionType === id
+                          ? 'bg-violet-50 border-violet-500 ring-4 ring-violet-200 shadow-xl'
+                          : 'bg-white border-gray-200 hover:border-violet-300 hover:bg-violet-50'
+                        }`}
                     >
-                      <div className={`w-10 h-10 mx-auto rounded-lg flex items-center justify-center mb-2 ${
-                        formData.connectionType === id ? 'bg-violet-100' : 'bg-gray-100'
-                      }`}>
-                        <Icon size={20} className={formData.connectionType === id ? 'text-violet-600' : 'text-gray-500'} />
+                      {formData.connectionType === id && (
+                        <div className="absolute top-3 right-3 bg-violet-600 rounded-full p-1">
+                          <Check size={16} className="text-white" strokeWidth={3} />
+                        </div>
+                      )}
+                      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-1 ${formData.connectionType === id ? 'bg-violet-100' : 'bg-gray-100'
+                        }`}>
+                        <Icon size={32} className={formData.connectionType === id ? 'text-violet-600' : 'text-gray-500'} />
                       </div>
-                      <p className={`text-sm font-semibold ${formData.connectionType === id ? 'text-violet-700' : 'text-gray-700'}`}>
-                        {t(`newConnection.connectionDetails.${id}`)}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {t(`newConnection.connectionDetails.${id}Desc`)}
-                      </p>
+                      <div>
+                        <p className={`text-lg font-bold ${formData.connectionType === id ? 'text-violet-700' : 'text-gray-700'
+                          }`}>
+                          {t(`newConnection.connectionDetails.${id}`)}
+                        </p>
+                        <p className="text-sm font-medium text-gray-400 mt-1 line-clamp-1">
+                          {t(`newConnection.connectionDetails.${id}Desc`)}
+                        </p>
+                      </div>
                     </button>
                   ))}
                 </div>
-                {errors.connectionType && <p className="text-xs text-red-500 mt-1">{errors.connectionType}</p>}
+                {errors.connectionType && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.connectionType}</p>}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Load Required */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.connectionDetails.loadRequired')} <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    value={formData.loadRequired}
-                    onChange={(e) => handleChange('loadRequired', e.target.value)}
-                    className={`w-full px-4 py-2.5 border-2 rounded-lg focus:outline-none transition-colors appearance-none bg-white ${
-                      errors.loadRequired ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-violet-400'
-                    }`}
-                  >
-                    <option value="">{t('newConnection.connectionDetails.selectLoad')}</option>
-                    {loadOptions.map(load => (
-                      <option key={load} value={load}>{load}</option>
-                    ))}
-                  </select>
-                  {errors.loadRequired && <p className="text-xs text-red-500 mt-1">{errors.loadRequired}</p>}
+                  <div className="relative">
+                    <select
+                      value={formData.loadRequired}
+                      onChange={(e) => handleChange('loadRequired', e.target.value)}
+                      className={`w-full px-6 py-5 border-2 rounded-2xl text-xl font-medium focus:outline-none transition-all appearance-none bg-white shadow-sm pr-12 ${errors.loadRequired ? 'border-red-300 focus:border-red-400 bg-red-50' : 'border-gray-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100'
+                        }`}
+                    >
+                      <option value="">{t('newConnection.connectionDetails.selectLoad')}</option>
+                      {loadOptions.map(load => (
+                        <option key={load} value={load}>{load}</option>
+                      ))}
+                    </select>
+                    <ChevronDown size={28} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  </div>
+                  {errors.loadRequired && <p className="text-base text-red-600 mt-2 font-medium ml-1 flex items-center gap-1"><AlertCircle size={16} /> {errors.loadRequired}</p>}
                 </div>
 
                 {/* Phase Type */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.connectionDetails.phase')}
                   </label>
-                  <div className="flex gap-3">
+                  <div className="flex gap-4">
                     <button
                       onClick={() => handleChange('phase', 'single')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium border-2 transition-all ${
-                        formData.phase === 'single'
-                          ? 'bg-violet-600 text-white border-violet-600'
-                          : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                      }`}
+                      className={`flex-1 px-4 py-5 rounded-2xl text-lg font-bold border-2 transition-all shadow-sm ${formData.phase === 'single'
+                          ? 'bg-violet-600 text-white border-violet-600 scale-[1.02] shadow-md'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300 hover:bg-violet-50'
+                        }`}
                     >
                       {t('newConnection.connectionDetails.singlePhase')}
                     </button>
                     <button
                       onClick={() => handleChange('phase', 'three')}
-                      className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium border-2 transition-all ${
-                        formData.phase === 'three'
-                          ? 'bg-violet-600 text-white border-violet-600'
-                          : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300'
-                      }`}
+                      className={`flex-1 px-4 py-5 rounded-2xl text-lg font-bold border-2 transition-all shadow-sm ${formData.phase === 'three'
+                          ? 'bg-violet-600 text-white border-violet-600 scale-[1.02] shadow-md'
+                          : 'bg-white text-gray-700 border-gray-200 hover:border-violet-300 hover:bg-violet-50'
+                        }`}
                     >
                       {t('newConnection.connectionDetails.threePhase')}
                     </button>
@@ -786,19 +799,22 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
 
                 {/* Purpose */}
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xl font-bold text-gray-800 mb-3 ml-1">
                     {t('newConnection.connectionDetails.purpose')}
                   </label>
-                  <select
-                    value={formData.purpose}
-                    onChange={(e) => handleChange('purpose', e.target.value)}
-                    className="w-full px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-violet-400 transition-colors appearance-none bg-white"
-                  >
-                    <option value="">{t('newConnection.connectionDetails.selectPurpose')}</option>
-                    {['residential', 'shop', 'office', 'factory', 'farm', 'hospital', 'school', 'other'].map(purpose => (
-                      <option key={purpose} value={purpose}>{t(`newConnection.connectionDetails.purposes.${purpose}`)}</option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={formData.purpose}
+                      onChange={(e) => handleChange('purpose', e.target.value)}
+                      className="w-full px-6 py-5 border-2 border-gray-200 rounded-2xl text-xl font-medium focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-100 transition-all appearance-none bg-white shadow-sm pr-12"
+                    >
+                      <option value="">{t('newConnection.connectionDetails.selectPurpose')}</option>
+                      {['residential', 'shop', 'office', 'factory', 'farm', 'hospital', 'school', 'other'].map(purpose => (
+                        <option key={purpose} value={purpose}>{t(`newConnection.connectionDetails.purposes.${purpose}`)}</option>
+                      ))}
+                    </select>
+                    <ChevronDown size={28} className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                  </div>
                 </div>
               </div>
 
@@ -953,7 +969,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
               <div className="w-20 h-20 mx-auto rounded-full bg-violet-100 flex items-center justify-center">
                 <CheckCircle2 size={48} className="text-violet-600" />
               </div>
-              
+
               <div>
                 <h3 className="text-2xl font-bold text-gray-900">{t('newConnection.confirmation.title')}</h3>
                 <p className="text-gray-600 mt-2">{t('newConnection.confirmation.subtitle')}</p>
@@ -1055,7 +1071,7 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
                   {t('newConnection.confirmation.printAcknowledgement')}
                 </button>
                 <button
-                  onClick={() => {}}
+                  onClick={() => { }}
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-violet-500 text-violet-700 rounded-lg font-semibold hover:bg-violet-50 transition-colors"
                 >
                   <Download size={18} />
@@ -1075,12 +1091,12 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
 
         {/* Footer Navigation */}
         {currentStep < 5 && (
-          <div className="px-4 sm:px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between flex-shrink-0">
+          <div className="px-6 sm:px-8 py-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between flex-shrink-0">
             <button
               onClick={currentStep === 1 ? onClose : handleBack}
-              className="flex items-center gap-2 px-4 sm:px-6 py-2.5 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+              className="flex items-center gap-3 px-6 sm:px-8 py-4 text-gray-600 hover:bg-gray-200 hover:text-gray-900 font-bold rounded-2xl transition-colors text-lg"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={28} />
               <span className="hidden sm:inline">{currentStep === 1 ? t('common.cancel') : t('progress.back')}</span>
             </button>
 
@@ -1088,16 +1104,16 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex items-center gap-2 px-6 sm:px-8 py-2.5 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-lg font-bold hover:from-violet-700 hover:to-violet-800 transition-all disabled:opacity-50 shadow-sm"
+                className="flex items-center gap-3 px-8 sm:px-12 py-4 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-2xl font-bold hover:from-violet-700 hover:to-violet-800 transition-all disabled:opacity-50 shadow-lg text-lg active:scale-95"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 size={18} className="animate-spin" />
+                    <Loader2 size={24} className="animate-spin" />
                     {t('newConnection.review.submitting')}
                   </>
                 ) : (
                   <>
-                    <CreditCard size={18} />
+                    <CreditCard size={24} />
                     {t('newConnection.review.submitApplication')}
                   </>
                 )}
@@ -1105,10 +1121,10 @@ const NewConnectionForm = ({ isOpen, onClose }) => {
             ) : (
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 px-6 sm:px-8 py-2.5 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-lg font-bold hover:from-violet-700 hover:to-violet-800 transition-all shadow-sm"
+                className="flex items-center gap-3 px-8 sm:px-12 py-4 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-2xl font-bold hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg text-lg active:scale-95"
               >
                 <span>{t('progress.next')}</span>
-                <ChevronRight size={20} />
+                <ChevronRight size={28} />
               </button>
             )}
           </div>
