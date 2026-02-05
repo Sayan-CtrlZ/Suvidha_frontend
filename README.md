@@ -1,4 +1,3 @@
-git clone <repository-url>
 # SUVIDHA - Government Citizen Services Portal
 
 A modern, responsive web application for delivering government services to citizens with an intuitive interface and seamless user experience.
@@ -39,15 +38,41 @@ SUVIDHA is a Government of India initiative providing citizens easy access to go
 
 ## Features
 
-- Multi-language support with Context API
-- Responsive design for all devices
-- Service directory with expandable details
-- Animated news ticker for updates
-- Authentication pages (Sign In/Sign Up)
-- Quick access service cards
-- Government branding with emblem and logo
-- Smooth animations and transitions
+- **Comprehensive Service Modules**: Dedicated sections for Electricity, Gas, Water, Waste Management, and Municipal Services.
+- **Interactive Dashboards**: Billing dashboards with payment history, consumption stats, and receipt downloads.
+- **New Connection Applications**: Multi-step, user-friendly forms for applying for new utility connections.
+- **Kiosk-Optimized Mode**: Specialized, accessible UI components (large touch targets, simplified forms) for public kiosk terminals.
+- **Unified Design System**: Standardized "PageHeader" component and consistent theming across all service pages.
+- **Multi-language Support**: Real-time language switching with Context API.
+- **Responsive Design**: Fully responsive layout optimized for mobile, tablet, and desktop.
+- **Role-Based Access Control**: Distinct portals for Citizens, Department Heads, and Super Admins.
+- **Government Branding**: Official emblem, localized headers, and trust indicators.
+- **Smooth Animations**: Animated news ticker and page transitions.
 - Trust indicators and verification marks
+
+---
+
+## Access & Credentials
+
+Use the following credentials to access the different portals of the application.
+
+### 1. Citizen Portal (User)
+*   **URL**: `/signin`
+*   **Email**: `test@suvidha.gov.in`
+*   **Password**: `test123`
+*   **Role**: Standard user access to apply for services, pay bills, and view history.
+
+### 2. Department Admin Portal
+*   **URL**: `/admin/login`
+*   **Email**: `admin@suvidha.gov.in`
+*   **Password**: `admin123`
+*   **Role**: Department Head access to manage specific utility services (Electricity, Gas, Water).
+
+### 3. Super Admin Portal
+*   **URL**: `/super-admin/login`
+*   **Email**: `super@suvidha.gov.in`
+*   **Password**: `super123`
+*   **Role**: System-wide access to oversee all departments, users, and platform settings.
 
 ---
 
@@ -124,6 +149,8 @@ src/
 ├── components/          # Reusable UI components
 ├── pages/              # Page components (Home, Services, Auth)
 ├── context/            # Language context and state management
+├── hooks/              # Custom React hooks
+├── utils/              # Utility functions and helpers
 ├── assets/             # Images (emblem, logo, banner)
 ├── App.jsx             # Main application component
 └── main.jsx            # Entry point
@@ -133,6 +160,7 @@ src/
 
 ## Key Components
 
+- **TopBar**: Top-level navigation and info bar
 - **HeroSection**: Government header with branding
 - **TickerBanner**: Animated news ticker with announcements
 - **ServiceCard**: Individual service display with expandable details
@@ -140,6 +168,9 @@ src/
 - **LanguageSwitcher**: Multi-language support
 - **Footer**: Application footer with links
 - **QuickActionCard**: Quick access service shortcuts
+- **TrustIndicators**: Visual section establishing trust
+- **ProgressIndicator**: Visual indicators for multi-step processes
+- **ServiceStatus**: Status indicators for services
 
 ---
 
