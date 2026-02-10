@@ -89,7 +89,7 @@ const SignIn = () => {
               <form onSubmit={handleSubmit} className="space-y-3 px-6">
                 {/* Email Input */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5 ml-1">
                     {t('auth.emailOrUserId')}
                   </label>
                   <input
@@ -105,7 +105,7 @@ const SignIn = () => {
 
                 {/* Password Input */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5 ml-1">
                     {t('auth.password')}
                   </label>
                   <div className="relative">
@@ -138,7 +138,7 @@ const SignIn = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full px-4 py-3 text-base bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                  className="w-full px-4 py-4 text-lg bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-2xl font-black uppercase tracking-widest hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-[0_8px_0_0_rgba(21,128,61,1)] active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                 >
                   {isLoading ? t('auth.signingIn') : t('auth.signin')}
                 </button>
@@ -166,7 +166,7 @@ const SignIn = () => {
                 </p>
                 <Link
                   to="/signup"
-                  className="w-full px-3 py-1.5 text-sm border-2 bg-gradient-to-r from-green-700 via-green-600 to-green-700 bg-clip-border text-white rounded-md font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all text-center block shadow-md hover:shadow-lg"
+                  className="w-full px-3 py-3 text-sm border-2 bg-gradient-to-r from-slate-800 to-slate-900 border-slate-700 text-white rounded-xl font-bold uppercase tracking-wider transition-all text-center block shadow-[0_4px_0_0_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none"
                 >
                   {t('auth.createaccount')}
                 </Link>

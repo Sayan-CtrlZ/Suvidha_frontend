@@ -89,7 +89,7 @@ const GasServicesPage = () => {
 
       {/* Main Feature Grid */}
       <section className="py-12 px-4 sm:px-6 mb-12 -mt-8 relative z-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
 
             {services.map((service) => {
@@ -131,9 +131,9 @@ const GasServicesPage = () => {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-gray-900 transition-colors mt-4">
+                    <div className="w-fit self-center mt-6 py-3 px-16 bg-gradient-to-r from-orange-500 to-red-600 border border-orange-500 border-b-4 border-b-orange-800 rounded-xl flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-orange-200 group-hover:shadow-orange-400 transition-all group-active:border-b-0 group-active:translate-y-1">
                       <span>Access Features</span>
-                      <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight size={18} className="text-white/90" />
                     </div>
                   </div>
                 </button>

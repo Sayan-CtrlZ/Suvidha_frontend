@@ -24,7 +24,8 @@ const ServicesOffered = () => {
       icon: Zap,
       gradient: 'from-violet-600 to-indigo-600',
       shadowColor: 'hover:shadow-violet-500/70',
-      link: '/services/electricity'
+      link: '/services/electricity',
+      buttonStyle: 'bg-gradient-to-r from-violet-600 to-indigo-600 border-violet-500 border-b-violet-800 shadow-violet-200 group-hover:shadow-violet-400'
     },
     {
       id: 2,
@@ -33,7 +34,8 @@ const ServicesOffered = () => {
       icon: Flame,
       gradient: 'from-orange-500 to-red-600',
       shadowColor: 'hover:shadow-orange-500/70',
-      link: '/services/gas'
+      link: '/services/gas',
+      buttonStyle: 'bg-gradient-to-r from-orange-500 to-red-600 border-orange-500 border-b-orange-800 shadow-orange-200 group-hover:shadow-orange-400'
     },
     {
       id: 3,
@@ -42,7 +44,8 @@ const ServicesOffered = () => {
       icon: Droplet,
       gradient: 'from-cyan-500 to-blue-600',
       shadowColor: 'hover:shadow-cyan-500/70',
-      link: '/services/water'
+      link: '/services/water',
+      buttonStyle: 'bg-gradient-to-r from-cyan-500 to-blue-600 border-cyan-500 border-b-blue-800 shadow-cyan-200 group-hover:shadow-cyan-400'
     },
     {
       id: 4,
@@ -51,7 +54,8 @@ const ServicesOffered = () => {
       icon: Trash2,
       gradient: 'from-emerald-500 to-green-600',
       shadowColor: 'hover:shadow-emerald-500/70',
-      link: '/services/waste'
+      link: '/services/waste',
+      buttonStyle: 'bg-gradient-to-r from-emerald-500 to-green-600 border-emerald-500 border-b-emerald-800 shadow-emerald-200 group-hover:shadow-emerald-400'
     },
     {
       id: 5,
@@ -60,7 +64,8 @@ const ServicesOffered = () => {
       icon: FileText,
       gradient: 'from-teal-500 to-emerald-600',
       shadowColor: 'hover:shadow-teal-500/70',
-      link: '/services/grievance'
+      link: '/services/grievance',
+      buttonStyle: 'bg-gradient-to-r from-teal-500 to-emerald-600 border-teal-500 border-b-teal-800 shadow-teal-200 group-hover:shadow-teal-400'
     },
   ];
 
@@ -120,9 +125,9 @@ const ServicesOffered = () => {
                     </div>
 
                     {/* Action Footer */}
-                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-gray-900 transition-colors pt-6 border-t border-gray-100 mt-2">
+                    <div className={`w-full mt-6 py-3 px-4 border border-b-4 rounded-xl flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all group-active:border-b-0 group-active:translate-y-1 ${service.buttonStyle}`}>
                       <span>{t('services.viewServices')}</span>
-                      <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight size={18} className="text-white/90" />
                     </div>
                   </div>
                 </button>

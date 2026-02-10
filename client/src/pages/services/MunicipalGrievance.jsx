@@ -41,7 +41,7 @@ const MunicipalGrievancePage = () => {
 
       {/* Main Feature Grid (Huge Cards) */}
       <section className="py-12 px-4 sm:px-6 mb-12 -mt-8 relative z-20">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 mb-12">
 
             {/* File Complaint Card */}
@@ -67,9 +67,9 @@ const MunicipalGrievancePage = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-red-600 mt-6">
+                <div className="w-fit self-center mt-6 py-3 px-16 bg-gradient-to-r from-red-600 to-rose-600 border border-red-500 border-b-4 border-b-red-800 rounded-xl flex items-center justify-center gap-2 text-lg font-bold uppercase tracking-wider text-white shadow-lg shadow-red-200 group-hover:shadow-red-400 transition-all group-active:border-b-0 group-active:translate-y-1">
                   <span>Start Now</span>
-                  <ArrowRight size={24} className="transform group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight size={24} className="text-white/90" />
                 </div>
               </div>
             </button>
@@ -97,9 +97,9 @@ const MunicipalGrievancePage = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 text-lg font-bold uppercase tracking-wider text-blue-600 mt-6">
+                <div className="w-fit self-center mt-6 py-3 px-16 bg-gradient-to-r from-blue-600 to-indigo-600 border border-blue-500 border-b-4 border-b-blue-800 rounded-xl flex items-center justify-center gap-2 text-lg font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-200 group-hover:shadow-blue-400 transition-all group-active:border-b-0 group-active:translate-y-1">
                   <span>Check Status</span>
-                  <ArrowRight size={24} className="transform group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight size={24} className="text-white/90" />
                 </div>
               </div>
             </button>

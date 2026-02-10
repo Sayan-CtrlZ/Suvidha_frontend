@@ -5,7 +5,7 @@ import TopBar from '../components/common/TopBar';
 import NavBar from '../components/common/NavBar';
 import AnimatedBackground from '../components/common/AnimatedBackground';
 import Footer from '../components/common/Footer';
-import BackButton from '../components/common/BackButton';
+import PageHeader from '../components/common/PageHeader';
 
 const AboutUs = () => {
     const { t } = useLanguage();
@@ -16,29 +16,21 @@ const AboutUs = () => {
             <AnimatedBackground />
             <NavBar />
 
-            {/* Page Header */}
-            <section className="w-full pt-2 md:pt-3 pb-4 md:pb-5 px-3 sm:px-6 bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-900 shadow-2xl relative overflow-hidden">
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <BackButton
-                        to="/"
-                        text={t('common.back')}
-                        className="mb-6 scale-90 origin-left !bg-white/10 !text-white !border-white/20 hover:!bg-white/20"
-                    />
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-                            <Building2 size={32} className="text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide uppercase">About SUVIDHA</h1>
-                            <p className="text-indigo-50 text-sm sm:text-base mt-1 font-medium">Empowering citizens through digital governance</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <PageHeader
+                title="About SUVIDHA"
+                description="Empowering citizens through digital governance"
+                icon={Building2}
+                watermarkIcon={Building2}
+                to="/"
+                gradient="bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-900"
+                stripeColor="via-indigo-400/30"
+                orb1Color="from-indigo-400/15 to-purple-500/15"
+                orb2Color="from-purple-400/10 to-indigo-500/10"
+            />
 
             {/* Content */}
             <section className="py-6 sm:py-10 px-3 sm:px-6">
-                <div className="max-w-5xl mx-auto space-y-6">
+                <div className="max-w-7xl mx-auto space-y-6">
 
                     {/* Mission */}
                     <div className="bg-white rounded-xl shadow-md border-2 border-gray-200 p-6">

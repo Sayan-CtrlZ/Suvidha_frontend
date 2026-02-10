@@ -49,21 +49,27 @@ const Footer = () => {
                 <ChevronRight size={20} className="text-gray-500 group-hover:text-green-400" />
                 <span className="text-lg font-medium">{t('footer.sitemap')}</span>
               </Link>
+              <Link to="/contact" className="flex items-center gap-3 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition border border-gray-700 hover:border-green-500 group">
+                <ChevronRight size={20} className="text-gray-500 group-hover:text-green-400" />
+                <span className="text-lg font-medium">{t('footer.contactUs')}</span>
+              </Link>
             </div>
           </div>
 
           {/* Contact Info - Large Text */}
           <div className="col-span-1 md:col-span-2 lg:col-span-2">
-            <h4 className="text-xl font-bold mb-6 flex items-center gap-2 text-green-400">
-              <Phone size={24} /> {t('footer.contactUs')}
-            </h4>
+            <Link to="/contact" className="hover:opacity-80 transition-opacity">
+              <h4 className="text-xl font-bold mb-6 flex items-center gap-2 text-green-400">
+                <Phone size={24} /> {t('footer.contactUs')}
+              </h4>
+            </Link>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700">
                 <div className="flex items-center gap-4 mb-2">
                   <div className="p-3 bg-green-900/50 rounded-full text-green-400"><Phone size={28} /></div>
                   <div>
                     <p className="text-sm text-gray-400">Toll Free Number</p>
-                    <p className="text-2xl font-bold text-white">1800-000-SUVIDHA</p>
+                    <p className="text-2xl font-bold text-white">1800-234-9876</p>
                   </div>
                 </div>
               </div>
@@ -81,7 +87,7 @@ const Footer = () => {
                   <div className="p-3 bg-red-900/50 rounded-full text-red-400"><MapPin size={28} /></div>
                   <div>
                     <p className="text-sm text-gray-400">Head Office</p>
-                    <p className="text-lg font-bold text-white">Ministry of Housing and Urban Affairs,<br />Nirman Bhawan, New Delhi - 110011</p>
+                    <p className="text-lg font-bold text-white">Suvidha Bhavan, Block-B,<br />Sector 18, New Delhi - 110001</p>
                   </div>
                 </div>
               </div>

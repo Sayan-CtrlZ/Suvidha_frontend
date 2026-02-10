@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "ଆକାଉଣ୍ଟ ବିବରଣୀ",
     "connectionInfo": "ସଂଯୋଗ ସୂଚନା",
+    "personalInfo": "ବ୍ୟକ୍ତିଗତ ସୂଚନା",
     "name": "ନାମ",
+    "email": "ଇମେଲ",
+    "phone": "ଫୋନ",
+    "state": "ରାଜ୍ୟ",
+    "district": "ଜିଲ୍ଲା",
     "consumerNo": "କନ୍ସୁମର ନମ୍ବର",
     "connectionType": "ପ୍ରକାର",
     "domestic": "ଘରୋଇ",

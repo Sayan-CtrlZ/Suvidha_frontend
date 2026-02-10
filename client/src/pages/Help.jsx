@@ -25,7 +25,7 @@ import NavBar from '../components/common/NavBar';
 
 import Footer from '../components/common/Footer';
 import AnimatedBackground from '../components/common/AnimatedBackground';
-import BackButton from '../components/common/BackButton';
+import PageHeader from '../components/common/PageHeader';
 import { useLanguage } from '../context/LanguageContext';
 
 const HelpPage = () => {
@@ -136,49 +136,21 @@ const HelpPage = () => {
 
 
 
-      {/* Government-style Header - Enhanced Aesthetic */}
-      <div className="bg-gradient-to-br from-emerald-800 via-green-700 to-emerald-800 text-white pt-2 md:pt-3 pb-4 md:pb-5 shadow-2xl relative overflow-hidden">
-        {/* Sophisticated Mesh Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.25]">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid-help" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
-                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
-                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid-help)" />
-          </svg>
-        </div>
-
-        {/* Elegant Gradient Orbs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/15 to-green-500/15 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-teal-400/10 to-emerald-500/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
-
-        {/* Decorative Line Accent */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
-
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-white/20 rounded-lg backdrop-blur-sm border border-white/20">
-              <HelpCircle className="w-8 h-8" />
-            </div>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold">{t('help.title')}</h1>
-              <p className="text-emerald-50 mt-1">{t('help.desc')}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title={t('help.title')}
+        description={t('help.desc')}
+        icon={HelpCircle}
+        watermarkIcon={HelpCircle}
+        to="/"
+        gradient="bg-gradient-to-br from-emerald-800 via-green-700 to-emerald-800"
+        stripeColor="via-emerald-400/30"
+        orb1Color="from-emerald-400/15 to-green-500/15"
+        orb2Color="from-teal-400/10 to-emerald-500/10"
+      />
 
       {/* Main Content */}
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Back Button */}
-          <div className="mb-8">
-            <BackButton />
-          </div>
+        <div className="max-w-7xl mx-auto">
 
           <div className="text-center mb-12">
             {/* Search Section */}
@@ -360,9 +332,9 @@ const HelpPage = () => {
                   <button className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition-colors">
                     {t('help.liveChat')}
                   </button>
-                  <button className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors border border-white/30">
+                  <Link to="/contact" className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors border border-white/30">
                     {t('help.submitTicket')}
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

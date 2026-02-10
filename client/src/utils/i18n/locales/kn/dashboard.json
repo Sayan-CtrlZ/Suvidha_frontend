@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "ಖಾತೆ ವಿವರಗಳು",
     "connectionInfo": "ಸಂಪರ್ಕ ಮಾಹಿತಿ",
+    "personalInfo": "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
     "name": "ಹೆಸರು",
+    "email": "ಇಮೇಲ್",
+    "phone": "ಫೋನ್",
+    "state": "ರಾಜ್ಯ",
+    "district": "ಜಿಲ್ಲೆ",
     "consumerNo": "ಕನ್ಸ್ಯೂಮರ್ ನಂಬರ್",
     "connectionType": "ಪ್ರಕಾರ",
     "domestic": "ಮನೆ ಬಳಕೆ",

@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "അക്കൗണ്ട് വിശദാംശങ്ങൾ",
     "connectionInfo": "കണക്ഷൻ വിവരങ്ങൾ",
+    "personalInfo": "വ്യക്തിഗത വിവരം",
     "name": "പേര്",
+    "email": "ഇമെയിൽ",
+    "phone": "ഫോൺ",
+    "state": "സംസ്ഥാനം",
+    "district": "ജില്ല",
     "consumerNo": "കൺസ്യൂമർ നമ്പർ",
     "connectionType": "തരം",
     "domestic": "ഗാർഹിക",

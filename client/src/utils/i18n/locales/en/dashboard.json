@@ -27,6 +27,8 @@
         "name": "Full Name",
         "email": "Email Address",
         "phone": "Phone Number",
+        "state": "State",
+        "district": "District",
         "address": "Postal Address",
         "updateProfile": "Update Profile",
         "saveChanges": "Save Changes",

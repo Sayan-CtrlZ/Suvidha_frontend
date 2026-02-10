@@ -40,7 +40,19 @@ import { LanguageProvider } from './context/LanguageContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 
 const App = () => {
-  const [languageSelected, setLanguageSelected] = useState(true);
+  // Check if language was already selected or skipped in this session
+  const [languageSelected, setLanguageSelected] = useState(() => {
+    return localStorage.getItem('suvidha-language') || sessionStorage.getItem('suvidha-language-skipped');
+  });
+
+  const handleLanguageSelect = () => {
+    setLanguageSelected(true);
+  };
+
+  const handleLanguageSkip = () => {
+    sessionStorage.setItem('suvidha-language-skipped', 'true');
+    setLanguageSelected(true);
+  };
 
   return (
     <AuthProvider>
@@ -105,7 +117,10 @@ const App = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           ) : (
-            <LanguageSelection onLanguageSelect={() => setLanguageSelected(true)} />
+            <LanguageSelection
+              onLanguageSelect={handleLanguageSelect}
+              onClose={handleLanguageSkip}
+            />
           )}
         </Router>
       </LanguageProvider>

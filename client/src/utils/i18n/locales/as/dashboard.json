@@ -22,7 +22,18 @@
   "account": {
     "accountDetails": "একাউণ্ট বিৱৰণ",
     "connectionInfo": "সংযোগ তথ্য",
+    "personalInfo": "ব্যক্তিগত তথ্য",
     "name": "নাম",
+    "email": "ইমেইল ঠিকনা",
+    "phone": "ফোন নম্বৰ",
+    "state": "ৰাজ্য",
+    "district": "জিলা",
+    "address": "ঠিকনা",
+    "updateProfile": "প্ৰফাইল আপডেট কৰক",
+    "saveChanges": "পৰিবৰ্তন সংৰক্ষণ কৰক",
+    "profileUpdated": "প্ৰফাইল সফলতাৰে আপডেট কৰা হৈছে!",
+    "memberSince": "ৰ পৰা সদস্য",
+    "userId": "ইউজাৰ আইডি",
     "consumerNo": "কনজিউমাৰ নম্বৰ",
     "connectionType": "প্ৰকাৰ",
     "domestic": "গৃহস্থালি",
@@ -30,7 +41,11 @@
     "industrial": "ঔদ্যোগিক",
     "sanctionedLoad": "লোড",
     "meterNo": "মিটাৰ নম্বৰ",
-    "address": "ঠিকনা"
+    "back": "পিছলৈ",
+    "unsavedChanges": "অসংৰক্ষিত পৰিবৰ্তন",
+    "leaveConfirm": "আপোনাৰ অসংৰক্ষিত পৰিবৰ্তন আছে। আপুনি নিশ্চিতনে যে আপুনি ওলাই যাব বিচাৰে?",
+    "leave": "ওলাই যাওক",
+    "stay": "থাকক আৰু সংৰক্ষণ কৰক"
   },
   "billing": {
     "currentBill": "বৰ্তমান বিল",

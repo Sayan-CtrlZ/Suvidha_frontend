@@ -27,6 +27,8 @@
     "name": "पूरा नाम",
     "email": "ईमेल पता",
     "phone": "फ़ोन नंबर",
+    "state": "राज्य",
+    "district": "ज़िला",
     "address": "पता",
     "updateProfile": "प्रोफ़ाइल अपडेट करें",
     "saveChanges": "बदलाव सेव करें",

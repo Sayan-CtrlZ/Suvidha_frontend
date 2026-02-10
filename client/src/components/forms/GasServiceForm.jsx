@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Upload, Calendar, MapPin, AlertTriangle, Flame } from 'lucide-react';
+import { X, CheckCircle2, Upload, Calendar, MapPin, AlertTriangle, Flame, Globe, Search } from 'lucide-react';
+import { locationData } from '../../constants/locations';
 
 const GasServiceForm = ({ isOpen, onClose, category, action }) => {
     const [submitted, setSubmitted] = useState(false);
@@ -7,7 +8,9 @@ const GasServiceForm = ({ isOpen, onClose, category, action }) => {
         name: '',
         consumerNumber: '',
         description: '',
-        address: '',
+        state: '',
+        district: '',
+        addressDetail: '',
         date: ''
     });
 
@@ -22,8 +25,17 @@ const GasServiceForm = ({ isOpen, onClose, category, action }) => {
 
     const resetForm = () => {
         setSubmitted(false);
-        setFormData({ name: '', consumerNumber: '', description: '', address: '', date: '' });
+        setFormData({ name: '', consumerNumber: '', description: '', state: '', district: '', addressDetail: '', date: '' });
         onClose();
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+            ...(name === 'state' ? { district: '' } : {})
+        }));
     };
 
     const renderFields = () => {
@@ -42,23 +54,56 @@ const GasServiceForm = ({ isOpen, onClose, category, action }) => {
                     </div>
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Description of Incident</label>
+                            <label className="block text-sm font-bold text-gray-700 mb-1">Description of Incident</label>
                             <textarea
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border-2 border-slate-100 rounded-xl focus:ring-4 focus:ring-red-500/10 focus:border-red-500 outline-none transition-all"
                                 rows="3"
-                                placeholder="Describe the leak or emergency..."
+                                placeholder="Where is the leak? Is there a smell of gas?"
                                 required
                             ></textarea>
                         </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">State</label>
+                                <select
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleInputChange}
+                                    className="w-full p-3 border-2 border-slate-100 rounded-xl focus:border-red-500 outline-none"
+                                >
+                                    <option value="">Select State</option>
+                                    {Object.keys(locationData).sort().map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">District</label>
+                                <select
+                                    name="district"
+                                    value={formData.district}
+                                    onChange={handleInputChange}
+                                    disabled={!formData.state}
+                                    className="w-full p-3 border-2 border-slate-100 rounded-xl focus:border-red-500 outline-none disabled:opacity-50"
+                                >
+                                    <option value="">Select District</option>
+                                    {formData.state && locationData[formData.state].sort().map(d => <option key={d} value={d}>{d}</option>)}
+                                </select>
+                            </div>
+                        </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Location Details</label>
+                            <label className="block text-sm font-bold text-gray-700 mb-1">Local Address</label>
                             <div className="flex gap-2">
                                 <input
                                     type="text"
-                                    className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                                    name="addressDetail"
+                                    value={formData.addressDetail}
+                                    onChange={handleInputChange}
+                                    className="flex-1 p-3 border-2 border-slate-100 rounded-xl focus:border-red-500 outline-none"
                                     placeholder="Enter address or landmark"
                                 />
-                                <button type="button" className="p-3 bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200">
+                                <button type="button" className="p-3 bg-red-50 rounded-xl text-red-600 hover:bg-red-100 transition-colors">
                                     <MapPin size={20} />
                                 </button>
                             </div>
@@ -73,10 +118,13 @@ const GasServiceForm = ({ isOpen, onClose, category, action }) => {
             return (
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Consumer Number</label>
+                        <label className="block text-sm font-bold text-gray-700 mb-1">Consumer Number</label>
                         <input
                             type="text"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                            name="consumerNumber"
+                            value={formData.consumerNumber}
+                            onChange={handleInputChange}
+                            className="w-full p-3 border-2 border-slate-100 rounded-xl focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 outline-none transition-all font-mono"
                             placeholder="Enter Gas Consumer ID"
                             required
                         />
@@ -231,8 +279,8 @@ const GasServiceForm = ({ isOpen, onClose, category, action }) => {
                         type="submit"
                         form="gas-service-form"
                         className={`px-8 py-2.5 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 ${category === 'safety'
-                                ? 'bg-red-600 hover:bg-red-700 shadow-red-200'
-                                : 'bg-orange-600 hover:bg-orange-700 shadow-orange-200'
+                            ? 'bg-red-600 hover:bg-red-700 shadow-red-200'
+                            : 'bg-orange-600 hover:bg-orange-700 shadow-orange-200'
                             }`}
                     >
                         Submit Request

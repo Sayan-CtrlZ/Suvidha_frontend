@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "खाते तपशील",
     "connectionInfo": "कनेक्शन माहिती",
+    "personalInfo": "वैयक्तिक माहिती",
     "name": "नाव",
+    "email": "ईमेल",
+    "phone": "फोन",
+    "state": "राज्य",
+    "district": "जिल्हा",
     "consumerNo": "कन्झ्युमर नंबर",
     "connectionType": "प्रकार",
     "domestic": "घरगुती",

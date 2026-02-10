@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "கணக்கு விவரங்கள்",
     "connectionInfo": "இணைப்பு தகவல்",
+    "personalInfo": "தனிப்பட்ட தகவல்",
     "name": "பெயர்",
+    "email": "மின்னஞ்சல்",
+    "phone": "தொலைபேசி",
+    "state": "மாநிலம்",
+    "district": "மாவட்டம்",
     "consumerNo": "நுகர்வோர் எண்",
     "connectionType": "வகை",
     "domestic": "வீட்டு உபயோகம்",

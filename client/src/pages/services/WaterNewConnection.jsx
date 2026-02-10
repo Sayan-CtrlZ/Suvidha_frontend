@@ -10,7 +10,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
 import Footer from '../../components/common/Footer';
-import BackButton from '../../components/common/BackButton';
+import PageHeader from '../../components/common/PageHeader';
 import AnimatedBackground from '../../components/common/AnimatedBackground';
 import { useMultiStepForm, useFormValidation } from '../../hooks';
 
@@ -64,6 +64,9 @@ const WaterNewConnectionPage = () => {
     goToStep(5);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  const fileInputRef = useRef(null);
+  const fileInputBackRef = useRef(null);
 
   const [isVerifying, setIsVerifying] = useState(false);
   const [documentVerified, setDocumentVerified] = useState(false);
@@ -206,55 +209,23 @@ const WaterNewConnectionPage = () => {
       <NavBar />
 
       {/* Page Header - Enhanced Aesthetic */}
-      <section className="w-full pt-2 md:pt-3 pb-4 md:pb-5 px-3 sm:px-6 bg-gradient-to-br from-cyan-900 via-blue-800 to-cyan-900 shadow-2xl relative overflow-hidden">
-        {/* Sophisticated Mesh Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.25]">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid-water-newconn" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
-                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
-                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid-water-newconn)" />
-          </svg>
-        </div>
-
-        {/* Elegant Gradient Orbs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-cyan-400/30 to-blue-500/30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-blue-400/25 to-cyan-500/25 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
-
-        {/* Decorative Line Accent */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-
-        <div className="max-w-5xl mx-auto relative z-10">
-          <button
-            onClick={() => navigate('/services/water')}
-            className="mb-4 text-white/80 hover:text-white font-semibold text-sm flex items-center gap-2 tracking-wide transition-colors"
-          >
-            <ArrowLeft size={18} />
-            Back
-          </button>
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-              <Droplet size={32} className="text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">Apply for Water Connection</h1>
-              <p className="text-cyan-50 text-sm sm:text-base mt-1 font-medium">Complete the form to get a new water connection</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        title="Apply for Water Connection"
+        description="Complete the form to get a new water connection"
+        icon={Droplet}
+        watermarkIcon={Droplet}
+        to="/services/water"
+        backText="Back"
+        gradient="bg-gradient-to-br from-cyan-900 via-blue-800 to-cyan-900"
+        stripeColor="via-cyan-400/30"
+        orb1Color="from-cyan-400/30 to-blue-500/30"
+        orb2Color="from-blue-400/25 to-cyan-500/25"
+      />
 
       {/* Main Content */}
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="max-w-5xl mx-auto">
-          {/* Top Back Button */}
-          <div className="mb-6">
-            <BackButton to="/services/water" text={t('common.back')} />
-          </div>
+
 
           {/* Progress Section */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 mb-6">

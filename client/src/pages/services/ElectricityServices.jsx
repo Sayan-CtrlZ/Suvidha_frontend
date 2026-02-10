@@ -86,7 +86,7 @@ const ElectricityServicesPage = () => {
                     <path fill="currentColor" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,112C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0Z"></path>
                   </svg>
 
-                  <div className="relative h-full p-8 pb-16 flex flex-col justify-between z-10">
+                  <div className="relative h-full p-8 pb-6 flex flex-col justify-between z-10">
                     <div>
                       {/* Icon Box */}
                       <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center shadow-lg mb-8 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-shadow duration-300`}>
@@ -101,9 +101,9 @@ const ElectricityServicesPage = () => {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-gray-900 transition-colors mt-6 pt-6 border-t border-gray-100">
+                    <div className="w-full mt-6 py-3 px-4 bg-gradient-to-r from-violet-600 to-indigo-600 border border-violet-500 border-b-4 border-b-violet-800 rounded-xl flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-violet-200 group-hover:shadow-violet-400 transition-all group-active:border-b-0 group-active:translate-y-1">
                       <span>Access Services</span>
-                      <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight size={18} className="text-white/90" />
                     </div>
                   </div>
                 </button>

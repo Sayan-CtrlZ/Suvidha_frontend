@@ -6,7 +6,7 @@ import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
 import AnimatedBackground from '../../components/common/AnimatedBackground';
 import Footer from '../../components/common/Footer';
-import BackButton from '../../components/common/BackButton';
+import PageHeader from '../../components/common/PageHeader';
 
 const WasteSchedulePage = () => {
     const navigate = useNavigate();
@@ -29,84 +29,62 @@ const WasteSchedulePage = () => {
             <NavBar />
 
             {/* Page Header */}
-            <section className="w-full pt-2 md:pt-3 pb-4 md:pb-5 px-3 sm:px-6 bg-gradient-to-br from-emerald-900 via-green-800 to-emerald-900 shadow-2xl relative overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.25]">
-                    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <pattern id="grid-waste" width="40" height="40" patternUnits="userSpaceOnUse">
-                                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
-                                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
-                                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
-                            </pattern>
-                        </defs>
-                        <rect width="100%" height="100%" fill="url(#grid-waste)" />
-                    </svg>
-                </div>
-
-                <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/15 to-green-500/15 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-400/10 to-emerald-500/10 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
-
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
-
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <BackButton
-                        to="/services/waste"
-                        text={t('common.back')}
-                        className="mb-6 scale-90 origin-left !bg-white/10 !text-white !border-white/20 hover:!bg-white/20"
-                    />
-                    <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-                            <Calendar size={32} className="text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide uppercase">Waste Collection Schedule</h1>
-                            <p className="text-emerald-50 text-sm sm:text-base mt-1 font-medium">View your weekly waste collection schedule</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <PageHeader
+                title="Waste Collection Schedule"
+                description={t('services.wasteScheduleDesc') || "View your weekly waste collection schedule"}
+                icon={Calendar}
+                watermarkIcon={Recycle}
+                to="/services/waste"
+                backText={t('common.back')}
+                gradient="bg-gradient-to-br from-emerald-900 via-green-800 to-emerald-900"
+                stripeColor="via-emerald-400/30"
+                orb1Color="from-emerald-400/15 to-green-500/15"
+                orb2Color="from-green-400/10 to-emerald-500/10"
+            />
 
             {/* Schedule Content */}
             <section className="py-6 sm:py-10 px-3 sm:px-6">
                 <div className="max-w-5xl mx-auto space-y-6">
 
-                    {/* Info Card */}
-                    <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 flex items-start gap-3">
-                        <AlertCircle size={20} className="text-blue-600 flex-shrink-0 mt-0.5" />
+                    {/* Info Card - Glassmorphism */}
+                    <div className="bg-blue-50/80 backdrop-blur-lg border border-blue-200 rounded-2xl p-6 flex items-start gap-4 shadow-lg">
+                        <AlertCircle size={24} className="text-blue-600 flex-shrink-0 mt-0.5" />
                         <div>
-                            <p className="text-sm font-bold text-blue-800">Collection Guidelines</p>
-                            <p className="text-xs text-blue-700 mt-1">
-                                Please keep your waste bins outside your premises by 6:00 AM on collection days. Ensure waste is properly segregated.
+                            <p className="text-base font-bold text-blue-900">Collection Guidelines</p>
+                            <p className="text-sm text-blue-700 mt-1 leading-relaxed">
+                                Please keep your waste bins outside your premises by 6:00 AM on collection days. Ensure waste is properly segregated into the correct bins.
                             </p>
                         </div>
                     </div>
 
-                    {/* Schedule Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Schedule Cards Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {scheduleData.map((schedule, index) => {
                             const Icon = schedule.icon;
                             return (
-                                <div key={index} className="bg-white rounded-xl shadow-md border-2 border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                                    <div className={`bg-${schedule.color}-50 px-5 py-3 border-b border-${schedule.color}-200`}>
+                                <div key={index} className="group relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 overflow-hidden hover:shadow-2xl transition-all duration-300">
+                                    <div className={`px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-${schedule.color}-50 to-white`}>
                                         <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-10 h-10 rounded-lg bg-white border-2 border-${schedule.color}-200 flex items-center justify-center`}>
-                                                    <Icon size={20} className={`text-${schedule.color}-600`} />
+                                            <div className="flex items-center gap-4">
+                                                <div className={`w-12 h-12 rounded-xl bg-${schedule.color}-100 flex items-center justify-center border border-${schedule.color}-200 group-hover:scale-105 transition-transform`}>
+                                                    <Icon size={24} className={`text-${schedule.color}-600`} />
                                                 </div>
                                                 <div>
-                                                    <h3 className="text-base font-bold text-gray-900">{schedule.day}</h3>
-                                                    <p className="text-xs text-gray-600">{schedule.type}</p>
+                                                    <h3 className="text-lg font-bold text-gray-900">{schedule.day}</h3>
+                                                    <p className={`text-xs font-semibold uppercase tracking-wider text-${schedule.color}-600`}>{schedule.type}</p>
                                                 </div>
                                             </div>
                                             {schedule.day !== 'Sunday' && (
-                                                <CheckCircle size={20} className="text-green-600" />
+                                                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                                    <CheckCircle size={18} className="text-green-600" />
+                                                </div>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="p-4">
-                                        <div className="flex items-center gap-2 text-gray-700">
-                                            <Clock size={16} className="text-gray-500" />
-                                            <span className="text-sm font-medium">{schedule.time}</span>
+                                    <div className="p-6">
+                                        <div className="flex items-center gap-3 text-gray-600 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                            <Clock size={20} className="text-gray-400" />
+                                            <span className="text-base font-medium">{schedule.time}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -114,21 +92,33 @@ const WasteSchedulePage = () => {
                         })}
                     </div>
 
-                    {/* Waste Segregation Guide */}
-                    <div className="bg-white rounded-xl shadow-md border-2 border-gray-200 p-6">
-                        <h3 className="text-lg font-bold text-gray-900 mb-4">Waste Segregation Guide</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="p-4 bg-green-50 border-2 border-green-200 rounded-lg">
-                                <h4 className="font-bold text-green-800 mb-2">General Waste</h4>
-                                <p className="text-xs text-green-700">Non-recyclable items, food packaging, etc.</p>
+                    {/* Waste Segregation Guide - Glassmorphism */}
+                    <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 p-6 md:p-8">
+                        <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <Recycle className="text-emerald-600" size={24} />
+                            Waste Segregation Guide
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="p-5 bg-green-50/50 border border-green-100 rounded-2xl hover:bg-green-50 transition-colors">
+                                <h4 className="font-bold text-green-800 mb-2 flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                                    General Waste
+                                </h4>
+                                <p className="text-sm text-green-700 leading-relaxed opacity-80">Non-recyclable items, food packaging, wrappers, and general household trash.</p>
                             </div>
-                            <div className="p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
-                                <h4 className="font-bold text-blue-800 mb-2">Recyclable Waste</h4>
-                                <p className="text-xs text-blue-700">Paper, plastic, glass, metal items</p>
+                            <div className="p-5 bg-blue-50/50 border border-blue-100 rounded-2xl hover:bg-blue-50 transition-colors">
+                                <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                    Recyclable Waste
+                                </h4>
+                                <p className="text-sm text-blue-700 leading-relaxed opacity-80">Paper, plastic bottles, glass containers, metal cans, and cardboard.</p>
                             </div>
-                            <div className="p-4 bg-amber-50 border-2 border-amber-200 rounded-lg">
-                                <h4 className="font-bold text-amber-800 mb-2">Organic Waste</h4>
-                                <p className="text-xs text-amber-700">Food scraps, garden waste, biodegradable items</p>
+                            <div className="p-5 bg-amber-50/50 border border-amber-100 rounded-2xl hover:bg-amber-50 transition-colors">
+                                <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-amber-500" />
+                                    Organic Waste
+                                </h4>
+                                <p className="text-sm text-amber-700 leading-relaxed opacity-80">Vegetable peels, food scraps, garden waste, and biodegradable items.</p>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-white/95 backdrop-blur-xl border-2 border-gray-200 rounded-3xl shadow-xl relative z-50 ml-4 mr-8 my-4">
+    <nav className="bg-white/95 backdrop-blur-xl border-2 border-gray-200 rounded-3xl shadow-xl relative z-50 ml-12 mr-8 my-4">
 
       {/* Subtle gradient accent at top */}
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-green-500/60 to-transparent rounded-t-3xl" />
@@ -29,103 +29,101 @@ const NavBar = () => {
         <div className="flex items-center justify-between w-full gap-2">
 
           {/* All Navigation Links - Evenly Distributed */}
-          <div className="hidden md:flex items-center justify-between text-base font-bold text-gray-700 gap-3 flex-1 flex-wrap xl:flex-nowrap">
+          <div className="hidden md:flex items-center justify-between text-sm font-bold text-gray-700 gap-2 flex-1 flex-wrap xl:flex-nowrap">
             {!isAuthenticated ? (
               <>
-                <Link to="/" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-600 ${isActive('/') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <Home size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/') ? 'text-white' : 'group-hover:text-white'}`} />
-                  <span className={`relative z-10 transition-colors duration-400 ${isActive('/') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.home')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.home')}</span>
                 </Link>
 
-                <Link to="/signin" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/signin" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-yellow-500 to-orange-500 ${isActive('/signin') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <User size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/signin') ? 'text-white' : 'group-hover:text-white'}`} />
-                  <span className={`relative z-10 transition-colors duration-400 ${isActive('/signin') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.signIn')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/signin') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.signIn')}</span>
                 </Link>
 
-                <div className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md cursor-pointer flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-in-out" />
-                  <span className="relative z-10 transition-colors duration-400 group-hover:text-white">{t('nav.aboutUs')}</span>
-                  <ChevronDown size={20} className="relative z-10 transition-colors duration-400 group-hover:text-white" />
-                </div>
+                <Link to="/about" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md cursor-pointer flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
+                  <div className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 ${isActive('/about') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/about') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.aboutUs')}</span>
+                  <ChevronDown size={20} className={`relative z-10 transition-colors duration-400 ${isActive('/about') ? 'text-white' : 'group-hover:text-white'}`} />
+                </Link>
 
-                <Link to="/services" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/services" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 ${isActive('/services') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <Layers size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`} />
-                  <span className={`relative z-10 transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.servicesOffered')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.servicesOffered')}</span>
                 </Link>
 
-                <Link to="/quick-pay" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/quick-pay" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-violet-500 to-purple-600 ${isActive('/quick-pay') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <Zap size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`} />
-                  <span className={`relative z-10 font-bold transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`}>{t('nav.quickPay')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`}>{t('nav.quickPay')}</span>
                 </Link>
 
-                <Link to="/help" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/help" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 ${isActive('/help') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <HelpCircle size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`} />
-                  <span className={`relative z-10 transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.help')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.help')}</span>
                 </Link>
 
-                <Link to="/contact" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/contact" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-md">
                   <div className={`absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 ${isActive('/contact') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
                   <Phone size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`} />
-                  <span className={`relative z-10 transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.contactUs')}</span>
+                  <span className={`relative z-10 text-base font-bold transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.contactUs')}</span>
                 </Link>
-
-
               </>
             ) : (
               <>
-                <Link to="/dashboard" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/dashboard" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 ${isActive('/dashboard') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <LayoutDashboard size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/dashboard') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <LayoutDashboard size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/dashboard') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/dashboard') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.dashboard')}</span>
                 </Link>
 
-                <Link to="/my-services" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/my-services" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-purple-500 to-violet-600 ${isActive('/my-services') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <Layers size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/my-services') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <Layers size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/my-services') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/my-services') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.myServices')}</span>
                 </Link>
 
-                <Link to="/services" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/services" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-600 ${isActive('/services') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <Layers size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <Layers size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/services') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.servicesOffered')}</span>
                 </Link>
 
-                <Link to="/quick-pay" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/quick-pay" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-800 ${isActive('/quick-pay') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <Zap size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`} />
+                  <Zap size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`} />
                   <span className={`relative z-10 font-bold transition-colors duration-400 ${isActive('/quick-pay') ? 'text-white' : 'text-violet-600 group-hover:text-white'}`}>{t('nav.quickPay')}</span>
                 </Link>
 
-                <Link to="/help" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/help" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 ${isActive('/help') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <HelpCircle size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <HelpCircle size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/help') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.help')}</span>
                 </Link>
 
-                <Link to="/contact" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/contact" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-700 ${isActive('/contact') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <Phone size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <Phone size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/contact') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.contactUs')}</span>
                 </Link>
 
-                <Link to="/account" className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                <Link to="/account" className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
                   <div className={`absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 ${isActive('/account') ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 transition-opacity duration-400 ease-in-out`} />
-                  <User size={24} className={`relative z-10 transition-colors duration-400 ${isActive('/account') ? 'text-white' : 'group-hover:text-white'}`} />
+                  <User size={21} className={`relative z-10 transition-colors duration-400 ${isActive('/account') ? 'text-white' : 'group-hover:text-white'}`} />
                   <span className={`relative z-10 transition-colors duration-400 ${isActive('/account') ? 'text-white' : 'group-hover:text-white'}`}>{t('nav.myAccount')}</span>
                 </Link>
 
                 <button
                   onClick={handleLogout}
-                  className="group relative px-10 py-4 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-3 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
+                  className="group relative px-5 py-3 rounded-2xl border-2 border-white/50 bg-white/60 backdrop-blur-md flex items-center gap-2 overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-red-700 to-rose-900 opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-in-out" />
-                  <LogOut size={24} className="relative z-10 transition-colors duration-400 group-hover:text-white" />
+                  <LogOut size={21} className="relative z-10 transition-colors duration-400 group-hover:text-white" />
                   <span className="font-bold relative z-10 transition-colors duration-400 group-hover:text-white">{t('nav.logout')}</span>
                 </button>
               </>

@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "اکاؤنٹ تفصیلات",
     "connectionInfo": "کنکشن معلومات",
+    "personalInfo": "ذاتی معلومات",
     "name": "نام",
+    "email": "ای میل",
+    "phone": "فون",
+    "state": "ریاست",
+    "district": "ضلع",
     "consumerNo": "کنزیومر نمبر",
     "connectionType": "قسم",
     "domestic": "گھریلو",

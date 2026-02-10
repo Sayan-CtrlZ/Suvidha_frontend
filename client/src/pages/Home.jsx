@@ -153,7 +153,9 @@ const Home = () => {
                     <ul className="text-gray-500 text-sm space-y-2 font-medium">
                       <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-orange-500" /> {t('home.support247')}</li>
                       <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500" /> {t('home.faqGuides')}</li>
-                      <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> {t('home.contactSupport')}</li>
+                      <Link to="/contact" className="flex items-center gap-2 hover:text-orange-600 transition-colors">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-500" /> {t('home.contactSupport')}
+                      </Link>
                     </ul>
                   </div>
 

@@ -3,6 +3,7 @@
         "home": "Home",
         "dashboard": "My Dashboard",
         "myServices": "My Services",
+        "myServicesDesc": "Manage all your subscribed government services and track ongoing applications in one place.",
         "myAccount": "My Account",
         "logout": "Logout",
         "services": "Services",
@@ -205,41 +206,41 @@
             "emergency": "Emergency",
             "grievances": "Grievances",
             "security": "Security"
-        },
-        "contact": {
-            "title": "Contact Us",
-            "subtitle": "We're here to help you",
-            "formTitle": "Send us a Message",
-            "name": "Name",
-            "namePlaceholder": "Your full name",
+        }
+    },
+    "contact": {
+        "title": "Contact Us",
+        "subtitle": "Get in touch with the Suvidha support team for any assistance",
+        "formTitle": "Send us a Message",
+        "name": "Name",
+        "namePlaceholder": "Enter your full name",
+        "email": "Email Address",
+        "emailPlaceholder": "e.g., citizen@example.com",
+        "subject": "Subject",
+        "subjectPlaceholder": "Briefly describe your issue",
+        "message": "Message",
+        "messagePlaceholder": "Please provide details about your query...",
+        "sendMessage": "Send Message",
+        "success": "Your message has been sent successfully! We will get back to you soon.",
+        "info": {
+            "phone": "Phone",
             "email": "Email",
-            "emailPlaceholder": "your.email@example.com",
-            "subject": "Subject",
-            "subjectPlaceholder": "What is this regarding?",
-            "message": "Message",
-            "messagePlaceholder": "Your message...",
-            "sendMessage": "Send Message",
-            "success": "Your message has been sent successfully! We will get back to you soon.",
-            "info": {
-                "phone": "Phone",
-                "email": "Email",
-                "address": "Address",
-                "hours": "Office Hours",
-                "tollFree": "Toll Free",
-                "workingHours": {
-                    "monFri": "Monday - Friday: 9:00 AM - 6:00 PM",
-                    "sat": "Saturday: 9:00 AM - 1:00 PM",
-                    "sun": "Sunday: Closed"
-                }
-            },
-            "validation": {
-                "nameRequired": "Name is required",
-                "emailRequired": "Email is required",
-                "emailInvalid": "Email is invalid",
-                "subjectRequired": "Subject is required",
-                "messageRequired": "Message is required",
-                "messageTooShort": "Message must be at least 10 characters"
+            "address": "Address",
+            "hours": "Office Hours",
+            "tollFree": "Toll Free",
+            "workingHours": {
+                "monFri": "Monday - Friday: 9:00 AM - 6:00 PM",
+                "sat": "Saturday: 9:00 AM - 1:00 PM",
+                "sun": "Sunday: Closed"
             }
+        },
+        "validation": {
+            "nameRequired": "Name is required",
+            "emailRequired": "Email is required",
+            "emailInvalid": "Email is invalid",
+            "subjectRequired": "Subject is required",
+            "messageRequired": "Message is required",
+            "messageTooShort": "Message must be at least 10 characters"
         }
     }
 }

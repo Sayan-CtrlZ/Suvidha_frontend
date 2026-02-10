@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { User, Mail, Phone, Lock, Eye, EyeOff, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react';
 import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
 
@@ -211,16 +212,17 @@ const SignUp = () => {
 
             <div className="relative z-10">
               {/* Header */}
-              <div className="text-center mb-4">
-                <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('auth.createaccount')}</h1>
-                <p className="text-gray-600 text-base">{t('auth.createaccountDesc')}</p>
+              <div className="text-center mb-6">
+                <h1 className="text-3xl font-black text-gray-900 mb-1 uppercase tracking-tight italic">SUVIDHA</h1>
+                <p className="text-gray-600 text-sm font-bold">{t('auth.createaccountDesc')}</p>
               </div>
+
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-3 px-6">
                 {/* Full Name Input */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5 ml-1">
                     {t('auth.fullName')}
                   </label>
                   <input
@@ -236,7 +238,7 @@ const SignUp = () => {
 
                 {/* Email or Phone Input with OTP Button */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5 ml-1">
                     {t('auth.emailOrPhone')}
                   </label>
                   <div className="flex gap-2">
@@ -254,7 +256,7 @@ const SignUp = () => {
                       type="button"
                       onClick={handleSendOtp}
                       disabled={otpVerified || otpLoading}
-                      className="px-4 py-3 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                      className="px-4 py-3 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-xl font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-[0_4px_0_0_rgba(21,128,61,1)] active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                     >
                       {otpLoading ? t('auth.sendingOtp') : otpSent ? t('auth.resendOtp') : t('auth.sendOtp')}
                     </button>
@@ -292,7 +294,7 @@ const SignUp = () => {
                         type="button"
                         onClick={handleVerifyOtp}
                         disabled={otp.join('').length !== 6 || otpLoading}
-                        className="flex-1 px-3 py-3 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex-1 px-3 py-4 text-sm bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-xl font-bold uppercase tracking-wider shadow-[0_4px_0_0_rgba(21,128,61,1)] active:translate-y-1 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {otpLoading ? t('auth.verifying') : t('auth.verifyOtp')}
                       </button>
@@ -300,7 +302,7 @@ const SignUp = () => {
                         type="button"
                         onClick={handleResendOtp}
                         disabled={resendTimer > 0 || otpLoading}
-                        className="flex-1 px-3 py-3 text-sm border-2 border-green-600 text-green-600 rounded-lg font-bold uppercase tracking-wider hover:bg-green-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex-1 px-3 py-4 text-sm border-2 border-green-600 text-green-600 rounded-xl font-bold uppercase tracking-wider hover:bg-green-50 shadow-[0_4px_0_0_rgba(22,163,74,0.1)] active:translate-y-1 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {resendTimer > 0 ? `${t('auth.resendIn')} (${resendTimer}${t('auth.seconds')})` : t('auth.resendOtp')}
                       </button>
@@ -310,7 +312,7 @@ const SignUp = () => {
 
                 {/* Password Input */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5 ml-1">
                     {t('auth.password')}
                   </label>
                   <div className="relative">
@@ -383,7 +385,7 @@ const SignUp = () => {
                 <button
                   type="submit"
                   disabled={isLoading || !passwordMatch}
-                  className="w-full px-4 py-3 text-base bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-lg font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                  className="w-full px-4 py-4 text-lg bg-gradient-to-r from-green-700 via-green-600 to-green-700 text-white rounded-2xl font-black uppercase tracking-widest hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all shadow-[0_8px_0_0_rgba(21,128,61,1)] active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                 >
                   {isLoading ? t('auth.creatingAccount') : t('auth.createaccount')}
                 </button>
@@ -400,7 +402,7 @@ const SignUp = () => {
               <div className="px-6">
                 <Link
                   to="/signin"
-                  className="w-full px-3 py-1.5 text-sm border-2 bg-gradient-to-r from-green-700 via-green-600 to-green-700 bg-clip-border text-white rounded-md font-bold uppercase tracking-wider hover:from-green-800 hover:via-green-700 hover:to-green-800 transition-all text-center block shadow-md hover:shadow-lg"
+                  className="w-full px-3 py-3 text-sm border-2 bg-gradient-to-r from-slate-800 to-slate-900 border-slate-700 text-white rounded-xl font-bold uppercase tracking-wider transition-all text-center block shadow-[0_4px_0_0_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none"
                 >
                   {t('auth.signin')}
                 </Link>

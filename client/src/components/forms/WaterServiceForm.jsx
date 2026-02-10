@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, Upload, Calendar, MapPin, AlertTriangle } from 'lucide-react';
+import { X, CheckCircle2, Upload, Calendar, MapPin, AlertTriangle, Globe, Search } from 'lucide-react';
+import { locationData } from '../../constants/locations';
 
 const WaterServiceForm = ({ isOpen, onClose, category, action }) => {
     const [submitted, setSubmitted] = useState(false);
@@ -7,7 +8,9 @@ const WaterServiceForm = ({ isOpen, onClose, category, action }) => {
         name: '',
         consumerNumber: '',
         description: '',
-        address: '',
+        state: '',
+        district: '',
+        addressDetail: '',
         date: ''
     });
 
@@ -22,8 +25,17 @@ const WaterServiceForm = ({ isOpen, onClose, category, action }) => {
 
     const resetForm = () => {
         setSubmitted(false);
-        setFormData({ name: '', consumerNumber: '', description: '', address: '', date: '' });
+        setFormData({ name: '', consumerNumber: '', description: '', state: '', district: '', addressDetail: '', date: '' });
         onClose();
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+            ...(name === 'state' ? { district: '' } : {})
+        }));
     };
 
     const renderFields = () => {
@@ -42,23 +54,56 @@ const WaterServiceForm = ({ isOpen, onClose, category, action }) => {
                     </div>
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <label className="block text-sm font-bold text-gray-700 mb-1">Detailed Description</label>
                             <textarea
-                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border-2 border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all"
                                 rows="3"
-                                placeholder="Describe the leakage severity..."
+                                placeholder="Where exactly is the leak? How big is it?"
                                 required
                             ></textarea>
                         </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">State</label>
+                                <select
+                                    name="state"
+                                    value={formData.state}
+                                    onChange={handleInputChange}
+                                    className="w-full p-3 border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none"
+                                >
+                                    <option value="">Select State</option>
+                                    {Object.keys(locationData).sort().map(s => <option key={s} value={s}>{s}</option>)}
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-gray-700 mb-1">District</label>
+                                <select
+                                    name="district"
+                                    value={formData.district}
+                                    onChange={handleInputChange}
+                                    disabled={!formData.state}
+                                    className="w-full p-3 border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none disabled:opacity-50"
+                                >
+                                    <option value="">Select District</option>
+                                    {formData.state && locationData[formData.state].sort().map(d => <option key={d} value={d}>{d}</option>)}
+                                </select>
+                            </div>
+                        </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                            <label className="block text-sm font-bold text-gray-700 mb-1">Local Address</label>
                             <div className="flex gap-2">
                                 <input
                                     type="text"
-                                    className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 outline-none"
-                                    placeholder="Address or landmark"
+                                    name="addressDetail"
+                                    value={formData.addressDetail}
+                                    onChange={handleInputChange}
+                                    className="flex-1 p-3 border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none"
+                                    placeholder="House/Street/Landmark"
                                 />
-                                <button type="button" className="p-3 bg-gray-100 rounded-lg text-gray-600 hover:bg-gray-200">
+                                <button type="button" className="p-3 bg-slate-100 rounded-xl text-slate-600 hover:bg-slate-200 transition-colors">
                                     <MapPin size={20} />
                                 </button>
                             </div>
@@ -73,11 +118,14 @@ const WaterServiceForm = ({ isOpen, onClose, category, action }) => {
             return (
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Consumer Number</label>
+                        <label className="block text-sm font-bold text-gray-700 mb-1">Consumer Number</label>
                         <input
                             type="text"
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                            placeholder="Enter Water Consumer No."
+                            name="consumerNumber"
+                            value={formData.consumerNumber}
+                            onChange={handleInputChange}
+                            className="w-full p-3 border-2 border-slate-100 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-mono"
+                            placeholder="Example: 12345678"
                             required
                         />
                     </div>

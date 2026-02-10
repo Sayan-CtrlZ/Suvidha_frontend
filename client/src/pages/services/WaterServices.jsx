@@ -107,9 +107,9 @@ const WaterServicesPage = () => {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-400 group-hover:text-gray-900 transition-colors mt-6 pt-6 border-t border-gray-100">
+                    <div className="w-full mt-6 py-3 px-4 bg-gradient-to-r from-blue-500 to-cyan-600 border border-blue-500 border-b-4 border-b-blue-800 rounded-xl flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-blue-200 group-hover:shadow-blue-400 transition-all group-active:border-b-0 group-active:translate-y-1">
                       <span>Proceed</span>
-                      <ArrowRight size={18} className="transform group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight size={18} className="text-white/90" />
                     </div>
                   </div>
                 </button>

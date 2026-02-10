@@ -170,24 +170,31 @@ const ServiceCategoryPage = () => {
                                     key={idx}
                                     onClick={() => setSelectedAction({ category: categoryId, action: action.name })}
                                     className={`group relative p - 6 bg - white rounded - 2xl border - 2 text - left transition - colors ${action.isEmergency
-                                            ? 'border-red-100 hover:border-red-300 ring-4 ring-red-50'
-                                            : 'border-gray-100 hover:border-blue-200'
+                                        ? 'border-red-100 hover:border-red-300 ring-4 ring-red-50'
+                                        : 'border-gray-100 hover:border-blue-200'
                                         } `}
                                 >
-                                    <div className={`w - 12 h - 12 rounded - xl flex items - center justify - center mb - 4 transition - colors ${action.isEmergency ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-600'
-                                        } `}>
-                                        <ActionIcon size={24} />
+                                    <div className="flex-1">
+                                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${action.isEmergency ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-600'
+                                            }`}>
+                                            <ActionIcon size={24} />
+                                        </div>
+
+                                        <h3 className={`text-lg font-bold mb-2 ${action.isEmergency ? 'text-red-700' : 'text-gray-900'} `}>
+                                            {action.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 font-medium mb-6">
+                                            {action.desc}
+                                        </p>
                                     </div>
 
-                                    <h3 className={`text - lg font - bold mb - 2 ${action.isEmergency ? 'text-red-700' : 'text-gray-900'} `}>
-                                        {action.name}
-                                    </h3>
-                                    <p className="text-sm text-gray-500 font-medium">
-                                        {action.desc}
-                                    </p>
-
-                                    <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <ChevronRight size={20} className={action.isEmergency ? 'text-red-400' : 'text-blue-400'} />
+                                    {/* 3D Button */}
+                                    <div className={`w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all group-active:translate-y-1 ${action.isEmergency
+                                            ? 'bg-gradient-to-r from-red-600 to-rose-600 border border-red-500 border-b-4 border-b-red-800 shadow-red-200 group-hover:shadow-red-400'
+                                            : 'bg-gradient-to-r from-blue-600 to-indigo-600 border border-blue-500 border-b-4 border-b-blue-800 shadow-blue-200 group-hover:shadow-blue-400'
+                                        }`}>
+                                        <span>{action.isEmergency ? 'Report Now' : 'Proceed'}</span>
+                                        <ChevronRight size={18} className="text-white/90" />
                                     </div>
                                 </button>
                             );

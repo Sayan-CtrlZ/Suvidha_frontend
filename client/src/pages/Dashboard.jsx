@@ -6,12 +6,44 @@ import NavBar from '../components/common/NavBar';
 import AnimatedBackground from '../components/common/AnimatedBackground';
 import Footer from '../components/common/Footer';
 import { useLanguage } from '../context/LanguageContext.jsx';
-import { User, Mail, Phone, MapPin, Calendar, Zap, FileText, CreditCard, Bell } from 'lucide-react';
+import PageHeader from '../components/common/PageHeader';
+import {
+    LayoutDashboard,
+    User,
+    Mail,
+    Phone,
+    MapPin,
+    Calendar,
+    ArrowRight,
+    Search,
+    Bell,
+    Settings,
+    ShieldCheck,
+    CreditCard,
+    Zap,
+    Droplet,
+    Flame,
+    FileText,
+    AlertTriangle
+} from 'lucide-react';
 
 const Dashboard = () => {
-    const { user } = useAuth();
-    const { t } = useLanguage();
-    const navigate = useNavigate();
+    const { user } = useAuth()
+    const { t } = useLanguage()
+    const navigate = useNavigate()
+
+    const getMissingFields = () => {
+        const fields = []
+        if (!user?.village) fields.push('Village')
+        if (!user?.subDistrict) fields.push('Sub District/City')
+        if (!user?.pincode) fields.push('PIN Code')
+        if (!user?.state) fields.push('State')
+        if (!user?.district) fields.push('District')
+        return fields
+    }
+
+    const missingFields = getMissingFields()
+    const isAddressComplete = missingFields.length === 0
 
 
     const quickActions = [
@@ -43,13 +75,7 @@ const Dashboard = () => {
             color: 'orange',
             route: '/services/grievance'
         },
-        {
-            icon: User,
-            label: t('dashboard.updateProfile'),
-            description: t('account.updateProfile'),
-            color: 'indigo',
-            route: '/account'
-        },
+
     ];
 
     return (
@@ -64,57 +90,47 @@ const Dashboard = () => {
             </div>
 
             {/* Dashboard Content */}
-            <main className="flex-1 px-4 sm:px-6 lg:px-8 py-12 relative z-10">
-                <div className="max-w-7xl mx-auto">
+            <main className="flex-1 pb-12 relative z-10">
+                <PageHeader
+                    title={`${t('dashboard.welcome')}, ${user?.name || 'User'}!`}
+                    description={t('dashboard.manageEase')}
+                    icon={LayoutDashboard}
+                    watermarkIcon={User}
+                    to={null}
+                    backText={null}
+                    gradient="bg-gradient-to-br from-green-900 via-emerald-800 to-green-900"
+                    stripeColor="via-green-400/30"
+                    orb1Color="from-green-400/30 to-emerald-500/30"
+                    orb2Color="from-teal-400/25 to-green-500/25"
+                />
 
-                    {/* Enhanced Dashboard Header - Aesthetic */}
-                    <section className="relative w-full pt-8 pb-10 px-8 mb-8 overflow-hidden bg-gradient-to-br from-green-900 via-emerald-800 to-green-900 shadow-2xl rounded-3xl">
-                        {/* Sophisticated Mesh Background Pattern */}
-                        <div className="absolute inset-0 opacity-[0.25]">
-                            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <pattern id="grid-dashboard" width="40" height="40" patternUnits="userSpaceOnUse">
-                                        <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
-                                        <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
-                                        <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
-                                    </pattern>
-                                </defs>
-                                <rect width="100%" height="100%" fill="url(#grid-dashboard)" />
-                            </svg>
-                        </div>
-
-                        {/* Elegant Gradient Orbs */}
-                        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-green-400/30 to-emerald-500/30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-teal-400/25 to-green-500/25 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
-
-                        {/* Subtle Icon Watermark */}
-                        <div className="absolute top-0 right-0 p-12 opacity-[0.07] transform translate-x-1/4 -translate-y-1/4">
-                            <User size={180} className="text-white" />
-                        </div>
-
-                        {/* Sparkle Effects */}
-                        <div className="absolute top-8 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse opacity-60" />
-                        <div className="absolute top-16 right-1/3 w-1.5 h-1.5 bg-green-200 rounded-full animate-pulse opacity-50" style={{ animationDelay: '0.5s' }} />
-                        <div className="absolute bottom-12 left-1/3 w-1 h-1 bg-emerald-100 rounded-full animate-pulse opacity-70" style={{ animationDelay: '1s' }} />
-                        <div className="absolute bottom-20 right-1/4 w-2 h-2 bg-white rounded-full animate-pulse opacity-40" style={{ animationDelay: '1.5s' }} />
-
-                        {/* Decorative Line Accent */}
-                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400/30 to-transparent" />
-
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-white/30 shadow-lg">
-                                    <User size={32} className="text-white" />
+                <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+                    {/* Profile Completeness Alert */}
+                    {!isAddressComplete && (
+                        <div className="mb-8 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200 rounded-3xl p-6 sm:p-8 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+                            <div className="flex items-start gap-4 text-center md:text-left">
+                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-amber-600 shadow-sm shrink-0">
+                                    <AlertTriangle size={32} />
                                 </div>
                                 <div>
-                                    <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-1 tracking-tight">
-                                        {t('dashboard.welcome')}, {user?.name || 'User'}!
-                                    </h1>
-                                    <p className="text-green-100 text-lg font-medium">{t('dashboard.manageEase')}</p>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-1">
+                                        Update Your Address
+                                    </h3>
+                                    <p className="text-slate-600 text-sm max-w-xl">
+                                        Your profile address is incomplete. Please provide your {missingFields.join(', ')} to help us serve you better.
+                                    </p>
                                 </div>
                             </div>
+                            <button
+                                onClick={() => navigate('/account')}
+                                className="w-full md:w-auto px-8 py-4 bg-amber-600 text-white rounded-2xl font-bold text-sm shadow-xl shadow-amber-600/20 hover:bg-amber-700 active:scale-95 transition-all flex items-center justify-center gap-2 group whitespace-nowrap"
+                            >
+                                <Settings size={18} className="group-hover:rotate-90 transition-transform duration-500" />
+                                {t('account.updateProfile')}
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            </button>
                         </div>
-                    </section>
+                    )}
 
                     {/* User Info Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -123,7 +139,7 @@ const Dashboard = () => {
                                 <Mail size={20} className="text-green-600" />
                                 <h3 className="font-semibold text-gray-900">{t('auth.email')}</h3>
                             </div>
-                            <p className="text-sm text-gray-600">{user?.email}</p>
+                            <p className="text-sm text-gray-600 truncate">{user?.email}</p>
                         </div>
 
                         <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
@@ -131,7 +147,7 @@ const Dashboard = () => {
                                 <Phone size={20} className="text-blue-600" />
                                 <h3 className="font-semibold text-gray-900">{t('auth.mobile')}</h3>
                             </div>
-                            <p className="text-sm text-gray-600">{user?.phone}</p>
+                            <p className="text-sm text-gray-600">{user?.phone || 'N/A'}</p>
                         </div>
 
                         <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
@@ -139,7 +155,9 @@ const Dashboard = () => {
                                 <MapPin size={20} className="text-purple-600" />
                                 <h3 className="font-semibold text-gray-900">{t('account.address')}</h3>
                             </div>
-                            <p className="text-sm text-gray-600">{user?.address}</p>
+                            <p className="text-sm text-gray-600 truncate">
+                                {[user?.village, user?.subDistrict, user?.district, user?.state, user?.pincode].filter(Boolean).join(', ') || 'Incomplete'}
+                            </p>
                         </div>
 
                         <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100">

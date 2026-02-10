@@ -10,7 +10,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import TopBar from '../../components/common/TopBar';
 import NavBar from '../../components/common/NavBar';
 import Footer from '../../components/common/Footer';
-import BackButton from '../../components/common/BackButton';
+import PageHeader from '../../components/common/PageHeader';
 import AnimatedBackground from '../../components/common/AnimatedBackground';
 import { useMultiStepForm, useFormValidation } from '../../hooks';
 
@@ -64,6 +64,9 @@ const NewConnectionPage = () => {
     goToStep(5);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  const fileInputRef = useRef(null);
+  const fileInputBackRef = useRef(null);
 
   const [isVerifying, setIsVerifying] = useState(false);
   const [documentVerified, setDocumentVerified] = useState(false);
@@ -207,55 +210,23 @@ const NewConnectionPage = () => {
       <NavBar />
 
       {/* Page Header - Enhanced Aesthetic */}
-      <section className="w-full pt-2 md:pt-3 pb-4 md:pb-5 px-3 sm:px-6 bg-gradient-to-br from-violet-900 via-purple-800 to-violet-900 shadow-2xl relative overflow-hidden">
-        {/* Sophisticated Mesh Background Pattern */}
-        <div className="absolute inset-0 opacity-[0.25]">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="grid-newconn" width="40" height="40" patternUnits="userSpaceOnUse">
-                <circle cx="20" cy="20" r="1" fill="white" opacity="0.4" />
-                <circle cx="0" cy="0" r="1" fill="white" opacity="0.3" />
-                <circle cx="40" cy="40" r="1" fill="white" opacity="0.3" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid-newconn)" />
-          </svg>
-        </div>
-
-        {/* Elegant Gradient Orbs */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-violet-400/30 to-purple-500/30 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-indigo-400/25 to-violet-500/25 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3" />
-
-        {/* Decorative Line Accent */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
-
-        <div className="max-w-5xl mx-auto relative z-10">
-          <button
-            onClick={() => navigate('/services/electricity')}
-            className="mb-4 text-white/80 hover:text-white font-semibold text-sm flex items-center gap-2 tracking-wide transition-colors"
-          >
-            <ArrowLeft size={18} />
-            Back
-          </button>
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center border-2 border-white/30">
-              <Zap size={32} className="text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-wide">{t('newConnection.title')}</h1>
-              <p className="text-violet-50 text-sm sm:text-base mt-1 font-medium">{t('newConnection.subtitle')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        title={t('newConnection.title')}
+        description={t('newConnection.subtitle')}
+        icon={Zap}
+        watermarkIcon={Zap}
+        to="/services/electricity"
+        backText="Back"
+        gradient="bg-gradient-to-br from-violet-900 via-purple-800 to-violet-900"
+        stripeColor="via-violet-400/30"
+        orb1Color="from-violet-400/30 to-purple-500/30"
+        orb2Color="from-indigo-400/25 to-violet-500/25"
+      />
 
       {/* Main Content */}
       <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="max-w-5xl mx-auto">
-          {/* Top Back Button */}
-          <div className="mb-6">
-            <BackButton to="/services/electricity" text={t('common.back')} />
-          </div>
+
 
           {/* Progress Section */}
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 mb-6">

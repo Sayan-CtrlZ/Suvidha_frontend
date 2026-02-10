@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "ਖਾਤੇ ਦੇ ਵੇਰਵੇ",
     "connectionInfo": "ਕਨੈਕਸ਼ਨ ਜਾਣਕਾਰੀ",
+    "personalInfo": "ਨਿੱਜੀ ਜਾਣਕਾਰੀ",
     "name": "ਨਾਮ",
+    "email": "ਈਮੇਲ",
+    "phone": "ਫੋਨ",
+    "state": "ਰਾਜ",
+    "district": "ਜ਼ਿਲ੍ਹਾ",
     "consumerNo": "ਕੰਜ਼ਿਊਮਰ ਨੰਬਰ",
     "connectionType": "ਕਿਸਮ",
     "domestic": "ਘਰੇਲੂ",

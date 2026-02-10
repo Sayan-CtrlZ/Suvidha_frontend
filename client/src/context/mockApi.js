@@ -158,6 +158,38 @@ export const mockSignUp = async (userData) => {
 };
 
 /**
+ * Fetch bill details for mock verification
+ * @param {string} consumerNumber - The consumer ID to check
+ * @param {string} type - Bill type (electricity, water, gas)
+ * @returns {Promise<{success: boolean, billDetails?: Object, message?: string}>} Bill details result
+ */
+export const fetchBillDetails = async (consumerNumber, type) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (consumerNumber && consumerNumber.length >= 8) {
+        resolve({
+          success: true,
+          billDetails: {
+            consumerId: consumerNumber,
+            consumerName: 'Rajesh Kumar',
+            billingMonth: 'February 2026',
+            amount: 1450.00,
+            dueDate: '2026-02-25',
+            status: 'unpaid',
+            serviceType: type || 'Electricity'
+          }
+        });
+      } else {
+        resolve({
+          success: false,
+          message: 'Invalid Consumer Number. Please check and try again.'
+        });
+      }
+    }, 1200);
+  });
+};
+
+/**
  * Mock guest payment (Quick Pay without login)
  * @param {Object} billData - Bill payment data
  * @param {number} billData.amount - Payment amount
@@ -168,11 +200,12 @@ export const mockQuickPay = async (billData) => {
     setTimeout(() => {
       resolve({
         success: true,
-        transactionId: 'TXN-' + Date.now(),
+        transactionId: 'TXN-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
         amount: billData.amount,
         status: 'Payment Successful',
+        date: new Date().toLocaleString()
       });
-    }, 1000);
+    }, 1500);
   });
 };
 

@@ -22,7 +22,12 @@
   "account": {
     "accountDetails": "ఖాతా వివరాలు",
     "connectionInfo": "కనెక్షన్ సమాచారం",
+    "personalInfo": "వ్యక్తిగత సమాచారం",
     "name": "పేరు",
+    "email": "ఈమెయిల్",
+    "phone": "ఫోన్",
+    "state": "రాష్ట్రం",
+    "district": "జిల్లా",
     "consumerNo": "కన్స్యూమర్ నంబర్",
     "connectionType": "రకం",
     "domestic": "గృహ",
